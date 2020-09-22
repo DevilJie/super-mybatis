@@ -136,8 +136,5 @@ public abstract class BaseSqlProvider {
         TABLE_NAME_ALIAS = TABLE_NAME.toLowerCase();
 
         Method[] methods = entity.getClass().getMethods();
-
-
-
     }
 }
