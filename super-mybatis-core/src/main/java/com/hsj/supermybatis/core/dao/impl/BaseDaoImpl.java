@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,7 +18,6 @@ import java.util.Map;
  * @Date: 2020/09/21/21:42
  */
 public class BaseDaoImpl<T> implements BaseDao<T> {
-
 
     private Class<T>          entityClass;
 
@@ -46,5 +46,21 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
             entity = null;
         }
         return (T) CoreUtil.process(entity, map);
+    }
+
+    @Override
+    public void insert(T t) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.ENTITY, t);
+        baseMapper.insert(map);
+    }
+
+    @Override
+    public void batchInsert(List<T> l) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.ENTITY_LIST, l);
+        baseMapper.batchInsert(map);
     }
 }

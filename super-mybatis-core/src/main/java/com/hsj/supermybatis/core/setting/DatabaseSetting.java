@@ -39,6 +39,19 @@ public class DatabaseSetting {
      */
     private String logicalNotDelValue = "0";
 
+    /**
+     * 是否显示执行的sql语句
+     */
+    public Boolean showSql = false;
+
+    public Boolean getShowSql() {
+        return showSql;
+    }
+
+    public void setShowSql(Boolean showSql) {
+        this.showSql = showSql;
+    }
+
     public String getTablePerfix() {
         return tablePerfix;
     }

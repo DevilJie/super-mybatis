@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 
 import javax.sql.DataSource;
 
+import com.hsj.supermybatis.core.parser.BaseSqlProviderParser;
 import com.hsj.supermybatis.core.setting.GlobalSetting;
 import com.hsj.supermybatis.extend.spring.SuperMybatisSqlSessionFactoryBean;
 import org.apache.ibatis.annotations.Mapper;
@@ -202,6 +203,8 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
       }
     }
     factory.setConfiguration(configuration);
+
+//    new BaseSqlProviderParser();
   }
 
 

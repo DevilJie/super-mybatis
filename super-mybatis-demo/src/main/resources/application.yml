@@ -9,9 +9,11 @@ super-mybatis:
   global-setting:
     database-setting:
       primary-key-type: auto
-      camel-model: false
+      camel-model: true
       upper-case-mode: true
       table-perfix: test_
+      show-sql: true
     snowflake-setting:
       datacenter-id: 1
       worker-id: 1
+

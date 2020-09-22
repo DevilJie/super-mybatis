@@ -53,6 +53,7 @@ public class ReflectionUtil {
             Method setterMethod = object.getClass().getMethod(setterMethodName, setterMethodClass);
             setterMethod.invoke(object, propertyValue);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

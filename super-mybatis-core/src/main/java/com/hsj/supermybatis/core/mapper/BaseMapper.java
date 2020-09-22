@@ -1,6 +1,10 @@
 package com.hsj.supermybatis.core.mapper;
 
+import com.hsj.supermybatis.core.parser.BatchInsertSqlProviderParser;
+import com.hsj.supermybatis.core.parser.GetSqlProviderParser;
+import com.hsj.supermybatis.core.parser.InsertSqlProviderParser;
 import com.hsj.supermybatis.core.provider.GetSqlProvider;
+import com.hsj.supermybatis.core.provider.InsertSqlProvider;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 
@@ -17,11 +21,28 @@ import java.util.Map;
 public interface BaseMapper {
 
     /**
+     * 插入数据
+     *
+     * @return ID
+     */
+    @SelectProvider(type= InsertSqlProviderParser.class,method="execute")
+    public void insert(Map<String, Object> paramMap);
+
+
+    /**
+     * 批量插入数据
+     *
+     * @return ID
+     */
+    @SelectProvider(type= BatchInsertSqlProviderParser.class,method="execute")
+    public void batchInsert(Map<String, Object> paramMap);
+
+    /**
      * 根据ID获取实体对象
      *
      * @return 实体对象
      */
-    @SelectProvider(type=GetSqlProvider.class,method="execute")
+    @SelectProvider(type= GetSqlProviderParser.class,method="execute")
     public HashMap<String, Object> get(Map<String, Object> paramMap);
 
     /**
@@ -31,12 +52,6 @@ public interface BaseMapper {
      */
     public List<HashMap<String, Object>> getAllList(Map<String, Object> paramMap);
 
-    /**
-     * 保存实体对象
-     *
-     * @return ID
-     */
-    public void save(Map<String, Object> paramMap);
 
 
     /**
@@ -45,13 +60,6 @@ public interface BaseMapper {
      * @return ID
      */
     public void saveAuto(Map<String, Object> paramMap);
-
-    /**
-     * 批量保存实体对象
-     *
-     * @return ID
-     */
-    public void batchSave(Map<String, Object> paramMap);
 
     /**
      * 更新实体对象

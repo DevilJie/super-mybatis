@@ -71,6 +71,12 @@
             "name": "super-mybatis.global-setting.database-setting.camel-model",
             "type": "java.lang.Boolean",
             "description": "数据库表名以及列名是否开启驼峰和下划线分割互转"
+        },
+        {
+            "sourceType": "com.hsj.supermybatis.core.setting.DatabaseSetting",
+            "name": "super-mybatis.global-setting.database-setting.show-sql",
+            "type": "java.lang.Boolean",
+            "description": "控制台是否输出执行的sql语句"
         }
     ]
 }

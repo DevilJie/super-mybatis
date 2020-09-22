@@ -28,9 +28,13 @@ public enum PrimaryKeyType {
      */
     INPUT(4);
 
-    private final int type;
+    private int type;
 
     PrimaryKeyType(int type) {
         this.type = type;
+    }
+
+    public int getType() {
+        return type;
     }
 }
