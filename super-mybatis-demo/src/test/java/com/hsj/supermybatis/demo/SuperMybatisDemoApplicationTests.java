@@ -25,6 +25,7 @@ class SuperMybatisDemoApplicationTests {
 
 	@Test
 	void testInsert(){
+
 		User user = new User("菜菜2", 30, "314170122@qq.com", "菜鸡小彩虹");
 		userInfoService.insert(user);
 	}
