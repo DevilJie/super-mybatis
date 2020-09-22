@@ -229,7 +229,6 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
             Optional.ofNullable(this.configurationProperties).ifPresent(targetConfiguration::setVariables);
         }
 
-        //TODO 设置全局设置
         this.globalSetting = Optional.ofNullable(this.globalSetting).orElseGet(GlobalSetting::create);
         this.globalSetting.setDatabaseSetting(Optional.ofNullable(this.globalSetting.getDatabaseSetting()).orElseGet(DatabaseSetting::new));
 

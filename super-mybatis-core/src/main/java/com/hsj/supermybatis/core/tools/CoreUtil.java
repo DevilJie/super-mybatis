@@ -43,7 +43,6 @@ public class CoreUtil {
         for (Map.Entry<String, Object> en : hashMap.entrySet()) {
             key = en.getKey();
 
-            //TODO 全局变量配置，需要动态读取
             GlobalSetting setting = GlobalSetting.create();
             key = setting.getDatabaseSetting().getCamelModel() ? CamelCaseUtils.toCamelCase(key) : key;
 

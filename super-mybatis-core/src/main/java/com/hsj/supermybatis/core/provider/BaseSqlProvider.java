@@ -84,7 +84,6 @@ public abstract class BaseSqlProvider {
             Table table = (Table)entity.getClass().getAnnotation(Table.class);
             TABLE_NAME = entity.getClass().getSimpleName();
 
-            //TODO 全局变量配置，需要动态读取
             GlobalSetting setting = GlobalSetting.getGlobalSetting();
             TABLE_NAME = setting.getDatabaseSetting().getCamelModel() ? CamelCaseUtils.processNameWithUnderLine(TABLE_NAME) : TABLE_NAME;
             /**
