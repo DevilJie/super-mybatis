@@ -3,13 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <properties>
-        <devType>SNAPSHOT</devType>
-    </properties>
     <groupId>com.hsj.supermybatis</groupId>
     <artifactId>super-mybatis</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-${devType}</version>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <modules>
+        <module>super-mybatis-base</module>
+        <module>super-mybatis</module>
+        <module>super-mybatis-core</module>
+        <module>super-mybatis-starters</module>
+        <module>super-mybatis-demo</module>
+        <module>super-mybatis-extend</module>
+    </modules>
+
     <build>
         <plugins>
             <plugin>
@@ -22,15 +29,4 @@
             </plugin>
         </plugins>
     </build>
-    <modules>
-        <module>super-mybatis-base</module>
-        <module>super-mybatis</module>
-        <module>super-mybatis-core</module>
-        <module>super-mybatis-starters</module>
-        <module>super-mybatis-demo</module>
-        <module>super-mybatis-extend</module>
-    </modules>
-
-    <dependencies>
-    </dependencies>
 </project>
