@@ -1,5 +1,6 @@
 package com.hsj.supermybatis.demo;
 
+import com.alibaba.fastjson.JSON;
 import com.hsj.supermybatis.demo.entity.User;
 import com.hsj.supermybatis.demo.service.UserInfoService;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,8 @@ class SuperMybatisDemoApplicationTests {
 	void testInsert(){
 
 		User user = new User("菜菜2", 30, "314170122@qq.com", "菜鸡小彩虹");
-		userInfoService.insert(user);
+		String s = userInfoService.insert(user);
+		System.out.println(s);
 	}
 
 	@Test
@@ -44,7 +47,16 @@ class SuperMybatisDemoApplicationTests {
 			}
 		};
 
-		userInfoService.batchInsert(list);
+		System.out.println(JSON.toJSONString(userInfoService.batchInsert(list)));
 	}
 
+	@Test
+	void testAllList(){
+		System.out.println(JSON.toJSONString(userInfoService.allList()));
+	}
+
+	@Test
+	void testDelete(){
+		System.out.println(userInfoService.delete("493137875643142166"));
+	}
 }

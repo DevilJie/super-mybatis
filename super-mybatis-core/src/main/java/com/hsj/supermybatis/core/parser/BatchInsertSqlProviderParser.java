@@ -10,6 +10,8 @@ import com.hsj.supermybatis.core.tools.ReflectionUtil;
 import com.hsj.supermybatis.core.tools.SqlPrint;
 import com.hsj.supermybatis.core.tools.SuperMybatisAssert;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +33,10 @@ public class BatchInsertSqlProviderParser extends BaseSqlProviderParser {
 
         StringBuffer valuesBufferTotal = new StringBuffer();
         StringBuffer columnBuffer = new StringBuffer();
+        List primaryKeyIds = new ArrayList();
 
         boolean camelModel = setting.getDatabaseSetting().getCamelModel();
+
 
         AtomicInteger index = new AtomicInteger(0);
         ((List<Object>) map.get(SqlProviderConstants.ENTITY_LIST)).stream().forEach(insertEntity -> {
@@ -63,6 +67,7 @@ public class BatchInsertSqlProviderParser extends BaseSqlProviderParser {
                         SuperMybatisAssert.check(ReflectionUtil.invokeGetterMethod(insertEntity, item.getName()) !=  null, "The primary key has no assignment");
                     }
                     ReflectionUtil.invokeSetterMethod(insertEntity, item.getName(), id);
+                    primaryKeyIds.add(id);
                 }
             });
 
@@ -85,6 +90,7 @@ public class BatchInsertSqlProviderParser extends BaseSqlProviderParser {
          * 打印sql
          */
         SqlPrint.print(map, sql);
+        map.put(SqlProviderConstants.PRIMARY_KEY_VALUE, primaryKeyIds.toArray(new String[primaryKeyIds.size()]));
         return sql;
     }
 }

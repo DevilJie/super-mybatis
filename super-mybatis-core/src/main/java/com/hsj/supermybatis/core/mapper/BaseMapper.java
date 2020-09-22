@@ -1,13 +1,14 @@
 package com.hsj.supermybatis.core.mapper;
 
-import com.hsj.supermybatis.core.parser.BatchInsertSqlProviderParser;
-import com.hsj.supermybatis.core.parser.GetSqlProviderParser;
-import com.hsj.supermybatis.core.parser.InsertSqlProviderParser;
+import com.hsj.supermybatis.core.parser.*;
 import com.hsj.supermybatis.core.provider.GetSqlProvider;
 import com.hsj.supermybatis.core.provider.InsertSqlProvider;
+import org.apache.ibatis.annotations.DeleteProvider;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +26,8 @@ public interface BaseMapper {
      *
      * @return ID
      */
-    @SelectProvider(type= InsertSqlProviderParser.class,method="execute")
-    public void insert(Map<String, Object> paramMap);
+    @InsertProvider(type= InsertSqlProviderParser.class,method="execute")
+    void insert(Map<String, Object> paramMap);
 
 
     /**
@@ -34,8 +35,8 @@ public interface BaseMapper {
      *
      * @return ID
      */
-    @SelectProvider(type= BatchInsertSqlProviderParser.class,method="execute")
-    public void batchInsert(Map<String, Object> paramMap);
+    @InsertProvider(type= BatchInsertSqlProviderParser.class,method="execute")
+    void batchInsert(Map<String, Object> paramMap);
 
     /**
      * 根据ID获取实体对象
@@ -43,14 +44,23 @@ public interface BaseMapper {
      * @return 实体对象
      */
     @SelectProvider(type= GetSqlProviderParser.class,method="execute")
-    public HashMap<String, Object> get(Map<String, Object> paramMap);
+    HashMap<String, Object> get(Map<String, Object> paramMap);
 
     /**
      * 获取所有实体对象集合
      *
      * @return 实体对象集合
      */
-    public List<HashMap<String, Object>> getAllList(Map<String, Object> paramMap);
+    @SelectProvider(type= AllListSqlProviderParser.class,method="execute")
+    List<HashMap<String, Object>> getAllList(Map<String, Object> paramMap);
+
+
+    /**
+     * 根据ID删除实体对象
+     *
+     */
+    @DeleteProvider(type= DeleteSqlProviderParser.class,method="execute")
+    Long delete(Map<String, Object> paramMap);
 
 
 
@@ -59,25 +69,19 @@ public interface BaseMapper {
      *
      * @return ID
      */
-    public void saveAuto(Map<String, Object> paramMap);
+    void saveAuto(Map<String, Object> paramMap);
 
     /**
      * 更新实体对象
      *
      */
-    public void update(Map<String, Object> paramMap);
+    void update(Map<String, Object> paramMap);
 
     /**
      * 批量更新实体对象
      *
      */
-    public void batchUpdate(List<Map<String, Object>> list);
-
-    /**
-     * 根据ID删除实体对象
-     *
-     */
-    public void delete(Map<String, Object> paramMap);
+    void batchUpdate(List<Map<String, Object>> list);
 
     /**
      * 获取分页数据
@@ -85,7 +89,7 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
-    public List<HashMap<String, Object>> getPager(Map<String, Object> paramMap);
+    List<HashMap<String, Object>> getPager(Map<String, Object> paramMap);
 
     /**
      * 获取分页数据
@@ -93,7 +97,7 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
-    public Long getPagerCount(Map<String, Object> paramMap);
+    Long getPagerCount(Map<String, Object> paramMap);
 
     /**
      * 获取分页数据
@@ -101,7 +105,7 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
-    public List<HashMap<String, Object>> getPagerBySql(Map<String, Object> paramMap);
+    List<HashMap<String, Object>> getPagerBySql(Map<String, Object> paramMap);
 
     /**
      * 获取分页数据
@@ -109,7 +113,7 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
-    public Long getPagerCountBySql(Map<String, Object> paramMap);
+    Long getPagerCountBySql(Map<String, Object> paramMap);
 
     /**
      * 自定义查询条件获取对象
@@ -117,7 +121,7 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
-    public HashMap<String, Object> getObject(Map<String, Object> paramMap);
+    HashMap<String, Object> getObject(Map<String, Object> paramMap);
 
     /**
      * 自定义查询条件获取对象列表
@@ -125,7 +129,7 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
-    public List<HashMap<String, Object>> getObjectList(Map<String, Object> paramMap);
+    List<HashMap<String, Object>> getObjectList(Map<String, Object> paramMap);
 
     /**
      * 自定义查询条件获取对象列表集合大小
@@ -133,15 +137,15 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
-    public Long getObjectListCount(Map<String, Object> paramMap);
+    Long getObjectListCount(Map<String, Object> paramMap);
 
     /**
      * 执行sql查询数据，返回对象集合
      */
-    public List<Object> queryBySql(Map<String, Object> paramMap);
+    List<Object> queryBySql(Map<String, Object> paramMap);
 
     /**
      * 直接执行sql语句
      */
-    public Long executeBySql(Map<String, Object> paramMap);
+    Long executeBySql(Map<String, Object> paramMap);
 }

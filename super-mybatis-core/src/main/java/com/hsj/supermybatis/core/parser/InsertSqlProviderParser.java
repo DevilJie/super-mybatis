@@ -55,6 +55,7 @@ public class InsertSqlProviderParser extends BaseSqlProviderParser {
                     SuperMybatisAssert.check(ReflectionUtil.invokeGetterMethod(insertEntity, item.getName()) !=  null, "The primary key has no assignment");
                 }
                 ReflectionUtil.invokeSetterMethod(insertEntity, item.getName(), id);
+                map.put(SqlProviderConstants.PRIMARY_KEY_VALUE, id);
             }
         });
 

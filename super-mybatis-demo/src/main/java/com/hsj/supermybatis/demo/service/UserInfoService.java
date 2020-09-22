@@ -11,7 +11,16 @@ import java.util.List;
 public interface UserInfoService {
     void process();
 
-    void insert(User user);
+    String insert(User user);
 
-    void batchInsert(List<User> user);
+    String[] batchInsert(List<User> user);
+
+    List<User> allList();
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    Long delete(String id);
 }

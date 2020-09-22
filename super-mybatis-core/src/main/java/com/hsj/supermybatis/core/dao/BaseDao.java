@@ -20,11 +20,23 @@ public interface BaseDao<T> {
      * 插入数据
      * @param t
      */
-    void insert(T t);
+    Serializable insert(T t);
 
     /**
      * 插入数据
      * @param l
      */
-    void batchInsert(List<T> l);
+    Serializable[] batchInsert(List<T> l);
+
+    /**
+     * 获取所有数据
+     * @return
+     */
+    List<T> allList();
+
+    /**
+     * 根据主键ID删除
+     * @param id
+     */
+    Long delete(Serializable id);
 }

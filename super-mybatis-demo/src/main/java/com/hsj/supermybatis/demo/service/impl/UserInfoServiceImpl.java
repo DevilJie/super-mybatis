@@ -25,12 +25,22 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public void insert(User user) {
-        userInfoDao.insert(user);
+    public String insert(User user) {
+        return (String)userInfoDao.insert(user);
     }
 
     @Override
-    public void batchInsert(List<User> user) {
-        userInfoDao.batchInsert(user);
+    public String[] batchInsert(List<User> user) {
+        return (String[])userInfoDao.batchInsert(user);
+    }
+
+    @Override
+    public List<User> allList() {
+        return userInfoDao.allList();
+    }
+
+    @Override
+    public Long delete(String id) {
+        return userInfoDao.delete(id);
     }
 }
