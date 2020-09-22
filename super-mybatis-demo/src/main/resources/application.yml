@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 111111
+
+super-mybatis:
+  global-setting:
+    database-setting:
+      primary-key-type: auto
+      camel-model: false
+      upper-case-mode: true
+      table-perfix: test_
+    snowflake-setting:
+      datacenter-id: 1
+      worker-id: 1
