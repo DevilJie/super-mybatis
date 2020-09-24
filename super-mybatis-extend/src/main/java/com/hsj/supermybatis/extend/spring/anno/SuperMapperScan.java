@@ -23,6 +23,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.hsj.supermybatis.base.bean.CommonCons;
 import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.support.BeanNameGenerator;
@@ -85,7 +86,7 @@ public @interface SuperMapperScan {
    *
    * @return base package names
    */
-  String[] value() default {"com.hsj.supermybatis.core.mapper"};
+  String[] value() default {CommonCons.BASE_MAPPER};
 
   /**
    * Base packages to scan for MyBatis interfaces. Note that only interfaces with at least one method will be

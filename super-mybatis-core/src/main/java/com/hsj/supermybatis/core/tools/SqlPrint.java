@@ -13,37 +13,40 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * 日志打印工具 -- 已弃用，直接采用mybatis内置的Sql打印
  * @Author: 菜鸡小彩虹
  * @Date: 2020/09/22/18:49
  */
+@Deprecated
 public class SqlPrint {
 
     static Logger logger = LoggerFactory.getLogger(SqlPrint.class);
 
     public static void print(Map<String, Object> map, String sql){
-        if(GlobalSetting.getGlobalSetting().getDatabaseSetting().getShowSql()) {
-            StringBuffer buffer = new StringBuffer();
-            try {
-                AtomicInteger index = new AtomicInteger(0);
-                getSubUtilSimple(sql, "\\#\\{", "\\}").stream().forEach(ret -> {
-                    if(ret.contains("[")){
-                        Integer indexNow = Integer.parseInt(getSubUtilSimple(ret, "\\[", "\\]").get(0));
-                        if(indexNow != index.get()){
-                            buffer.append(String.format("\n , #{%s} = %s", ret, getValueByKey(ret, map)));
-                            index.set(indexNow);
-                        }else{
-                            buffer.append(String.format(" , #{%s} = %s", ret, getValueByKey(ret, map)));
-                        }
-                    }else {
-                        buffer.append(String.format(" , #{%s} = %s", ret, getValueByKey(ret, map)));
-                    }
-                });
-            }catch(Exception e){}
-            logger.info("\n\n【 Super-Mybatis 】 Sql调试 start.....\n" +
-                    "【 Super-Mybatis 】 sql语句 ： {} \n" +
-                    "【 Super-Mybatis 】 参数 ：{} \n" +
-                    "【 Super-Mybatis 】 Sql调试 end.....\n", sql, buffer.length() > 2 ? buffer.substring(3) : "");
-        }
+        return;
+//        if(GlobalSetting.getGlobalSetting().getDatabaseSetting().getShowSql()) {
+//            StringBuffer buffer = new StringBuffer();
+//            try {
+//                AtomicInteger index = new AtomicInteger(0);
+//                getSubUtilSimple(sql, "\\#\\{", "\\}").stream().forEach(ret -> {
+//                    if(ret.contains("[")){
+//                        Integer indexNow = Integer.parseInt(getSubUtilSimple(ret, "\\[", "\\]").get(0));
+//                        if(indexNow != index.get()){
+//                            buffer.append(String.format("\n , #{%s} = %s", ret, getValueByKey(ret, map)));
+//                            index.set(indexNow);
+//                        }else{
+//                            buffer.append(String.format(" , #{%s} = %s", ret, getValueByKey(ret, map)));
+//                        }
+//                    }else {
+//                        buffer.append(String.format(" , #{%s} = %s", ret, getValueByKey(ret, map)));
+//                    }
+//                });
+//            }catch(Exception e){}
+//            logger.info("\n\n【 Super-Mybatis 】 Sql调试 start.....\n" +
+//                    "【 Super-Mybatis 】 sql语句 ： {} \n" +
+//                    "【 Super-Mybatis 】 参数 ：{} \n" +
+//                    "【 Super-Mybatis 】 Sql调试 end.....\n", sql, buffer.length() > 2 ? buffer.substring(3) : "");
+//        }
     }
 
     public static Object getValueByKey(String key, Map<String, Object> map){

@@ -41,10 +41,7 @@ public class CoreUtil {
     public static Object process(Object e, Map<String, Object> hashMap) {
         String key;
         for (Map.Entry<String, Object> en : hashMap.entrySet()) {
-            key = en.getKey();
-
-            GlobalSetting setting = GlobalSetting.create();
-            key = setting.getDatabaseSetting().getCamelModel() ? CamelCaseUtils.toCamelCase(key) : key;
+            key = TableTools.columnToField(GlobalSetting.getGlobalSetting(), en.getKey(), e);
 
             if (en.getValue() instanceof java.sql.Date) {
                 java.sql.Date d = (java.sql.Date) en.getValue();

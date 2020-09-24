@@ -2,8 +2,6 @@ package com.hsj.supermybatis.core.parser;
 
 import com.hsj.supermybatis.base.annotation.PrimaryKey;
 import com.hsj.supermybatis.base.annotation.Table;
-import com.hsj.supermybatis.core.provider.BaseSqlProvider;
-import com.hsj.supermybatis.core.provider.SqlProviderConstants;
 import com.hsj.supermybatis.core.setting.GlobalSetting;
 import com.hsj.supermybatis.core.tools.CamelCaseUtils;
 import com.hsj.supermybatis.core.tools.SuperMybatisAssert;

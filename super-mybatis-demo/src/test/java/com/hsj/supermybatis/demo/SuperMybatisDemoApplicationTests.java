@@ -1,6 +1,7 @@
 package com.hsj.supermybatis.demo;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.hsj.supermybatis.demo.entity.User;
 import com.hsj.supermybatis.demo.service.UserInfoService;
 import org.junit.jupiter.api.Test;
@@ -9,9 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -59,4 +65,5 @@ class SuperMybatisDemoApplicationTests {
 	void testDelete(){
 		System.out.println(userInfoService.delete("493137875643142166"));
 	}
+
 }

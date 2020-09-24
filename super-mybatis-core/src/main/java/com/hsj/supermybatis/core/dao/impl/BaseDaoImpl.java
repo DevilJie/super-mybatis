@@ -2,13 +2,11 @@ package com.hsj.supermybatis.core.dao.impl;
 
 import com.hsj.supermybatis.core.dao.BaseDao;
 import com.hsj.supermybatis.core.mapper.BaseMapper;
-import com.hsj.supermybatis.core.provider.SqlProviderConstants;
+import com.hsj.supermybatis.core.parser.SqlProviderConstants;
 import com.hsj.supermybatis.core.tools.CoreUtil;
-import com.hsj.supermybatis.core.tools.ReflectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return (T) CoreUtil.process(entity, map);
+        return map == null ? null : (T) CoreUtil.process(entity, map);
     }
 
     @Override

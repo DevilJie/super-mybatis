@@ -3,13 +3,10 @@ package com.hsj.supermybatis.core.parser;
 import com.hsj.supermybatis.base.annotation.PrimaryKey;
 import com.hsj.supermybatis.base.enu.BaseSqlTemplate;
 import com.hsj.supermybatis.base.enu.PrimaryKeyType;
-import com.hsj.supermybatis.core.provider.SqlProviderConstants;
 import com.hsj.supermybatis.core.setting.GlobalConstants;
-import com.hsj.supermybatis.core.tools.CamelCaseUtils;
-import com.hsj.supermybatis.core.tools.ReflectionUtil;
-import com.hsj.supermybatis.core.tools.SqlPrint;
-import com.hsj.supermybatis.core.tools.SuperMybatisAssert;
+import com.hsj.supermybatis.core.tools.*;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -29,17 +26,15 @@ public class InsertSqlProviderParser extends BaseSqlProviderParser {
         StringBuffer valuesBuffer = new StringBuffer();
         StringBuffer columnBuffer = new StringBuffer();
 
-        boolean camelModel = setting.getDatabaseSetting().getCamelModel();
-
         Object insertEntity = map.get(SqlProviderConstants.ENTITY);
 
         Arrays.asList(insertEntity.getClass().getDeclaredFields()).stream().
                 filter(item -> item.getAnnotation(PrimaryKey.class) != null).forEach(item -> {
             if((item.getAnnotation(PrimaryKey.class)).keyType() != PrimaryKeyType.AUTO){
-                columnBuffer.append(String.format(",`%s`", (camelModel ? CamelCaseUtils.processNameWithUnderLine(item.getName()) : item.getName())));
+                columnBuffer.append(String.format(",`%s`", TableTools.fieldToColumn(setting, item)));
                 valuesBuffer.append(String.format(",#{%s.%s}", insertEntity.getClass().getSimpleName(), item.getName()));
 
-                String id = null;
+                Serializable id = null;
 
                 PrimaryKeyType keyType = (item.getAnnotation(PrimaryKey.class)).keyType();
 
@@ -53,6 +48,7 @@ public class InsertSqlProviderParser extends BaseSqlProviderParser {
                     id = setting.getIdentifierGenerator(GlobalConstants.SNOWFLAKE_GENERATOR_KEY).nextId(insertEntity);
                 }else{
                     SuperMybatisAssert.check(ReflectionUtil.invokeGetterMethod(insertEntity, item.getName()) !=  null, "The primary key has no assignment");
+                    id = (Serializable)ReflectionUtil.invokeGetterMethod(insertEntity, item.getName());
                 }
                 ReflectionUtil.invokeSetterMethod(insertEntity, item.getName(), id);
                 map.put(SqlProviderConstants.PRIMARY_KEY_VALUE, id);
@@ -62,7 +58,7 @@ public class InsertSqlProviderParser extends BaseSqlProviderParser {
 
         Arrays.asList(insertEntity.getClass().getDeclaredFields()).stream().
                 filter(item -> item.getAnnotation(PrimaryKey.class) == null).forEach(item -> {
-            columnBuffer.append(String.format(",`%s`", (camelModel ? CamelCaseUtils.processNameWithUnderLine(item.getName()) : item.getName())));
+            columnBuffer.append(String.format(",`%s`", TableTools.fieldToColumn(setting, item)));
             valuesBuffer.append(String.format(",#{%s.%s}", insertEntity.getClass().getSimpleName(), item.getName()));
         });
 

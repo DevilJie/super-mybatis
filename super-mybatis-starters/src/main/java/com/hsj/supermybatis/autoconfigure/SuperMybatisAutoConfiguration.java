@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 import javax.sql.DataSource;
 
-import com.hsj.supermybatis.core.parser.BaseSqlProviderParser;
+import com.hsj.supermybatis.base.bean.CommonCons;
 import com.hsj.supermybatis.core.setting.GlobalSetting;
 import com.hsj.supermybatis.extend.spring.SuperMybatisSqlSessionFactoryBean;
 import org.apache.ibatis.annotations.Mapper;
@@ -38,7 +38,6 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.mybatis.spring.boot.autoconfigure.MybatisLanguageDriverAutoConfiguration;
-import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -51,6 +50,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
@@ -61,6 +61,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.logging.LogLevel;
+import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
@@ -109,6 +111,9 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
   private final DatabaseIdProvider databaseIdProvider;
 
   private final List<ConfigurationCustomizer> configurationCustomizers;
+
+  @Autowired
+  private LoggingSystem loggingSystem;
 
   public SuperMybatisAutoConfiguration(SuperMybatisProperties properties, ObjectProvider<Interceptor[]> interceptorsProvider,
                                        ObjectProvider<TypeHandler[]> typeHandlersProvider, ObjectProvider<LanguageDriver[]> languageDriversProvider,
@@ -188,6 +193,9 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
 
     GlobalSetting setting = this.properties.getGlobalSetting();
     factory.setGlobalSetting(setting);
+
+    if(setting.getDatabaseSetting().getShowSql())
+      loggingSystem.setLogLevel(CommonCons.BASE_MAPPER, LogLevel.DEBUG);
 
     return factory.getObject();
   }

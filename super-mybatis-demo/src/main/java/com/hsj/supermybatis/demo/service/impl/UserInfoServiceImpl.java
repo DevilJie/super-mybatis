@@ -20,13 +20,13 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public void process() {
-        User u = userInfoDao.get("1");
+        User u = userInfoDao.get("493197136603648073");
         System.out.println(u);
     }
 
     @Override
     public String insert(User user) {
-        return (String)userInfoDao.insert(user);
+        return String.valueOf(userInfoDao.insert(user));
     }
 
     @Override

@@ -6,6 +6,10 @@ spring:
     username: root
     password: 111111
 
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 
 super-mybatis:
   global-setting:
@@ -18,4 +22,3 @@ super-mybatis:
     snowflake-setting:
       datacenter-id: 1
       worker-id: 1
-

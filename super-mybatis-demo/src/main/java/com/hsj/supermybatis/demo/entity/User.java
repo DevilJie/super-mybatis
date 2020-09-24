@@ -1,7 +1,9 @@
 package com.hsj.supermybatis.demo.entity;
 
+import com.hsj.supermybatis.base.annotation.Column;
 import com.hsj.supermybatis.base.annotation.PrimaryKey;
 import com.hsj.supermybatis.base.annotation.Table;
+import com.hsj.supermybatis.base.enu.PrimaryKeyType;
 
 @Table(value="test_user")
 public class User {
@@ -9,24 +11,17 @@ public class User {
     private String id;
     private String name;
     private Integer age;
-    private String email;
-    private String nickName;
+    private String emailAddress;
+    @Column(name="nick_name")
+    private String nname;
 
     public User(){}
 
-    public User(String id, String name, Integer age, String email, String nickName) {
-        this.id = id;
+    public User(String name, Integer age, String emailAddress, String nname) {
         this.name = name;
         this.age = age;
-        this.email = email;
-        this.nickName = nickName;
-    }
-    public User(String name, Integer age, String email, String nickName) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.email = email;
-        this.nickName = nickName;
+        this.emailAddress = emailAddress;
+        this.nname = nname;
     }
 
     public String getId() {
@@ -53,20 +48,20 @@ public class User {
         this.age = age;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNname() {
+        return nname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNname(String nname) {
+        this.nname = nname;
     }
 
     @Override
@@ -75,8 +70,8 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", email='" + email + '\'' +
-                ", nickName='" + nickName + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", nick_name='" + nname + '\'' +
                 '}';
     }
 }

@@ -3,10 +3,7 @@ package com.hsj.supermybatis.core.mapper;
 import com.hsj.supermybatis.core.parser.*;
 import com.hsj.supermybatis.core.provider.GetSqlProvider;
 import com.hsj.supermybatis.core.provider.InsertSqlProvider;
-import org.apache.ibatis.annotations.DeleteProvider;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -27,6 +24,7 @@ public interface BaseMapper {
      * @return ID
      */
     @InsertProvider(type= InsertSqlProviderParser.class,method="execute")
+    @Options(useGeneratedKeys = true, keyProperty = SqlProviderConstants.PRIMARY_KEY_VALUE)
     void insert(Map<String, Object> paramMap);
 
 
@@ -61,15 +59,6 @@ public interface BaseMapper {
      */
     @DeleteProvider(type= DeleteSqlProviderParser.class,method="execute")
     Long delete(Map<String, Object> paramMap);
-
-
-
-    /**
-     * 保存实体对象
-     *
-     * @return ID
-     */
-    void saveAuto(Map<String, Object> paramMap);
 
     /**
      * 更新实体对象

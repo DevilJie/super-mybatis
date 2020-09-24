@@ -26,10 +26,10 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-public @interface ColumnType {
+public @interface Column {
     /**
      * 当执行update语句的时候，该字段拼接set语句的策略
-     * true：update table set column=#{column}
+     * true：update table set column=#{column} 无论值是否为空，都会赋值
      * false：自动识别字段类型
      *        数字型：update table set  <if test="column != null">column=#{column}</if>
      *        字符型：update table set  <if test="column != null and column != ''">column=#{column}</if>
@@ -51,6 +51,8 @@ public @interface ColumnType {
      * 比如实体类属性是 subTitle，数据库字段为wx_sub_title
      * 如果要做到自动映射，设置此属性为  wx_sub_title 即可
      * 一般情况下不需要设置，直接采用框架自动映射策略即可
+     * 一旦设置了此处的名称，将会强制对应
+     * 设置开启的驼峰下换线转换功能将会失效
      * @return
      */
     String name() default "";

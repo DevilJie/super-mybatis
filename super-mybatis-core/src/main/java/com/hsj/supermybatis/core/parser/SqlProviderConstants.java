@@ -1,4 +1,4 @@
-package com.hsj.supermybatis.core.provider;
+package com.hsj.supermybatis.core.parser;
 
 /**
  * @Author: 菜鸡小彩虹
