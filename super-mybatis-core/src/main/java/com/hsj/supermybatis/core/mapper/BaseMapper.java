@@ -116,12 +116,20 @@ public interface BaseMapper {
     Long getObjectListCount(Map<String, Object> paramMap);
 
     /**
-     * 执行sql查询数据，返回对象集合
+     * 个性化sql执行，获取列表
      */
-    List<Object> queryBySql(Map<String, Object> paramMap);
+    @SelectProvider(type= SelectBySqlProviderParser.class,method="execute")
+    List<HashMap<String, Object>> queryBySql(Map<String, Object> paramMap);
 
     /**
-     * 直接执行sql语句
+     * 个性化sql执行，分页查询
      */
-    Long executeBySql(Map<String, Object> paramMap);
+    @SelectProvider(type= SelectPagerBySqlProviderParser.class,method="execute")
+    List<Object> queryPagerBySql(Map<String, Object> paramMap);
+
+    /**
+     * 个性化sql执行，更新语句
+     */
+    @UpdateProvider(type= UpdateBySqlProviderParser.class,method="execute")
+    Long updateBySql(Map<String, Object> paramMap);
 }

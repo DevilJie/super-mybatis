@@ -37,7 +37,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public List<User> allList() {
-        return userInfoDao.allList();
+//        return userInfoDao.allList();
+        /**
+         * 封装自定义的查询sql
+         */
+        return userInfoDao.loadAll();
     }
 
     @Override

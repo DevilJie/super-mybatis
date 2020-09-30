@@ -1,6 +1,8 @@
 package com.hsj.supermybatis.core.dao.impl;
 
 import com.hsj.supermybatis.base.bean.Pager;
+import com.hsj.supermybatis.core.actuator.SuperMybatisBaseSession;
+import com.hsj.supermybatis.core.actuator.simple.SuperMybatisSimpleSession;
 import com.hsj.supermybatis.core.dao.BaseDao;
 import com.hsj.supermybatis.core.mapper.BaseMapper;
 import com.hsj.supermybatis.core.parser.SqlProviderConstants;
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 public class BaseDaoImpl<T> implements BaseDao<T> {
 
     private Class<T>          entityClass;
+
+    private SuperMybatisBaseSession superMybatisBaseSession;
 
     public BaseDaoImpl(){
         Class c = getClass();
@@ -210,5 +214,10 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         map.put(SqlProviderConstants.ORDER, pager.getOrder());
         map.put(SqlProviderConstants.ORDER_BY, pager.getOrderBy());
         return baseMapper.getObjectListCount(map);
+    }
+
+    public SuperMybatisBaseSession getBatisSession() {
+        if(superMybatisBaseSession == null) superMybatisBaseSession = new SuperMybatisSimpleSession(baseMapper);
+        return this.superMybatisBaseSession;
     }
 }

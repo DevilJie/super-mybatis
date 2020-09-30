@@ -16,6 +16,8 @@ public class SqlProviderConstants {
 
     public static final String ORDER_BY = "ORDER_BY";
 
+    public static final String SQL = "SQL";
+
     public static final String ENTITY_LIST = "ENTITY_LIST";
 
     public static final String PRIMARY_KEY_VALUE = "PRIMARY_KEY_VALUE";
