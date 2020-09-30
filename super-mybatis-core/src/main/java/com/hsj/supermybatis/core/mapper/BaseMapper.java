@@ -64,13 +64,14 @@ public interface BaseMapper {
      * 更新实体对象
      *
      */
-    void update(Map<String, Object> paramMap);
-
-    /**
-     * 批量更新实体对象
-     *
-     */
-    void batchUpdate(List<Map<String, Object>> list);
+    @UpdateProvider(type= UpdateSqlProviderParser.class,method="execute")
+    Long update(Map<String, Object> paramMap);
+//
+//    /**
+//     * 批量更新实体对象
+//     *
+//     */
+//    void batchUpdate(List<Map<String, Object>> list);
 
     /**
      * 获取分页数据
@@ -78,6 +79,7 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
+    @SelectProvider(type= PagerSqlProviderParser.class,method="execute")
     List<HashMap<String, Object>> getPager(Map<String, Object> paramMap);
 
     /**
@@ -86,6 +88,7 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
+    @SelectProvider(type= PagerCountSqlProviderParser.class,method="execute")
     Long getPagerCount(Map<String, Object> paramMap);
 
     /**

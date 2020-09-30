@@ -1,5 +1,6 @@
 package com.hsj.supermybatis.demo.service.impl;
 
+import com.hsj.supermybatis.base.bean.Pager;
 import com.hsj.supermybatis.demo.entity.User;
 import com.hsj.supermybatis.demo.dao.UserInfoDao;
 import com.hsj.supermybatis.demo.service.UserInfoService;
@@ -42,5 +43,15 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public Long delete(String id) {
         return userInfoDao.delete(id);
+    }
+
+    @Override
+    public Long update(User user) {
+        return userInfoDao.update(user);
+    }
+
+    @Override
+    public Pager getPager(Pager pager, User user) {
+        return userInfoDao.getPager(pager, user);
     }
 }

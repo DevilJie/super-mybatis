@@ -24,7 +24,9 @@ import java.util.stream.Stream;
 import javax.sql.DataSource;
 
 import com.hsj.supermybatis.base.bean.CommonCons;
+import com.hsj.supermybatis.core.setting.GlobalConstants;
 import com.hsj.supermybatis.core.setting.GlobalSetting;
+import com.hsj.supermybatis.core.tools.ReflectionUtil;
 import com.hsj.supermybatis.extend.spring.SuperMybatisSqlSessionFactoryBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
@@ -66,6 +68,7 @@ import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.AnnotationMetadata;
@@ -192,6 +195,8 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
     }
 
     GlobalSetting setting = this.properties.getGlobalSetting();
+    setting.setEnvironment((Environment) ReflectionUtil.getFieldValue(this.resourceLoader, "environment"));
+
     factory.setGlobalSetting(setting);
 
     if(setting.getDatabaseSetting().getShowSql())

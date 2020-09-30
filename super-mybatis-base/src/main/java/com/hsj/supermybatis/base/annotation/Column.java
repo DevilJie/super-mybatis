@@ -33,6 +33,8 @@ public @interface Column {
      * false：自动识别字段类型
      *        数字型：update table set  <if test="column != null">column=#{column}</if>
      *        字符型：update table set  <if test="column != null and column != ''">column=#{column}</if>
+     *
+     * 如果实体类不设置这个注解，则随着全局设置走
      * @return
      */
     boolean updateAnyway() default false;

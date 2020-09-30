@@ -10,6 +10,7 @@ public class User {
     @PrimaryKey
     private String id;
     private String name;
+    @Column(updateAnyway = true)
     private Integer age;
     private String emailAddress;
     @Column(name="nick_name")

@@ -5,6 +5,7 @@ import com.hsj.supermybatis.base.annotation.Table;
 import com.hsj.supermybatis.core.setting.GlobalSetting;
 import com.hsj.supermybatis.core.tools.CamelCaseUtils;
 import com.hsj.supermybatis.core.tools.SuperMybatisAssert;
+import com.hsj.supermybatis.core.tools.TableTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -28,6 +29,7 @@ public abstract class BaseSqlProviderParser {
     protected Object entity;
     protected GlobalSetting setting = GlobalSetting.getGlobalSetting();
     protected PrimaryKey primaryKey;
+    protected Field primaryKeyField;
 
 
 //    static {
@@ -91,14 +93,13 @@ public abstract class BaseSqlProviderParser {
         List<Field> fieldList = Arrays.asList(entity.getClass().getDeclaredFields()).stream().
                 filter(item -> item.getAnnotation(PrimaryKey.class) != null).collect(Collectors.toList());
 
-        Field primaryKeyField = (fieldList != null && fieldList.size() > 0) ? fieldList.get(0) : null;
+        primaryKeyField = (fieldList != null && fieldList.size() > 0) ? fieldList.get(0) : null;
 
         SuperMybatisAssert.check(primaryKeyField != null, "Sorry ! Primary key not found , please check");
 
         primaryKey = primaryKeyField.getAnnotation(PrimaryKey.class);
 
-        String PRIMARY_KEY = primaryKeyField.getName();
-        PRIMARY_KEY = setting.getDatabaseSetting().getCamelModel() ? CamelCaseUtils.processNameWithUnderLine(PRIMARY_KEY) : PRIMARY_KEY;
+        String PRIMARY_KEY = TableTools.fieldToColumn(setting, primaryKeyField);
         if(primaryKey != null && !"".equals(primaryKey.key())) PRIMARY_KEY = primaryKey.key();
 
         return PRIMARY_KEY;

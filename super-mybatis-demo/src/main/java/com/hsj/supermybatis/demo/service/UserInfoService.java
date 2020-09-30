@@ -1,5 +1,6 @@
 package com.hsj.supermybatis.demo.service;
 
+import com.hsj.supermybatis.base.bean.Pager;
 import com.hsj.supermybatis.demo.entity.User;
 
 import java.util.List;
@@ -23,4 +24,8 @@ public interface UserInfoService {
      * @return
      */
     Long delete(String id);
+
+    Long update(User user);
+
+    Pager getPager(Pager pager, User user);
 }

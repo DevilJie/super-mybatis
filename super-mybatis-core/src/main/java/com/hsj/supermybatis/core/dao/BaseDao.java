@@ -1,5 +1,7 @@
 package com.hsj.supermybatis.core.dao;
 
+import com.hsj.supermybatis.base.bean.Pager;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -39,4 +41,12 @@ public interface BaseDao<T> {
      * @param id
      */
     Long delete(Serializable id);
+
+    /**
+     * 更新数据
+     * @param t
+     */
+    Long update(T t);
+
+    Pager getPager(Pager pager, T t);
 }

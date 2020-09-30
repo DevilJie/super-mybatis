@@ -62,9 +62,9 @@
         },
         {
             "sourceType": "com.hsj.supermybatis.core.setting.DatabaseSetting",
-            "name": "super-mybatis.global-setting.database-setting.upper-case-mode",
+            "name": "super-mybatis.global-setting.database-setting.update-anyway",
             "type": "java.lang.Boolean",
-            "description": "数据库表名以及列名是否转为大写"
+            "description": "当执行update语句的时候，空值属性是否也更新"
         },
         {
             "sourceType": "com.hsj.supermybatis.core.setting.DatabaseSetting",

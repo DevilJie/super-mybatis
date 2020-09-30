@@ -6,6 +6,7 @@ import com.hsj.supermybatis.core.generator.SnowflakeIdentifierGenerator;
 import com.hsj.supermybatis.core.generator.UuidIdentifierGenerator;
 import com.hsj.supermybatis.core.tools.SuperMybatisAssert;
 import org.apache.ibatis.session.Configuration;
+import org.springframework.core.env.Environment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +32,8 @@ public class GlobalSetting {
      * 数据库配置
      */
     private DatabaseSetting databaseSetting = new DatabaseSetting();
+
+    private Environment environment;
 
     /**
      * 获取主键生成器
@@ -96,6 +99,15 @@ public class GlobalSetting {
         return GLOBAL_SETTING;
     }
 
+    public Environment getEnvironment() {
+        return environment;
+    }
 
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
 
+    public String getDbDriverClass(){
+        return getEnvironment().getProperty("spring.datasource.driver-class-name");
+    }
 }

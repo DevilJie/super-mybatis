@@ -78,12 +78,6 @@ public class BatchInsertSqlProviderParser extends BaseSqlProviderParser {
         });
 
 
-        String sql = String.format(BaseSqlTemplate.BATCH_INSERT.getSql(), TABLE_NAME, columnBuffer.substring(1), valuesBufferTotal.substring(1));
-        /**
-         * 打印sql
-         */
-        SqlPrint.print(map, sql);
-        map.put(SqlProviderConstants.PRIMARY_KEY_VALUE, primaryKeyIds.toArray(new String[primaryKeyIds.size()]));
-        return sql;
+        return String.format(BaseSqlTemplate.BATCH_INSERT.getSql(), TABLE_NAME, columnBuffer.substring(1), valuesBufferTotal.substring(1));
     }
 }

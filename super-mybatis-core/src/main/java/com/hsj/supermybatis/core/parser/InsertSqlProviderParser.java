@@ -64,11 +64,6 @@ public class InsertSqlProviderParser extends BaseSqlProviderParser {
 
         map.put(insertEntity.getClass().getSimpleName(), insertEntity);
 
-        String sql = String.format(BaseSqlTemplate.INSERT.getSql(), TABLE_NAME, columnBuffer.substring(1), valuesBuffer.substring(1));
-        /**
-         * 打印sql
-         */
-        SqlPrint.print(map, sql);
-        return sql;
+        return String.format(BaseSqlTemplate.INSERT.getSql(), TABLE_NAME, columnBuffer.substring(1), valuesBuffer.substring(1));
     }
 }

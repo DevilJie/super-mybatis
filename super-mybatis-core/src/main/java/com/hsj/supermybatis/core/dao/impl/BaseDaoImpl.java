@@ -1,5 +1,6 @@
 package com.hsj.supermybatis.core.dao.impl;
 
+import com.hsj.supermybatis.base.bean.Pager;
 import com.hsj.supermybatis.core.dao.BaseDao;
 import com.hsj.supermybatis.core.mapper.BaseMapper;
 import com.hsj.supermybatis.core.parser.SqlProviderConstants;
@@ -72,7 +73,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     public List<T> allList() {
         Map<String, Object> map = new HashMap<>();
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
-        List<T> ret = new ArrayList<>();
         return baseMapper.getAllList(map).stream().map(item -> {
             T entity = null;
             try {
@@ -91,5 +91,37 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
         map.put("id", id);
         return baseMapper.delete(map);
+    }
+
+    @Override
+    public Long update(T t) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.ENTITY, t);
+        return baseMapper.update(map);
+    }
+
+    @Override
+    public Pager getPager(Pager pager, T t) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.ENTITY, t);
+        map.put(SqlProviderConstants.PAGER, pager);
+        List<T> ret = baseMapper.getPager(map).stream().map(item -> {
+            T entity = null;
+            try {
+                entity = entityClass.getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            T tt = (T) CoreUtil.process(entity, item);
+            return tt;
+        }).collect(Collectors.toList());
+
+        Long totalCount = baseMapper.getPagerCount(map);
+
+        pager.setResult(ret);
+        pager.setTotalCount(totalCount==null?0:totalCount.intValue());
+        return pager;
     }
 }

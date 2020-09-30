@@ -2,6 +2,7 @@ package com.hsj.supermybatis.demo;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.hsj.supermybatis.base.bean.Pager;
 import com.hsj.supermybatis.demo.entity.User;
 import com.hsj.supermybatis.demo.service.UserInfoService;
 import org.junit.jupiter.api.Test;
@@ -9,15 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -66,4 +59,25 @@ class SuperMybatisDemoApplicationTests {
 		System.out.println(userInfoService.delete("493137875643142166"));
 	}
 
+	@Test
+	void testUpdate(){
+		User user = new User();
+		user.setId("493431920625979434");
+		user.setName("红妹妹");
+		user.setAge(19);
+		user.setEmailAddress("cjxch@cjxch.com");
+		user.setNname("哈哈");
+		System.out.println(userInfoService.update(user));
+	}
+
+	@Test
+	void testPager(){
+		Pager pager = new Pager();
+		pager.setPageSize(10);
+		User u = new User();
+		u.setAge(19);
+		u.setName("红妹妹");
+		pager = userInfoService.getPager(pager, u);
+		System.out.println(JSON.toJSONString(pager));
+	}
 }

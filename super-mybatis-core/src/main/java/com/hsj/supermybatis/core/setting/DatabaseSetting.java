@@ -26,9 +26,14 @@ public class DatabaseSetting {
     private Boolean camelModel = true;
 
     /**
-     * 表名和数据库名称是否转为大写
+     * 当执行update语句的时候，该字段拼接set语句的策略
+     * true：update table set column=#{column} 无论值是否为空，都会赋值
+     * false：自动识别字段类型
+     *        数字型：update table set  <if test="column != null">column=#{column}</if>
+     *        字符型：update table set  <if test="column != null and column != ''">column=#{column}</if>
+     * @return
      */
-    private Boolean upperCaseMode = false;
+    private Boolean updateAnyway = false;
 
     /**
      * 逻辑删除数据库对应值，默认 1 表示删除
@@ -76,12 +81,12 @@ public class DatabaseSetting {
         this.camelModel = camelModel;
     }
 
-    public Boolean getUpperCaseMode() {
-        return upperCaseMode;
+    public Boolean getUpdateAnyway() {
+        return updateAnyway;
     }
 
-    public void setUpperCaseMode(Boolean upperCaseMode) {
-        this.upperCaseMode = upperCaseMode;
+    public void setUpdateAnyway(Boolean updateAnyway) {
+        this.updateAnyway = updateAnyway;
     }
 
     public String getLogicalDelValue() {

@@ -1,7 +1,6 @@
 package com.hsj.supermybatis.core.parser;
 
 import com.hsj.supermybatis.base.enu.BaseSqlTemplate;
-import com.hsj.supermybatis.core.tools.SqlPrint;
 
 import java.util.Map;
 
@@ -18,12 +17,6 @@ public class DeleteSqlProviderParser extends BaseSqlProviderParser {
          */
         commonInit(map);
 
-        String sql = String.format(BaseSqlTemplate.DELETE.getSql(), TABLE_NAME, commonPrimaryKey(map), "#{id}");
-        /**
-         * 打印sql
-         */
-        SqlPrint.print(map, sql);
-        return sql;
-
+       return String.format(BaseSqlTemplate.DELETE.getSql(), TABLE_NAME, commonPrimaryKey(map), "#{id}");
     }
 }
