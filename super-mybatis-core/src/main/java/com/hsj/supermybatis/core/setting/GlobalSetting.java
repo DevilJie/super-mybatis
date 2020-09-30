@@ -33,7 +33,7 @@ public class GlobalSetting {
      */
     private DatabaseSetting databaseSetting = new DatabaseSetting();
 
-    private Environment environment;
+    private String driverClass;
 
     /**
      * 获取主键生成器
@@ -99,15 +99,11 @@ public class GlobalSetting {
         return GLOBAL_SETTING;
     }
 
-    public Environment getEnvironment() {
-        return environment;
-    }
-
-    public void setEnvironment(Environment environment) {
-        this.environment = environment;
-    }
-
     public String getDbDriverClass(){
-        return getEnvironment().getProperty("spring.datasource.driver-class-name");
+        return this.driverClass;
+    }
+
+    public void setDriverClass(String driverClass) {
+        this.driverClass = driverClass;
     }
 }

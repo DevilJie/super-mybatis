@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 
 import com.hsj.supermybatis.core.setting.DatabaseSetting;
 import com.hsj.supermybatis.core.setting.GlobalSetting;
+import com.hsj.supermybatis.core.tools.ReflectionUtil;
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.cache.Cache;
@@ -231,7 +232,7 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
 
         this.globalSetting = Optional.ofNullable(this.globalSetting).orElseGet(GlobalSetting::create);
         this.globalSetting.setDatabaseSetting(Optional.ofNullable(this.globalSetting.getDatabaseSetting()).orElseGet(DatabaseSetting::new));
-
+        globalSetting.setDriverClass((String) ReflectionUtil.getFieldValue(dataSource, "driverClass"));
         GlobalSetting.setGlobalSetting(this.globalSetting);
 
         Optional.ofNullable(this.objectFactory).ifPresent(targetConfiguration::setObjectFactory);

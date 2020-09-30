@@ -195,8 +195,6 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
     }
 
     GlobalSetting setting = this.properties.getGlobalSetting();
-    setting.setEnvironment((Environment) ReflectionUtil.getFieldValue(this.resourceLoader, "environment"));
-
     factory.setGlobalSetting(setting);
 
     if(setting.getDatabaseSetting().getShowSql())
