@@ -48,5 +48,11 @@ public interface BaseDao<T> {
      */
     Long update(T t);
 
+    /**
+     * 分页查询
+     * @param pager
+     * @param t
+     * @return
+     */
     Pager getPager(Pager pager, T t);
 }

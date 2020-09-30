@@ -1,6 +1,5 @@
 package com.hsj.supermybatis.core.enu;
 
-import com.hsj.supermybatis.core.provider.BaseSqlProvider;
 import com.hsj.supermybatis.core.provider.GetSqlProvider;
 
 import java.lang.annotation.*;
