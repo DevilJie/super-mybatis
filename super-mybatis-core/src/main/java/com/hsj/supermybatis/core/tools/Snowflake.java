@@ -1,9 +1,8 @@
 package com.hsj.supermybatis.core.tools;
 
-import java.util.Random;
+import com.hsj.supermybatis.base.exception.SuperMybatisException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Random;
 
 /**
  * Snowflake的结构如下(每部分用-分开): <br>
@@ -27,8 +26,6 @@ import org.slf4j.LoggerFactory;
  * @since 1.0.0
  */
 public class Snowflake {
-
-    private static final Logger logger = LoggerFactory.getLogger(Snowflake.class);
 
     /**
      * 机器ID
@@ -155,8 +152,7 @@ public class Snowflake {
         if (timestamp < lastTimestamp) {
             String message = String.format("Clock moved backwards. Refusing to generate id for %d milliseconds.",
                     (lastTimestamp - timestamp));
-            logger.error(message);
-            throw new RuntimeException(message);
+            throw new SuperMybatisException(message);
         }
         lastTimestamp = timestamp;
         // 移位并通过或运算拼到一起组成64位的ID

@@ -19,13 +19,6 @@ public class InsertSqlProvider extends BaseSqlProvider{
         super.execute(map);
         String tableName = TABLE_NAME;
         String primaryKey = PRIMARY_KEY;
-        String sql = String.format(BaseSqlTemplate.INSERT.getSql(), tableName, primaryKey, "#{id}");
-        if(GlobalSetting.getGlobalSetting().getDatabaseSetting().getShowSql()) {
-            logger.info("\n\n【 Super-Mybatis 】 Sql调试 start.....\n" +
-                    "【 Super-Mybatis 】 sql语句 ： {} \n" +
-                    "【 Super-Mybatis 】 参数 ：#{id} = {} \n" +
-                    "【 Super-Mybatis 】 Sql调试 end.....\n", sql, map.get("id"));
-        }
-        return sql;
+        return String.format(BaseSqlTemplate.INSERT.getSql(), tableName, primaryKey, "#{id}");
     }
 }

@@ -6,8 +6,6 @@ import com.hsj.supermybatis.core.setting.GlobalSetting;
 import com.hsj.supermybatis.core.tools.CamelCaseUtils;
 import com.hsj.supermybatis.core.tools.SuperMybatisAssert;
 import com.hsj.supermybatis.core.tools.TableTools;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
@@ -22,8 +20,6 @@ import java.util.stream.Collectors;
  * @Date: 2020/09/22/15:50
  */
 public abstract class BaseSqlProviderParser {
-
-    static Logger logger = LoggerFactory.getLogger(BaseSqlProviderParser.class);
 
     protected String TABLE_NAME;
     protected Object entity;

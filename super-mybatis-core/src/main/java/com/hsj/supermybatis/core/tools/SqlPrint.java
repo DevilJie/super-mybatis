@@ -1,14 +1,10 @@
 package com.hsj.supermybatis.core.tools;
 
 import com.alibaba.fastjson.JSON;
-import com.hsj.supermybatis.core.setting.GlobalSetting;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,8 +15,6 @@ import java.util.regex.Pattern;
  */
 @Deprecated
 public class SqlPrint {
-
-    static Logger logger = LoggerFactory.getLogger(SqlPrint.class);
 
     public static void print(Map<String, Object> map, String sql){
         return;

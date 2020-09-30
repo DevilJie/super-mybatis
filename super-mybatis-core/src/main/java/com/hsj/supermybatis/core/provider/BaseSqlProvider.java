@@ -1,8 +1,6 @@
 package com.hsj.supermybatis.core.provider;
 
 import com.hsj.supermybatis.core.parser.BaseSqlProviderParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
@@ -11,8 +9,6 @@ import java.util.Map;
  */
 @Deprecated
 public class BaseSqlProvider {
-
-    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public BaseSqlProvider(){}
 
