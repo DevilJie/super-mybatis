@@ -4,6 +4,7 @@ import com.hsj.supermybatis.base.annotation.PrimaryKey;
 import com.hsj.supermybatis.base.annotation.Table;
 import com.hsj.supermybatis.core.setting.GlobalSetting;
 import com.hsj.supermybatis.core.tools.CamelCaseUtils;
+import com.hsj.supermybatis.core.tools.ReflectionUtil;
 import com.hsj.supermybatis.core.tools.SuperMybatisAssert;
 import com.hsj.supermybatis.core.tools.TableTools;
 import org.springframework.util.StringUtils;
@@ -53,18 +54,20 @@ public abstract class BaseSqlProviderParser {
 
     public void commonInit(Map<String, Object> map){
 
-        /**
-         * 获取表名称
-         */
-        String className = ((Class)map.get(SqlProviderConstants.CLASS_NAME)).getName();
-        SuperMybatisAssert.check((className != null && !"".equals(className)), "className can't be null");
-        try{
-            entity = Class.forName(className).newInstance();
-        }catch(Exception e){
-            e.printStackTrace();
-            entity = null;
+        entity = map.get(SqlProviderConstants.ENTITY);
+        if(entity == null) {
+            /**
+             * 获取表名称
+             */
+            String className = ((Class) map.get(SqlProviderConstants.CLASS_NAME)).getName();
+            SuperMybatisAssert.check((className != null && !"".equals(className)), "className can't be null");
+            try {
+                entity = Class.forName(className).newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+                entity = null;
+            }
         }
-
         SuperMybatisAssert.check(entity != null, "unknown className");
 
         Table table = entity.getClass().getAnnotation(Table.class);
@@ -86,7 +89,7 @@ public abstract class BaseSqlProviderParser {
         /**
          * TODO 查找实体类中，配置了主键注解 {@link PrimaryKey} 的属性，目前暂时只支持数据表单主键，后期完善
          */
-        List<Field> fieldList = Arrays.asList(entity.getClass().getDeclaredFields()).stream().
+        List<Field> fieldList = Arrays.asList(ReflectionUtil.getDeclaredField(entity)).stream().
                 filter(item -> item.getAnnotation(PrimaryKey.class) != null).collect(Collectors.toList());
 
         primaryKeyField = (fieldList != null && fieldList.size() > 0) ? fieldList.get(0) : null;

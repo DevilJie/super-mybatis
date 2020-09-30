@@ -1,11 +1,8 @@
 package com.hsj.supermybatis.core.mapper;
 
 import com.hsj.supermybatis.core.parser.*;
-import com.hsj.supermybatis.core.provider.GetSqlProvider;
-import com.hsj.supermybatis.core.provider.InsertSqlProvider;
 import org.apache.ibatis.annotations.*;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,32 +85,17 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
-    @SelectProvider(type= PagerCountSqlProviderParser.class,method="execute")
+    @SelectProvider(type= SelectObjectCountSqlProviderParser.class,method="execute")
     Long getPagerCount(Map<String, Object> paramMap);
 
-    /**
-     * 获取分页数据
-     *
-     * @param paramMap
-     * @return
-     */
-    List<HashMap<String, Object>> getPagerBySql(Map<String, Object> paramMap);
-
-    /**
-     * 获取分页数据
-     *
-     * @param paramMap
-     * @return
-     */
-    Long getPagerCountBySql(Map<String, Object> paramMap);
-
-    /**
-     * 自定义查询条件获取对象
-     *
-     * @param paramMap
-     * @return
-     */
-    HashMap<String, Object> getObject(Map<String, Object> paramMap);
+//    /**
+//     * 自定义查询条件获取对象
+//     *
+//     * @param paramMap
+//     * @return
+//     */
+//    @SelectProvider(type= SelectObjectCountSqlProviderParser.class,method="execute")
+//    HashMap<String, Object> getObject(Map<String, Object> paramMap);
 
     /**
      * 自定义查询条件获取对象列表
@@ -121,6 +103,7 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
+    @SelectProvider(type= SelectObjectSqlProviderParser.class,method="execute")
     List<HashMap<String, Object>> getObjectList(Map<String, Object> paramMap);
 
     /**
@@ -129,6 +112,7 @@ public interface BaseMapper {
      * @param paramMap
      * @return
      */
+    @SelectProvider(type= SelectObjectCountSqlProviderParser.class,method="execute")
     Long getObjectListCount(Map<String, Object> paramMap);
 
     /**

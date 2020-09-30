@@ -1,8 +1,9 @@
 package com.hsj.supermybatis.demo;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.hsj.supermybatis.base.bean.Pager;
+import com.hsj.supermybatis.demo.dto.UserDto;
+import com.hsj.supermybatis.demo.dto.UserJobDto;
 import com.hsj.supermybatis.demo.entity.User;
 import com.hsj.supermybatis.demo.service.UserInfoService;
 import org.junit.jupiter.api.Test;
@@ -26,8 +27,11 @@ class SuperMybatisDemoApplicationTests {
 
 	@Test
 	void testInsert(){
-
-		User user = new User("菜菜2", 30, "314170122@qq.com", "菜鸡小彩虹");
+		UserDto user = new UserDto();
+		user.setAgeStart(18);
+		user.setAge(19);
+		user.setEmailAddress("cjxch@cjxch.com");
+		user.setNname("哈哈22");
 		String s = userInfoService.insert(user);
 		System.out.println(s);
 	}
@@ -74,9 +78,39 @@ class SuperMybatisDemoApplicationTests {
 	void testPager(){
 		Pager pager = new Pager();
 		pager.setPageSize(10);
-		User u = new User();
-		u.setAge(19);
-		u.setName("红妹妹");
+		pager.setOrderBy("age");
+		pager.setOrder(Pager.Order.asc);
+		UserDto u = new UserDto();
+		u.setAgeStart(10);
+		u.setAgeEnd(20);
+		u.setName("妹");
+		pager = userInfoService.getPager(pager, u);
+		System.out.println(JSON.toJSONString(pager));
+	}
+
+	@Test
+	void testGetList(){
+		UserDto u = new UserDto();
+		u.setAgeStart(19);
+		u.setAgeEnd(19);
+		u.setName("妹");
+		User user = userInfoService.get(u);
+		System.out.println(user);
+		u.setAgeStart(0);
+		u.setAgeEnd(20);
+		System.out.println(userInfoService.getList(u));
+		System.out.println(userInfoService.getList(u, Pager.Order.asc, "age"));
+		System.out.println(userInfoService.getCount(u));
+	}
+
+	@Test
+	void testUserJob(){
+		Pager pager = new Pager();
+		pager.setPageSize(10);
+		pager.setOrderBy("age");
+		pager.setOrder(Pager.Order.asc);
+		UserJobDto u = new UserJobDto();
+		u.setName("妹");
 		pager = userInfoService.getPager(pager, u);
 		System.out.println(JSON.toJSONString(pager));
 	}

@@ -1,6 +1,7 @@
 package com.hsj.supermybatis.core.tools;
 
 import com.hsj.supermybatis.base.annotation.Column;
+import com.hsj.supermybatis.base.enu.MatchMode;
 import com.hsj.supermybatis.core.setting.GlobalSetting;
 import org.springframework.util.StringUtils;
 
@@ -23,8 +24,11 @@ public class TableTools {
     public static String fieldToColumn(GlobalSetting setting, Field field){
         boolean camelModel = setting.getDatabaseSetting().getCamelModel();
         String ret = (camelModel ? CamelCaseUtils.processNameWithUnderLine(field.getName()) : field.getName());
-        if(field.getAnnotation(Column.class) != null)
-            ret = StringUtils.isEmpty(field.getAnnotation(Column.class).name()) ? ret : field.getAnnotation(Column.class).name();
+        Column column = field.getAnnotation(Column.class);
+        if(column != null) {
+            ret = StringUtils.isEmpty(column.name()) ? ret : field.getAnnotation(Column.class).name();
+            if(!StringUtils.isEmpty(column.matchBase())) ret = (camelModel ? CamelCaseUtils.processNameWithUnderLine(column.matchBase()) : column.matchBase());
+        }
 
         return ret;
     }
@@ -49,5 +53,24 @@ public class TableTools {
         if(fieldList != null && fieldList.size() > 0) ret = fieldList.get(0).getName();
 
         return ret;
+    }
+
+    public static String processQueryStatemenet(GlobalSetting setting, Field item, Object entity){
+        StringBuffer queryStatement = new StringBuffer();
+        queryStatement.append(String.format("and %s", TableTools.fieldToColumn(setting, item)));
+        Column column = item.getAnnotation(Column.class);
+        MatchMode matchMode = column == null ? MatchMode.FULL_MATCH : column.matchMode();
+        if(matchMode == null) matchMode = MatchMode.FULL_MATCH;
+        switch(matchMode){
+            case FULL_MATCH:queryStatement.append(String.format(" = #{%s.%s} ", entity.getClass().getSimpleName(), item.getName())); break;
+            case LEFT_MATCH:queryStatement.append(String.format(" like concat(#{%s.%s}, '%%') ", entity.getClass().getSimpleName(), item.getName())); break;
+            case RIGHT_MATCH:queryStatement.append(String.format(" like concat('%%', #{%s.%s}) ", entity.getClass().getSimpleName(), item.getName())); break;
+            case CENTER_MATCH:queryStatement.append(String.format(" like concat('%%', #{%s.%s}, '%%') ", entity.getClass().getSimpleName(), item.getName())); break;
+            case GT:queryStatement.append(String.format(" > #{%s.%s} ", entity.getClass().getSimpleName(), item.getName())); break;
+            case LT:queryStatement.append(String.format(" < #{%s.%s} ", entity.getClass().getSimpleName(), item.getName())); break;
+            case GE:queryStatement.append(String.format(" >= #{%s.%s} ", entity.getClass().getSimpleName(), item.getName())); break;
+            case LE:queryStatement.append(String.format(" <= #{%s.%s} ", entity.getClass().getSimpleName(), item.getName())); break;
+        }
+        return queryStatement.toString();
     }
 }

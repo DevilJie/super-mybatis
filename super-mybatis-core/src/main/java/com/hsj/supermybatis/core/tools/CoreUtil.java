@@ -33,11 +33,6 @@ public class CoreUtil {
         return returnStr;
     }
 
-    public static void main(String[] args) {
-        String sql = "= :ABC";
-        System.out.println(sql.contains("= :"));
-    }
-
     public static Object process(Object e, Map<String, Object> hashMap) {
         String key;
         for (Map.Entry<String, Object> en : hashMap.entrySet()) {
@@ -51,7 +46,7 @@ public class CoreUtil {
                 ReflectionUtil.invokeSetterMethod(e, key, new Date(t.getTime()));
             } else {
                 try {
-                    Field field = ReflectionUtils.getDeclaredField(e, key);
+                    Field field = ReflectionUtil.getDeclaredField(e, key);
                     Class clazz = field.getType();
                     Object v = en.getValue();
                     if (clazz != null) {

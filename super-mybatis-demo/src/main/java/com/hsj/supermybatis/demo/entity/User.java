@@ -3,15 +3,18 @@ package com.hsj.supermybatis.demo.entity;
 import com.hsj.supermybatis.base.annotation.Column;
 import com.hsj.supermybatis.base.annotation.PrimaryKey;
 import com.hsj.supermybatis.base.annotation.Table;
+import com.hsj.supermybatis.base.enu.MatchMode;
 import com.hsj.supermybatis.base.enu.PrimaryKeyType;
 
 @Table(value="test_user")
 public class User {
     @PrimaryKey
     private String id;
+    @Column(matchMode = MatchMode.CENTER_MATCH)
     private String name;
-    @Column(updateAnyway = true)
+    @Column(updateAnyway = true, matchMode = MatchMode.LE)
     private Integer age;
+    @Column(ignored = true)
     private String emailAddress;
     @Column(name="nick_name")
     private String nname;

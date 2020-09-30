@@ -1,5 +1,6 @@
 package com.hsj.supermybatis.core.parser;
 
+import com.hsj.supermybatis.base.annotation.Column;
 import com.hsj.supermybatis.base.annotation.PrimaryKey;
 import com.hsj.supermybatis.base.enu.BaseSqlTemplate;
 import com.hsj.supermybatis.base.enu.PrimaryKeyType;
@@ -35,7 +36,7 @@ public class BatchInsertSqlProviderParser extends BaseSqlProviderParser {
 
             StringBuffer valuesBuffer = new StringBuffer();
 
-            Arrays.asList(insertEntity.getClass().getDeclaredFields()).stream().
+            Arrays.asList(ReflectionUtil.getDeclaredField(insertEntity)).stream().
                     filter(item -> item.getAnnotation(PrimaryKey.class) != null).forEach(item -> {
 
                 if((item.getAnnotation(PrimaryKey.class)).keyType() != PrimaryKeyType.AUTO){
@@ -65,11 +66,14 @@ public class BatchInsertSqlProviderParser extends BaseSqlProviderParser {
             });
 
 
-            Arrays.asList(insertEntity.getClass().getDeclaredFields()).stream().
+            Arrays.asList(ReflectionUtil.getDeclaredField(insertEntity)).stream().
                     filter(item -> item.getAnnotation(PrimaryKey.class) == null).forEach(item -> {
-                if(index.get() == 0)
-                    columnBuffer.append(String.format(",`%s`", TableTools.fieldToColumn(setting, item)));
-                valuesBuffer.append(String.format(",#{%s[%s].%s}", SqlProviderConstants.ENTITY_LIST, index.get(), item.getName()));
+                Column c = item.getAnnotation(Column.class);
+                if(c == null || !c.ignored()) {
+                    if (index.get() == 0)
+                        columnBuffer.append(String.format(",`%s`", TableTools.fieldToColumn(setting, item)));
+                    valuesBuffer.append(String.format(",#{%s[%s].%s}", SqlProviderConstants.ENTITY_LIST, index.get(), item.getName()));
+                }
             });
 
             valuesBufferTotal.append(",("+valuesBuffer.substring(1)+")\n");

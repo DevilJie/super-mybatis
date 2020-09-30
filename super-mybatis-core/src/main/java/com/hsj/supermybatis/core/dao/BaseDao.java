@@ -55,4 +55,31 @@ public interface BaseDao<T> {
      * @return
      */
     Pager getPager(Pager pager, T t);
+
+    /**
+     * 根据对象查询
+     * @param t
+     * @return
+     */
+    T get(T t);
+
+    /**
+     * 根据对象查询列表
+     * @param t
+     * @return
+     */
+    List<T> getList(T t);
+
+    /**
+     * 根据对象查询列表
+     * @param t
+     * @return
+     */
+    List<T> getList(T t, Pager.Order order, String orderBy);
+
+    /**
+     * 根据对象获取总数据量
+     * @return
+     */
+    Long getListCount(T t);
 }

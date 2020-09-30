@@ -36,7 +36,7 @@ public class UpdateSqlProviderParser extends BaseSqlProviderParser {
         StringBuffer setVal = new StringBuffer();
 
         AtomicBoolean updateAnyway = new AtomicBoolean(false);
-        Arrays.asList(insertEntity.getClass().getDeclaredFields()).stream().
+        Arrays.asList(ReflectionUtil.getDeclaredField(insertEntity)).stream().
                 filter(item -> item.getAnnotation(PrimaryKey.class) == null).forEach(item -> {
             if(item.getAnnotation(Column.class) != null) updateAnyway.set(item.getAnnotation(Column.class).updateAnyway());
             else updateAnyway.set(setting.getDatabaseSetting().getUpdateAnyway());

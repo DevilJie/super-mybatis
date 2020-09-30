@@ -54,4 +54,24 @@ public class UserInfoServiceImpl implements UserInfoService {
     public Pager getPager(Pager pager, User user) {
         return userInfoDao.getPager(pager, user);
     }
+
+    @Override
+    public User get(User user) {
+        return userInfoDao.get(user);
+    }
+
+    @Override
+    public List<User> getList(User user) {
+        return userInfoDao.getList(user);
+    }
+
+    @Override
+    public List<User> getList(User user, Pager.Order order, String orderBy) {
+        return userInfoDao.getList(user, order, orderBy);
+    }
+
+    @Override
+    public Long getCount(User user) {
+        return userInfoDao.getListCount(user);
+    }
 }

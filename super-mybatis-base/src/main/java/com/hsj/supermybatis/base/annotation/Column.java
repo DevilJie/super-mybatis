@@ -15,6 +15,8 @@
  */
 package com.hsj.supermybatis.base.annotation;
 
+import com.hsj.supermybatis.base.enu.MatchMode;
+
 import java.lang.annotation.*;
 
 /**
@@ -58,4 +60,25 @@ public @interface Column {
      * @return
      */
     String name() default "";
+
+    /**
+     * 拼接查询语句时，该字段的匹配模式
+     * @return
+     */
+    MatchMode matchMode() default MatchMode.FULL_MATCH;
+
+    /**
+     * 匹配模式作用字段
+     * 与匹配模式配合使用
+     * 使用场景：需要查询某个时间段注册的用户，就需要2个属性值作为起始值和终止值，设置属性的作用字段就可以解决
+     * @return
+     */
+    String matchBase() default "";
+
+    /**
+     * 忽略此字段
+     * 在拼接sql的时候，不拼接此字段
+     * @return
+     */
+    boolean ignored() default false;
 }

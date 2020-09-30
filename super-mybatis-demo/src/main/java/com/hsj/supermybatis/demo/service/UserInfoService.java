@@ -28,4 +28,12 @@ public interface UserInfoService {
     Long update(User user);
 
     Pager getPager(Pager pager, User user);
+
+    User get(User user);
+
+    List<User> getList(User user);
+
+    List<User> getList(User user, Pager.Order order, String orderBy);
+
+    Long getCount(User user);
 }
