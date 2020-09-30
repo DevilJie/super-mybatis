@@ -46,16 +46,4 @@ public class PagerSqlProviderParser extends BaseSqlProviderParser {
         map.put(insertEntity.getClass().getSimpleName(), insertEntity);
         return DbType.getPagerSql(String.format(BaseSqlTemplate.SELECT.getSql(), TABLE_NAME, queryStatementSql, orderBy), setting.getDbDriverClass(), pager);
     }
-
-    static class U {
-        long i;
-
-        public long getI() {
-            return i;
-        }
-
-        public void setI(long i) {
-            this.i = i;
-        }
-    }
 }
