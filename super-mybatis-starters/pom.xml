@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.hsj</groupId>
+        <groupId>com.cjxch</groupId>
         <artifactId>super-mybatis</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.hsj.supermybatis</groupId>
+    <groupId>com.cjxch.supermybatis</groupId>
     <artifactId>super-mybatis-boot-starters</artifactId>
 
 
@@ -28,7 +28,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.hsj.supermybatis</groupId>
+            <groupId>com.cjxch.supermybatis</groupId>
             <artifactId>super-mybatis</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
