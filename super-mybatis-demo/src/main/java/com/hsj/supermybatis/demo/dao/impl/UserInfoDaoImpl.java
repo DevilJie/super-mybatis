@@ -1,5 +1,6 @@
 package com.hsj.supermybatis.demo.dao.impl;
 
+import com.hsj.supermybatis.base.annotation.CacheEnable;
 import com.hsj.supermybatis.base.bean.Pager;
 import com.hsj.supermybatis.core.dao.impl.BaseDaoImpl;
 import com.hsj.supermybatis.demo.dao.UserInfoDao;
@@ -14,6 +15,7 @@ import java.util.List;
  * @Date: 2020/09/21/22:20
  */
 @Repository
+@CacheEnable(expires = 1000 * 60)
 public class UserInfoDaoImpl extends BaseDaoImpl<User> implements UserInfoDao {
 
     @Override

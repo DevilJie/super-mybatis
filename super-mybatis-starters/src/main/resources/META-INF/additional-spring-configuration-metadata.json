@@ -3,36 +3,37 @@
         {
             "sourceType": "com.hsj.supermybatis.autoconfigure.SuperMybatisProperties",
             "name": "super-mybatis",
-            "type": "com.hsj.supermybatis.autoconfigure.SuperMybatisProperties",
-            "description": "Super-Mybatis 配置."
+            "type": "com.hsj.supermybatis.autoconfigure.SuperMybatisProperties"
         },
         {
             "sourceType": "com.hsj.supermybatis.autoconfigure.SuperMybatisProperties",
             "name": "super-mybatis.configuration",
             "sourceMethod": "getConfiguration()",
-            "type": "org.apache.ibatis.session.Configuration",
-            "description": "Super-Mybatis Configuration 配置."
+            "type": "org.apache.ibatis.session.Configuration"
         },
         {
             "sourceType": "com.hsj.supermybatis.autoconfigure.SuperMybatisProperties",
             "name": "super-mybatis.global-setting",
             "sourceMethod": "getGlobalSetting()",
-            "type": "com.hsj.supermybatis.core.setting.GlobalSetting",
-            "description": "Super-Mybatis 全局参数配置."
+            "type": "com.hsj.supermybatis.core.setting.GlobalSetting"
         },
         {
             "sourceType": "com.hsj.supermybatis.core.setting.GlobalSetting",
             "name": "super-mybatis.global-setting.database-setting",
             "sourceMethod": "getDatabaseSetting()",
-            "type": "com.hsj.supermybatis.core.setting.DatabaseSetting",
-            "description": "Super-Mybatis 全局参数-数据库配置."
+            "type": "com.hsj.supermybatis.core.setting.DatabaseSetting"
         },
         {
             "sourceType": "com.hsj.supermybatis.core.setting.GlobalSetting",
             "name": "super-mybatis.global-setting.snowflake-setting",
             "sourceMethod": "getSnowflakeSetting()",
-            "type": "com.hsj.supermybatis.core.setting.SnowflakeSetting",
-            "description": "Super-Mybatis 全局参数-雪花算法配置."
+            "type": "com.hsj.supermybatis.core.setting.SnowflakeSetting"
+        },
+        {
+            "sourceType": "com.hsj.supermybatis.core.setting.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting",
+            "sourceMethod": "getDbCacheSetting()",
+            "type": "com.hsj.supermybatis.core.setting.DbCacheSetting"
         }
     ],
     "properties": [
@@ -77,6 +78,24 @@
             "name": "super-mybatis.global-setting.database-setting.show-sql",
             "type": "java.lang.Boolean",
             "description": "控制台是否输出执行的sql语句"
+        },
+        {
+            "sourceType": "com.hsj.supermybatis.core.setting.GlobalSetting",
+            "name": "super-mybatis.global-setting.cache-switch",
+            "type": "java.lang.Boolean",
+            "description": "数据库缓存开关"
+        },
+        {
+            "sourceType": "com.hsj.supermybatis.core.setting.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting.db-cache-type",
+            "type": "com.hsj.supermybatis.base.enu.DbCacheType",
+            "description": "缓存类型"
+        },
+        {
+            "sourceType": "com.hsj.supermybatis.core.setting.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting.expire",
+            "type": "java.lang.Long",
+            "description": "默认的缓存失效时间，单位秒"
         }
     ]
 }

@@ -1,7 +1,6 @@
 package com.hsj.supermybatis.demo.dao;
 
 
-import com.hsj.supermybatis.base.bean.Pager;
 import com.hsj.supermybatis.core.dao.BaseDao;
 import com.hsj.supermybatis.demo.entity.User;
 
