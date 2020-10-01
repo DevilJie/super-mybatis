@@ -2,6 +2,7 @@ package com.hsj.supermybatis.core.actuator;
 
 import com.hsj.supermybatis.base.bean.Pager;
 import com.hsj.supermybatis.core.mapper.BaseMapper;
+import com.hsj.supermybatis.core.parser.SqlProviderConstants;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -14,8 +15,9 @@ public abstract class SuperMybatisBaseQuery {
     protected Class entityClass;
     private BaseMapper baseMapper;
 
-    public void setSql(String sql) {
+    public void setSql(String sql){
         this.sql = sql;
+        this.parameter.put(SqlProviderConstants.SQL, sql);
     }
 
     /**
@@ -24,26 +26,20 @@ public abstract class SuperMybatisBaseQuery {
      * @param <T> 泛类型
      * @return
      */
-    public <T> List<T> list(Class<T> t) {
-        return null;
-    };
+    public abstract <T> List<T> list(Class<T> t);
 
     /**
      * 获取列表
      * @return
      */
-    public List<HashMap<String, Object>> list(){
-        return null;
-    }
+    public abstract  List<HashMap<String, Object>> list();
 
     /**
      * 返回一个单元的数据
      * 
      * @return
      */
-    public Serializable uniqueResult() {
-        return null;
-    };
+    public abstract Serializable uniqueResult();
 
     /**
      * 返回指定类型的对象
@@ -51,44 +47,44 @@ public abstract class SuperMybatisBaseQuery {
      * @param <T> 泛类型
      * @return
      */
-    public <T> T uniqueObject(Class<T> t) {
-        return null;
-    };
+    public abstract <T> T uniqueObject(Class<T> t) ;
 
     /**
      * 返回一个对象
      *
      * @return
      */
-    public Object uniqueObject(){return null;}
+    public abstract Object uniqueObject();
 
     /**
      * 执行更新sql
      * 
      * @return
      */
-    public Long executeUpdate() {
-        return null;
-    };
+    public abstract Long executeUpdate();
 
     /**
      * 执行sql
      * 
      * @return
      */
-    public Serializable execute() {
-        return null;
-    };
+    public abstract Serializable execute();
 
     /**
      * 分页查询
-     * 
+     *
      * @param pager
      * @return
      */
-    public Pager queryPager(Pager pager) {
-        return null;
-    };
+    public abstract Pager queryPager(Pager pager);
+
+    /**
+     * 分页查询
+     *
+     * @param pager
+     * @return
+     */
+    public abstract Pager queryPager(Pager pager, Class t);
 
     protected Map<String, Object> parameter = new HashMap<String, Object>();
 

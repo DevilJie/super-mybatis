@@ -153,6 +153,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
             T tt = (T) CoreUtil.process(entity, item);
             return tt;
         }).collect(Collectors.toList());
+        if(ret == null || ret.size() == 0) return null;
         SuperMybatisAssert.check(ret.size() == 1, "The data you query is not unique, Please invike method getList(T).");
         return ret.get(0);
     }

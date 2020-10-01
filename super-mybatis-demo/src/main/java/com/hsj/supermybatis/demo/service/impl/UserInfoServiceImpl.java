@@ -59,6 +59,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoDao.getPager(pager, user);
     }
 
+
     @Override
     public User get(User user) {
         return userInfoDao.get(user);
@@ -66,7 +67,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public List<User> getList(User user) {
-        return userInfoDao.getList(user);
+//        return userInfoDao.getList(user);
+        return userInfoDao.loadByUser(user);
     }
 
     @Override

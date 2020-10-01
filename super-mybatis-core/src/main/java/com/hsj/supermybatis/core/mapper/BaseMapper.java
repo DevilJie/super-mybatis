@@ -128,6 +128,12 @@ public interface BaseMapper {
     List<Object> queryPagerBySql(Map<String, Object> paramMap);
 
     /**
+     * 个性化sql执行，分页查询
+     */
+    @SelectProvider(type= SelectPagerCountBySqlProviderParser.class,method="execute")
+    Long queryPagerCountBySql(Map<String, Object> paramMap);
+
+    /**
      * 个性化sql执行，更新语句
      */
     @UpdateProvider(type= UpdateBySqlProviderParser.class,method="execute")

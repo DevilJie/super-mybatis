@@ -83,7 +83,7 @@ class SuperMybatisDemoApplicationTests {
 		UserDto u = new UserDto();
 		u.setAgeStart(10);
 		u.setAgeEnd(20);
-		u.setName("妹");
+		u.setName("红妹妹");
 		pager = userInfoService.getPager(pager, u);
 		System.out.println(JSON.toJSONString(pager));
 	}
@@ -98,6 +98,7 @@ class SuperMybatisDemoApplicationTests {
 		System.out.println(user);
 		u.setAgeStart(0);
 		u.setAgeEnd(20);
+		u.setName("红妹妹");
 		System.out.println(userInfoService.getList(u));
 		System.out.println(userInfoService.getList(u, Pager.Order.asc, "age"));
 		System.out.println(userInfoService.getCount(u));

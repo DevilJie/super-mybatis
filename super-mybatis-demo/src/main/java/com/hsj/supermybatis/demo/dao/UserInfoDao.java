@@ -1,6 +1,7 @@
 package com.hsj.supermybatis.demo.dao;
 
 
+import com.hsj.supermybatis.base.bean.Pager;
 import com.hsj.supermybatis.core.dao.BaseDao;
 import com.hsj.supermybatis.demo.entity.User;
 
@@ -8,5 +9,7 @@ import java.util.List;
 
 public interface UserInfoDao extends BaseDao<User> {
 
-    public List<User> loadAll();
+    List<User> loadAll();
+
+    List<User> loadByUser(User user);
 }
