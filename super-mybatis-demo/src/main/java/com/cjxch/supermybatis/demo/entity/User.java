@@ -5,26 +5,24 @@ import com.cjxch.supermybatis.base.annotation.PrimaryKey;
 import com.cjxch.supermybatis.base.annotation.Table;
 import com.cjxch.supermybatis.base.enu.MatchMode;
 
-@Table(value="test_user")
-public class User {
+import java.io.Serializable;
+import java.util.Objects;
+
+@Table(value="user_info")
+public class User implements Serializable {
     @PrimaryKey
     private String id;
     @Column(matchMode = MatchMode.CENTER_MATCH)
-    private String name;
-    @Column(updateAnyway = true, matchMode = MatchMode.LE)
+    private String realName;
     private Integer age;
-    @Column(ignored = true)
-    private String emailAddress;
-    @Column(name="nick_name")
-    private String nname;
+    private String email;
 
     public User(){}
 
-    public User(String name, Integer age, String emailAddress, String nname) {
-        this.name = name;
+    public User(String realName, Integer age, String email) {
+        this.realName = realName;
         this.age = age;
-        this.emailAddress = emailAddress;
-        this.nname = nname;
+        this.email = email;
     }
 
     public String getId() {
@@ -35,12 +33,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public Integer getAge() {
@@ -51,30 +49,37 @@ public class User {
         this.age = age;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getNname() {
-        return nname;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(realName, user.realName) &&
+                Objects.equals(age, user.age) &&
+                Objects.equals(email, user.email);
     }
 
-    public void setNname(String nname) {
-        this.nname = nname;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, realName, age, email);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", nickName='" + realName + '\'' +
                 ", age=" + age +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", nick_name='" + nname + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

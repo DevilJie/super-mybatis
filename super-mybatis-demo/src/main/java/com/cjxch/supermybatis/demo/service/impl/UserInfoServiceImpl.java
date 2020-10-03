@@ -7,6 +7,7 @@ import com.cjxch.supermybatis.demo.dao.UserInfoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -20,9 +21,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     UserInfoDao userInfoDao;
 
     @Override
-    public void process() {
-        User u = userInfoDao.get("493197136603648073");
-        System.out.println(u);
+    public User get(Serializable id) {
+        return userInfoDao.get(id);
     }
 
     @Override
@@ -37,11 +37,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public List<User> allList() {
-//        return userInfoDao.allList();
+        return userInfoDao.allList();
         /**
          * 封装自定义的查询sql
          */
-        return userInfoDao.loadAll();
+//        return userInfoDao.loadAll();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public User get(User user) {
-        return userInfoDao.get(user);
+        return userInfoDao.getByEntity(user);
     }
 
     @Override

@@ -16,37 +16,37 @@ public interface BaseDao<T> {
      * @param id
      * @return
      */
-    T get(Serializable id);
+    public T get(Serializable id);
 
     /**
      * 插入数据
      * @param t
      */
-    Serializable insert(T t);
+    public Serializable insert(T t);
 
     /**
      * 插入数据
      * @param l
      */
-    Serializable[] batchInsert(List<T> l);
+    public Serializable[] batchInsert(List<T> l);
 
     /**
      * 获取所有数据
      * @return
      */
-    List<T> allList();
+    public List<T> allList();
 
     /**
      * 根据主键ID删除
      * @param id
      */
-    Long delete(Serializable id);
+    public Long delete(Serializable id);
 
     /**
      * 更新数据
      * @param t
      */
-    Long update(T t);
+    public Long update(T t);
 
     /**
      * 分页查询
@@ -54,32 +54,32 @@ public interface BaseDao<T> {
      * @param t
      * @return
      */
-    Pager getPager(Pager pager, T t);
+    public Pager getPager(Pager pager, T t);
 
     /**
      * 根据对象查询
      * @param t
      * @return
      */
-    T get(T t);
+    public T getByEntity(T t);
 
     /**
      * 根据对象查询列表
      * @param t
      * @return
      */
-    List<T> getList(T t);
+    public List<T> getList(T t);
 
     /**
      * 根据对象查询列表
      * @param t
      * @return
      */
-    List<T> getList(T t, Pager.Order order, String orderBy);
+    public List<T> getList(T t, Pager.Order order, String orderBy);
 
     /**
      * 根据对象获取总数据量
      * @return
      */
-    Long getListCount(T t);
+    public Long getListCount(T t);
 }

@@ -9,7 +9,7 @@ import com.cjxch.supermybatis.demo.entity.User;
  * @Author: 菜鸡小彩虹
  * @Date: 2020/09/30/16:26
  */
-@Table("test_user")
+@Table("user_info")
 public class UserDto extends User {
 
     @Column(matchMode = MatchMode.GE, ignored = true, matchBase = "age")

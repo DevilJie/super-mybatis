@@ -34,12 +34,14 @@ public class GlobalSetting {
      */
     private DbCacheSetting dbCacheSetting;
 
-    /**
-     * 数据库缓存开关
-     */
-    private boolean cacheSwitch = false;
 
     private String driverClass;
+
+    /**
+     * 开启debug模式
+     * 输出Super-Mybatis debug日志
+     */
+    private Boolean debug;
 
     /**
      * 获取主键生成器
@@ -113,19 +115,19 @@ public class GlobalSetting {
         this.driverClass = driverClass;
     }
 
-    public boolean isCacheSwitch() {
-        return cacheSwitch;
-    }
-
-    public void setCacheSwitch(boolean cacheSwitch) {
-        this.cacheSwitch = cacheSwitch;
-    }
-
     public DbCacheSetting getDbCacheSetting() {
         return dbCacheSetting;
     }
 
     public void setDbCacheSetting(DbCacheSetting dbCacheSetting) {
         this.dbCacheSetting = dbCacheSetting;
+    }
+
+    public Boolean getDebug() {
+        return debug;
+    }
+
+    public void setDebug(Boolean debug) {
+        this.debug = debug;
     }
 }

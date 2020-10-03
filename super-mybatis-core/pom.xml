@@ -33,12 +33,12 @@
         <dependency>
             <groupId>com.cjxch.supermybatis</groupId>
             <artifactId>super-mybatis-base</artifactId>
-            <version>1.0.0</version>
+            <version>${super-mybatis.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>5.2.8.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <!-- slf4j end -->
 

@@ -53,49 +53,37 @@
             "sourceType": "com.cjxch.supermybatis.core.setting.DatabaseSetting",
             "name": "super-mybatis.global-setting.database-setting.table-perfix",
             "type": "java.lang.String",
-            "description": "设置全局数据库表前缀"
+            "description": "设置全局数据库表前缀."
         },
         {
             "sourceType": "com.cjxch.supermybatis.core.setting.DatabaseSetting",
             "name": "super-mybatis.global-setting.database-setting.primary-key-type",
             "type": "com.cjxch.supermybatis.base.enu.PrimaryKeyType",
-            "description": "设置全局数据表主键策略"
+            "description": "设置全局数据表主键策略."
         },
         {
             "sourceType": "com.cjxch.supermybatis.core.setting.DatabaseSetting",
             "name": "super-mybatis.global-setting.database-setting.update-anyway",
             "type": "java.lang.Boolean",
-            "description": "当执行update语句的时候，空值属性是否也更新"
+            "description": "当执行update语句的时候，空值属性是否也更新."
         },
         {
             "sourceType": "com.cjxch.supermybatis.core.setting.DatabaseSetting",
             "name": "super-mybatis.global-setting.database-setting.camel-model",
             "type": "java.lang.Boolean",
-            "description": "数据库表名以及列名是否开启驼峰和下划线分割互转"
+            "description": "数据库表名以及列名是否开启驼峰和下划线分割互转."
         },
         {
             "sourceType": "com.cjxch.supermybatis.core.setting.DatabaseSetting",
             "name": "super-mybatis.global-setting.database-setting.show-sql",
             "type": "java.lang.Boolean",
-            "description": "控制台是否输出执行的sql语句"
+            "description": "控制台是否输出执行的sql语句."
         },
         {
-            "sourceType": "com.cjxch.supermybatis.core.setting.GlobalSetting",
-            "name": "super-mybatis.global-setting.cache-switch",
+            "sourceType": "com.cjxch.supermybatis.core.setting.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting.cache-switch",
             "type": "java.lang.Boolean",
-            "description": "数据库缓存开关"
-        },
-        {
-            "sourceType": "com.cjxch.supermybatis.core.setting.DbCacheSetting",
-            "name": "super-mybatis.global-setting.db-cache-setting.db-cache-type",
-            "type": "com.cjxch.supermybatis.base.enu.DbCacheType",
-            "description": "缓存类型"
-        },
-        {
-            "sourceType": "com.cjxch.supermybatis.core.setting.DbCacheSetting",
-            "name": "super-mybatis.global-setting.db-cache-setting.expire",
-            "type": "java.lang.Long",
-            "description": "默认的缓存失效时间，单位秒"
+            "description": "数据库缓存开关."
         }
     ]
 }

@@ -230,7 +230,11 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
 
         this.globalSetting = Optional.ofNullable(this.globalSetting).orElseGet(GlobalSetting::create);
         this.globalSetting.setDatabaseSetting(Optional.ofNullable(this.globalSetting.getDatabaseSetting()).orElseGet(DatabaseSetting::new));
-        globalSetting.setDriverClass((String) ReflectionUtil.getFieldValue(dataSource, "driverClass"));
+        try {
+            globalSetting.setDriverClass((String) ReflectionUtil.getFieldValue(dataSource, "driverClassName"));
+        }catch(Exception e){
+            globalSetting.setDriverClass((String) ReflectionUtil.getFieldValue(dataSource, "driverClass"));
+        }
         GlobalSetting.setGlobalSetting(this.globalSetting);
 
         Optional.ofNullable(this.objectFactory).ifPresent(targetConfiguration::setObjectFactory);

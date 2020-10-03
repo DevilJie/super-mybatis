@@ -21,8 +21,12 @@ class SuperMybatisDemoApplicationTests {
 	UserInfoService userInfoService;
 
 	@Test
-	void contextLoads() {
-		userInfoService.process();
+	void get(){
+		System.out.println(userInfoService.get("496976191702437956"));
+	}
+	@Test
+	void del(){
+		System.out.println(userInfoService.delete("496974922459910192"));
 	}
 
 	@Test
@@ -30,8 +34,8 @@ class SuperMybatisDemoApplicationTests {
 		UserDto user = new UserDto();
 		user.setAgeStart(18);
 		user.setAge(19);
-		user.setEmailAddress("cjxch@cjxch.com");
-		user.setNname("哈哈22");
+		user.setEmail("cjxch@cjxch.com");
+		user.setRealName("红妹妹");
 		String s = userInfoService.insert(user);
 		System.out.println(s);
 	}
@@ -40,13 +44,8 @@ class SuperMybatisDemoApplicationTests {
 	void testBatchInsert(){
 		List<User> list = new ArrayList(){
 			{
-				add(new User("菜菜2", 30, "314170122@qq.com", "菜鸡小彩虹1"));
-				add(new User("菜菜2", 30, "314170122@qq.com", "菜鸡小彩虹2"));
-				add(new User("菜菜2", 30, "314170122@qq.com", "菜鸡小彩虹3"));
-				add(new User("菜菜2", 30, "314170122@qq.com", "菜鸡小彩虹4"));
-				add(new User("菜菜2", 30, "314170122@qq.com", "菜鸡小彩虹5"));
-				add(new User("菜菜2", 30, "314170122@qq.com", "菜鸡小彩虹6"));
-				add(new User("菜菜2", 30, "314170122@qq.com", "菜鸡小彩虹7"));
+				add(new User("菜菜2", 30, "314170122@qq.com"));
+				add(new User("菜菜2", 30, "314170122@qq.com"));
 			}
 		};
 
@@ -66,11 +65,10 @@ class SuperMybatisDemoApplicationTests {
 	@Test
 	void testUpdate(){
 		User user = new User();
-		user.setId("493431920625979434");
-		user.setName("红妹妹");
-		user.setAge(19);
-		user.setEmailAddress("cjxch@cjxch.com");
-		user.setNname("哈哈");
+		user.setId("496976191702437956");
+		user.setRealName("小屁孩");
+		user.setAge(29);
+		user.setEmail("cjxch@cjxch.com");
 		System.out.println(userInfoService.update(user));
 	}
 
@@ -83,7 +81,7 @@ class SuperMybatisDemoApplicationTests {
 		UserDto u = new UserDto();
 		u.setAgeStart(10);
 		u.setAgeEnd(20);
-		u.setName("红妹妹");
+		u.setRealName("红妹妹");
 		pager = userInfoService.getPager(pager, u);
 		System.out.println(JSON.toJSONString(pager));
 	}
@@ -93,12 +91,12 @@ class SuperMybatisDemoApplicationTests {
 		UserDto u = new UserDto();
 		u.setAgeStart(19);
 		u.setAgeEnd(19);
-		u.setName("妹");
+		u.setRealName("妹");
 		User user = userInfoService.get(u);
 		System.out.println(user);
 		u.setAgeStart(0);
 		u.setAgeEnd(20);
-		u.setName("红妹妹");
+		u.setRealName("红妹妹");
 		System.out.println(userInfoService.getList(u));
 		System.out.println(userInfoService.getList(u, Pager.Order.asc, "age"));
 		System.out.println(userInfoService.getCount(u));
@@ -111,7 +109,7 @@ class SuperMybatisDemoApplicationTests {
 		pager.setOrderBy("age");
 		pager.setOrder(Pager.Order.asc);
 		UserJobDto u = new UserJobDto();
-		u.setName("妹");
+		u.setRealName("妹");
 		pager = userInfoService.getPager(pager, u);
 		System.out.println(JSON.toJSONString(pager));
 	}

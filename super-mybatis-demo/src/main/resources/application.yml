@@ -10,9 +10,10 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-
 super-mybatis:
   global-setting:
+    #开启debug日志
+    debug: true
     database-setting:
       primary-key-type: auto
       camel-model: true
@@ -22,3 +23,9 @@ super-mybatis:
     snowflake-setting:
       datacenter-id: 1
       worker-id: 1
+
+
+    db-cache-setting:
+      cache-switch: true
+      db-cache-type: redis
+

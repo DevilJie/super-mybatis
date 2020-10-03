@@ -3,6 +3,7 @@ package com.cjxch.supermybatis.demo.service;
 import com.cjxch.supermybatis.base.bean.Pager;
 import com.cjxch.supermybatis.demo.entity.User;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @Date: 2020/09/21/20:36
  */
 public interface UserInfoService {
-    void process();
+    User get(Serializable id);
 
     String insert(User user);
 

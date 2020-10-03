@@ -6,27 +6,42 @@
     <groupId>com.cjxch</groupId>
     <artifactId>super-mybatis</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>${super-mybatis.version}</version>
+
+    <properties>
+        <spring.version>5.2.8.RELEASE</spring.version>
+        <aspectj.version>1.6.11</aspectj.version>
+        <super-mybatis.version>1.0.0</super-mybatis.version>
+    </properties>
+
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
 
     <modules>
         <module>super-mybatis-base</module>
         <module>super-mybatis</module>
         <module>super-mybatis-core</module>
         <module>super-mybatis-starters</module>
-        <module>super-mybatis-demo</module>
         <module>super-mybatis-extend</module>
+        <module>super-mybatis-cache</module>
     </modules>
 
     <build>
         <plugins>
+            <!--Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
 </project>

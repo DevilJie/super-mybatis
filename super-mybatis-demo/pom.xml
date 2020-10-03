@@ -67,7 +67,13 @@
         <dependency>
             <groupId>com.cjxch.supermybatis</groupId>
             <artifactId>super-mybatis-boot-starters</artifactId>
-            <version>1.0.0</version>
+            <version>${super-mybatis.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cjxch.supermybatis</groupId>
+            <artifactId>super-mybatis-cache-redis</artifactId>
+            <version>${super-mybatis.version}</version>
         </dependency>
 
         <dependency>
@@ -77,13 +83,4 @@
         </dependency>
 
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>

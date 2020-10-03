@@ -1,0 +1,30 @@
+{
+    "groups": [
+        {
+            "sourceType": "com.cjxch.supermybatis.core.setting.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting",
+            "sourceMethod": "getDbCacheSetting()",
+            "type": "com.cjxch.supermybatis.core.setting.DbCacheSetting"
+        }
+    ],
+    "properties": [
+        {
+            "sourceType": "com.cjxch.supermybatis.core.setting.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting.redis-host",
+            "type": "java.lang.String",
+            "description": "redis连接主机ip."
+        },
+        {
+            "sourceType": "com.cjxch.supermybatis.core.setting.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting.redis-port",
+            "type": "java.lang.String",
+            "description": "redis连接端口."
+        },
+        {
+            "sourceType": "com.cjxch.supermybatis.core.setting.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting.redis-pwd",
+            "type": "java.lang.String",
+            "description": "redis连接口令."
+        }
+    ]
+}

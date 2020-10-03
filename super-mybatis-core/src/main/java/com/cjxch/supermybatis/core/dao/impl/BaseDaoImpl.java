@@ -2,6 +2,7 @@ package com.cjxch.supermybatis.core.dao.impl;
 
 import com.cjxch.supermybatis.base.annotation.CacheEvict;
 import com.cjxch.supermybatis.base.annotation.CacheSet;
+import com.cjxch.supermybatis.base.bean.BaseAspectConstants;
 import com.cjxch.supermybatis.base.bean.Pager;
 import com.cjxch.supermybatis.core.actuator.SuperMybatisBaseSession;
 import com.cjxch.supermybatis.core.actuator.simple.SuperMybatisSimpleSession;
@@ -43,7 +44,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     BaseMapper baseMapper;
 
     @Override
-    @CacheSet(key = "#ENTITY_CLASS#-#PRIMARYKEY#", expires = 1000 * 60 * 10)
+    @CacheSet(key = "{" + BaseAspectConstants.CLASS_NAME + "}-{1}")
     public T get(Serializable id) {
         Map<String, Object> map = new HashMap<>();
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
@@ -77,7 +78,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    @CacheSet(key = "#ENTITY_CLASS#_ALL_LIST", expires = 1000 * 60 * 10)
+    @CacheSet(key = "{" + BaseAspectConstants.CLASS_NAME + "}-ALL-LIST", expires = 60 * 10)
     public List<T> allList() {
         Map<String, Object> map = new HashMap<>();
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
@@ -94,7 +95,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    @CacheEvict(key = "#ENTITY_CLASS#-#PRIMARYKEY#")
+    @CacheEvict(key = "{" + BaseAspectConstants.CLASS_NAME + "}*")
     public Long delete(Serializable id) {
         Map<String, Object> map = new HashMap<>();
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
@@ -103,7 +104,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    @CacheSet(key = "#ENTITY_CLASS#-#PRIMARYKEY#", expires = 1000 * 60 * 10)
+    @CacheEvict(key = "{" + BaseAspectConstants.CLASS_NAME + "}*")
     public Long update(T t) {
         Map<String, Object> map = new HashMap<>();
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
@@ -112,7 +113,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    //TODO @CacheSet(key = "#ENTITY_CLASS#-#PRIMARYKEY#", expires = 1000 * 60 * 10)  分页查询的缓存方案，待完善
     public Pager getPager(Pager pager, T t) {
         SuperMybatisAssert.check(t != null, "Sorry, Query object cannot be empty.");
         Map<String, Object> map = new HashMap<>();
@@ -140,7 +140,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    public T get(T t) {
+    public T getByEntity(T t) {
         SuperMybatisAssert.check(t != null, "Sorry, Query object cannot be empty.");
         Map<String, Object> map = new HashMap<>();
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
@@ -161,7 +161,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
             return tt;
         }).collect(Collectors.toList());
         if(ret == null || ret.size() == 0) return null;
-        SuperMybatisAssert.check(ret.size() == 1, "The data you query is not unique, Please invike method getList(T).");
+        SuperMybatisAssert.check(ret.size() == 1, "The data you query is not unique, Please invoke method getList(T).");
         return ret.get(0);
     }
 
@@ -227,5 +227,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     public SuperMybatisBaseSession getBatisSession() {
         if(superMybatisBaseSession == null) superMybatisBaseSession = new SuperMybatisSimpleSession(baseMapper);
         return this.superMybatisBaseSession;
+    }
+
+    public Class<T> getEntityClass() {
+        return entityClass;
     }
 }
