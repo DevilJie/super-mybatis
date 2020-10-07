@@ -100,6 +100,9 @@ class SuperMybatisDemoApplicationTests {
 		System.out.println(userInfoService.getList(u));
 		System.out.println(userInfoService.getList(u, Pager.Order.asc, "age"));
 		System.out.println(userInfoService.getCount(u));
+		System.out.println(userInfoService.loadByColumn("realName", "小屁孩"));
+		System.out.println(userInfoService.loadListByColumn("realName", "小屁孩"));
+		System.out.println(userInfoService.loadListCountByColumn("realName", "小屁孩"));
 	}
 
 	@Test

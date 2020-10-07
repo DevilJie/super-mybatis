@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Autowired
-    BaseMapper baseMapper;
+    private BaseMapper baseMapper;
 
     @Override
     @CacheSet(key = "{" + BaseAspectConstants.CLASS_NAME + "}-{1}")
@@ -223,6 +224,86 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         map.put(SqlProviderConstants.ORDER_BY, pager.getOrderBy());
         return baseMapper.getObjectListCount(map);
     }
+
+    @Override
+    public T loadByColumn(String column, String val) {
+        SuperMybatisAssert.check(column != null && val != null, "Sorry, The properties and values of the query cannot be empty.");
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.QUERY_COLUMN, column);
+        map.put(SqlProviderConstants.QUERY_VAL, val);
+        List<T> ret = baseMapper.getListByColumn(map).stream().map(item -> {
+            T entity = null;
+            try {
+                entity = (T) entityClass.getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            T tt = (T) CoreUtil.process(entity, item);
+            return tt;
+        }).collect(Collectors.toList());
+
+        if(ret == null || ret.size() == 0) return null;
+        SuperMybatisAssert.check(ret.size() == 1, "The data you query is not unique, Please invoke method loadListByColumn(column, val).");
+        return ret.get(0);
+    }
+
+    @Override
+    public List<T> loadListByColumn(String column, String val) {
+        SuperMybatisAssert.check(column != null && val != null, "Sorry, The properties and values of the query cannot be empty.");
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.QUERY_COLUMN, column);
+        map.put(SqlProviderConstants.QUERY_VAL, val);
+        List<T> ret = baseMapper.getListByColumn(map).stream().map(item -> {
+            T entity = null;
+            try {
+                entity = (T) entityClass.getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            T tt = (T) CoreUtil.process(entity, item);
+            return tt;
+        }).collect(Collectors.toList());
+
+        if(ret == null || ret.size() == 0) return new ArrayList<>();
+        return ret;
+    }
+
+    @Override
+    public List<T> loadListByColumn(String column, String val, Pager.Order order, String orderBy) {
+        SuperMybatisAssert.check(column != null && val != null, "Sorry, The properties and values of the query cannot be empty.");
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.QUERY_COLUMN, column);
+        map.put(SqlProviderConstants.QUERY_VAL, val);
+        map.put(SqlProviderConstants.ORDER, order);
+        map.put(SqlProviderConstants.ORDER_BY, orderBy);
+        List<T> ret = baseMapper.getListByColumn(map).stream().map(item -> {
+            T entity = null;
+            try {
+                entity = (T) entityClass.getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            T tt = (T) CoreUtil.process(entity, item);
+            return tt;
+        }).collect(Collectors.toList());
+
+        if(ret == null || ret.size() == 0) return new ArrayList<>();
+        return ret;
+    }
+
+    @Override
+    public Long loadListCountByColumn(String column, String val) {
+        SuperMybatisAssert.check(column != null && val != null, "Sorry, The properties and values of the query cannot be empty.");
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.QUERY_COLUMN, column);
+        map.put(SqlProviderConstants.QUERY_VAL, val);
+        return baseMapper.getListCountByColumn(map);
+    }
+
 
     public SuperMybatisBaseSession getBatisSession() {
         if(superMybatisBaseSession == null) superMybatisBaseSession = new SuperMybatisSimpleSession(baseMapper);

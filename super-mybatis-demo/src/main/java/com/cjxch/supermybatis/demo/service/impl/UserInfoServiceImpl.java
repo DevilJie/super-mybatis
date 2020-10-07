@@ -80,4 +80,24 @@ public class UserInfoServiceImpl implements UserInfoService {
     public Long getCount(User user) {
         return userInfoDao.getListCount(user);
     }
+
+    @Override
+    public User loadByColumn(String column, String val) {
+        return userInfoDao.loadByColumn(column, val);
+    }
+
+    @Override
+    public List<User> loadListByColumn(String column, String val) {
+        return userInfoDao.loadListByColumn(column, val);
+    }
+
+    @Override
+    public List<User> loadListByColumn(String column, String val, Pager.Order order, String orderBy) {
+        return userInfoDao.loadListByColumn(column, val, order, orderBy);
+    }
+
+    @Override
+    public Long loadListCountByColumn(String column, String val) {
+        return userInfoDao.loadListCountByColumn(column, val);
+    }
 }

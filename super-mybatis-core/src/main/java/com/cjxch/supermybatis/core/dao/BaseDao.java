@@ -82,4 +82,12 @@ public interface BaseDao<T> {
      * @return
      */
     public Long getListCount(T t);
+
+    public T loadByColumn(String column, String val);
+
+    public List<T> loadListByColumn(String column, String val);
+
+    public List<T> loadListByColumn(String column, String val, Pager.Order order, String orderBy);
+
+    public Long loadListCountByColumn(String column, String val);
 }

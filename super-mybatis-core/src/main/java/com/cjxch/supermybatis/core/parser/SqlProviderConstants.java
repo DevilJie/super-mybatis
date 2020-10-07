@@ -21,4 +21,8 @@ public class SqlProviderConstants {
     public static final String ENTITY_LIST = "ENTITY_LIST";
 
     public static final String PRIMARY_KEY_VALUE = "PRIMARY_KEY_VALUE";
+
+    public static final String QUERY_COLUMN = "QUERY_COLUMN";
+
+    public static final String QUERY_VAL = "QUERY_VAL";
 }
