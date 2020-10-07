@@ -107,6 +107,22 @@ public interface BaseMapper {
     List<HashMap<String, Object>> getObjectList(Map<String, Object> paramMap);
 
     /**
+     * 根据属性查询
+     * @return
+     */
+    @SelectProvider(type= SelectObjectSqlProviderParser.class,method="execute")
+    List<HashMap<String, Object>> getListByColumn(Map<String, Object> paramMap);
+
+    /**
+     * 根据属性查询
+     * @return
+     */
+    @SelectProvider(type= SelectObjectCountSqlProviderParser.class,method="execute")
+    Long getListCountByColumn(Map<String, Object> paramMap);
+
+
+
+    /**
      * 自定义查询条件获取对象列表集合大小
      *
      * @param paramMap
