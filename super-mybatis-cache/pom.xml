@@ -16,6 +16,5 @@
     <modules>
         <module>super-mybatis-cache-redis</module>
         <module>super-mybatis-cache-base</module>
-        <module>super-mybatis-cache-memcache</module>
     </modules>
 </project>

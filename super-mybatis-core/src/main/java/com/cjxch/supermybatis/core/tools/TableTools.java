@@ -32,14 +32,6 @@ public class TableTools {
 
         return ret;
     }
-    /**
-     * 实体属性名称转数据库列
-     * @return
-     */
-    public static String fieldNameToColumn(GlobalSetting setting, String fieldName){
-        boolean camelModel = setting.getDatabaseSetting().getCamelModel();
-        return (camelModel ? CamelCaseUtils.processNameWithUnderLine(fieldName) : fieldName);
-    }
 
     /**
      * 列转属性

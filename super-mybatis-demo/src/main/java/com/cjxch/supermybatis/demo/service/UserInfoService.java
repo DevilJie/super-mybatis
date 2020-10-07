@@ -37,13 +37,4 @@ public interface UserInfoService {
     List<User> getList(User user, Pager.Order order, String orderBy);
 
     Long getCount(User user);
-
-
-    User loadByColumn(String column, String val);
-
-    List<User> loadListByColumn(String column, String val);
-
-    List<User> loadListByColumn(String column, String val, Pager.Order order, String orderBy);
-
-    Long loadListCountByColumn(String column, String val);
 }

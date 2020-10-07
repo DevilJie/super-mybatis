@@ -32,7 +32,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl<User> implements UserInfoDao {
     public List<User> loadByUser(User user) {
         StringBuffer sql = new StringBuffer("select * from user_info u where 1=1");
         if(user != null){
-            if(!StringUtils.isEmpty(user.getRealName())) sql.append(" and u.real_name = #{ui.realName}");
+            if(!StringUtils.isEmpty(user.getRealName())) sql.append(" and u.nick_name = #{ui.name}");
         }
         return getBatisSession().createQuery(sql.toString()).setParameter("ui", user).list(User.class);
     }
@@ -41,7 +41,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl<User> implements UserInfoDao {
     public Pager getPager(Pager pager, User user) {
         StringBuffer sql = new StringBuffer("select * from user_info u where 1=1");
         if(user != null){
-            if(!StringUtils.isEmpty(user.getRealName())) sql.append(" and u.real_name = #{ui.realName}");
+            if(!StringUtils.isEmpty(user.getRealName())) sql.append(" and u.nick_name = #{ui.name}");
         }
         return getBatisSession().createQuery(sql.toString()).setParameter("ui", user).queryPager(pager, User.class);
     }
