@@ -6,12 +6,11 @@
     <groupId>com.cjxch</groupId>
     <artifactId>super-mybatis</artifactId>
     <packaging>pom</packaging>
-    <version>${super-mybatis.version}</version>
+    <version>1.0.0</version>
 
     <properties>
         <spring.version>5.2.8.RELEASE</spring.version>
         <aspectj.version>1.6.11</aspectj.version>
-        <super-mybatis.version>1.0.0</super-mybatis.version>
     </properties>
 
 

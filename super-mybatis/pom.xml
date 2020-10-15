@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.cjxch.supermybatis</groupId>
             <artifactId>super-mybatis-extend</artifactId>
-            <version>${super-mybatis.version}</version>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

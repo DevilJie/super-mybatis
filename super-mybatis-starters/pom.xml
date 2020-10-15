@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.cjxch.supermybatis</groupId>
             <artifactId>super-mybatis</artifactId>
-            <version>${super-mybatis.version}</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

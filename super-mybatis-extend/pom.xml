@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.cjxch.supermybatis</groupId>
             <artifactId>super-mybatis-core</artifactId>
-            <version>${super-mybatis.version}</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
