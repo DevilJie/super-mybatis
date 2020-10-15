@@ -25,12 +25,12 @@ public class SelectObjectCountSqlProviderParser extends BaseSqlProviderParser {
          */
         commonInit(map);
 
-        Pager.Order order = map.get(SqlProviderConstants.ORDER) == null ? Pager.Order.desc : (Pager.Order)map.get(SqlProviderConstants.ORDER);
-        String orderBy = StringUtils.isEmpty(map.get(SqlProviderConstants.ORDER_BY)) ? "" : (String)map.get(SqlProviderConstants.ORDER_BY);
-        if(!StringUtils.isEmpty(orderBy)) {
-            orderBy = setting.getDatabaseSetting().getCamelModel() ? CamelCaseUtils.processNameWithUnderLine(orderBy) : orderBy;
-            orderBy = " order by " + orderBy + " " + order.name();
-        }
+//        Pager.Order order = map.get(SqlProviderConstants.ORDER) == null ? Pager.Order.desc : (Pager.Order)map.get(SqlProviderConstants.ORDER);
+//        String orderBy = StringUtils.isEmpty(map.get(SqlProviderConstants.ORDER_BY)) ? "" : (String)map.get(SqlProviderConstants.ORDER_BY);
+//        if(!StringUtils.isEmpty(orderBy)) {
+//            orderBy = setting.getDatabaseSetting().getCamelModel() ? CamelCaseUtils.processNameWithUnderLine(orderBy) : orderBy;
+//            orderBy = " order by " + orderBy + " " + order.name();
+//        }
 
         StringBuffer queryStatement = new StringBuffer();
 
@@ -64,7 +64,7 @@ public class SelectObjectCountSqlProviderParser extends BaseSqlProviderParser {
         }
 
 
-        return String.format(BaseSqlTemplate.SELECT_COUNT.getSql(), TABLE_NAME, queryStatementSql, orderBy);
+        return String.format(BaseSqlTemplate.SELECT_COUNT.getSql(), TABLE_NAME, queryStatementSql);
 
     }
 

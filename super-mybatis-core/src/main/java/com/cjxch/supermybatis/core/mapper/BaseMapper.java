@@ -141,7 +141,7 @@ public interface BaseMapper {
      * 个性化sql执行，分页查询
      */
     @SelectProvider(type= SelectPagerBySqlProviderParser.class,method="execute")
-    List<Object> queryPagerBySql(Map<String, Object> paramMap);
+    List<HashMap<String, Object>> queryPagerBySql(Map<String, Object> paramMap);
 
     /**
      * 个性化sql执行，分页查询

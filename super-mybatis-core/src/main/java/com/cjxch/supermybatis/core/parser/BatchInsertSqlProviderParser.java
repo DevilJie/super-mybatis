@@ -83,6 +83,7 @@ public class BatchInsertSqlProviderParser extends BaseSqlProviderParser {
             index.addAndGet(1);
         });
 
+        map.put(SqlProviderConstants.PRIMARY_KEY_VALUE, primaryKeyIds.toArray(new Serializable[primaryKeyIds.size()]));
 
         return String.format(BaseSqlTemplate.BATCH_INSERT.getSql(), TABLE_NAME, columnBuffer.substring(1), valuesBufferTotal.substring(1));
     }

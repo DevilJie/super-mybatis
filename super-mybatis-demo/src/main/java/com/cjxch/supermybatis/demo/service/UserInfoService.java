@@ -13,9 +13,9 @@ import java.util.List;
 public interface UserInfoService {
     User get(Serializable id);
 
-    String insert(User user);
+    Serializable insert(User user);
 
-    String[] batchInsert(List<User> user);
+    Serializable[] batchInsert(List<User> user);
 
     List<User> allList();
 

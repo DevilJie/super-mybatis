@@ -1,13 +1,11 @@
 package com.cjxch.supermybatis.demo.dao.impl;
 
 import com.cjxch.supermybatis.base.annotation.CacheEnable;
-import com.cjxch.supermybatis.base.annotation.CacheEvict;
 import com.cjxch.supermybatis.base.annotation.CacheSet;
 import com.cjxch.supermybatis.base.bean.Pager;
 import com.cjxch.supermybatis.core.dao.impl.BaseDaoImpl;
 import com.cjxch.supermybatis.demo.dao.UserInfoDao;
 import com.cjxch.supermybatis.demo.entity.User;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 

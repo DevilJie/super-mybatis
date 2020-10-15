@@ -93,7 +93,7 @@ public class SuperMybatisSimpleQuery extends SuperMybatisBaseQuery {
         parameter.put(SqlProviderConstants.ORDER, pager.getOrder());
         parameter.put(SqlProviderConstants.ORDER_BY, pager.getOrderBy());
         parameter.put(SqlProviderConstants.PAGER, pager);
-        List list = getBaseMapper().queryPagerBySql(parameter);
+        List<HashMap<String, Object>> list = getBaseMapper().queryPagerBySql(parameter);
 
         Long totalCount = getBaseMapper().queryPagerCountBySql(parameter);
 
@@ -106,7 +106,9 @@ public class SuperMybatisSimpleQuery extends SuperMybatisBaseQuery {
     public Pager queryPager(Pager pager, Class t) {
         pager = queryPager(pager);
 
-        List retList = list().stream().map(item -> {
+        List<HashMap<String, Object>> ret = (List<HashMap<String, Object>>)pager.getResult();
+
+        List retList = ret.stream().map(item -> {
             Object entity = null;
             try {
                 entity = t.getDeclaredConstructor().newInstance();

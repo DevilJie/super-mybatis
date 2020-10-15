@@ -13,7 +13,7 @@ public enum BaseSqlTemplate {
     UPDATE ("UPDATE %s %s WHERE %s = %s"), //更新
     ALL_LIST("SELECT * FROM %s"), //获取所有数据
     SELECT("SELECT * FROM %s %s %s"), //获取所有数据
-    SELECT_COUNT("SELECT count(*) FROM %s %s %s"); //获取所有数据
+    SELECT_COUNT("SELECT count(*) FROM %s %s"); //获取所有数据
 
 
     private final String sql;

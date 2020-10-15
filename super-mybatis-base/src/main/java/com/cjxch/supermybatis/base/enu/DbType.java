@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public enum DbType {
 
-    MySql(new String[]{"com.mysql.cj.jdbc.Driver"}, "#sql# LIMIT #pageStart#,#pageSize#"),
+    MySql(new String[]{"com.mysql.cj.jdbc.Driver", "com.mysql.jdbc.Driver"}, "#sql# LIMIT #pageStart#,#pageSize#"),
     Oracle(new String[]{"oracle.jdbc.driver.OracleDriver"}, "SELECT * FROM (SELECT tt.*, ROWNUM AS rowno FROM (  #sql# ) tt WHERE ROWNUM < #pageEnd#) table_alias WHERE table_alias.rowno >= #pageStart#"),
     SqlServer(new String[]{"com.microsoft.jdbc.sqlserver.SQLServerDriver", "com.microsoft.sqlserver.jdbc.SQLServerDriver"}, "#sql# offset #pageStart# rows fetch next #pageSize# rows only"),
     PostgreSQL(new String[]{"org.postgresql.Driver"}, "#sql# #pageSize# offset #pageStart#"),

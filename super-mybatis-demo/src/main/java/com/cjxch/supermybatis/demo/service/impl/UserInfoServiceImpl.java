@@ -26,13 +26,13 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public String insert(User user) {
-        return String.valueOf(userInfoDao.insert(user));
+    public Serializable insert(User user) {
+        return userInfoDao.insert(user);
     }
 
     @Override
-    public String[] batchInsert(List<User> user) {
-        return (String[])userInfoDao.batchInsert(user);
+    public Serializable[] batchInsert(List<User> user) {
+        return userInfoDao.batchInsert(user);
     }
 
     @Override
@@ -67,8 +67,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public List<User> getList(User user) {
-//        return userInfoDao.getList(user);
-        return userInfoDao.loadByUser(user);
+        return userInfoDao.getList(user);
+//        return userInfoDao.loadByUser(user);
     }
 
     @Override
