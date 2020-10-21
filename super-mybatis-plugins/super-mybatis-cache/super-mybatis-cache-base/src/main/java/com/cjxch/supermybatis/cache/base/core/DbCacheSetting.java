@@ -8,10 +8,8 @@ import com.cjxch.supermybatis.base.enu.DbCacheType;
  * @Email: cjxch@cjxch.com
  */
 public class DbCacheSetting {
-    /**
-     * 数据库缓存开关
-     */
-    private boolean cacheSwitch = false;
+
+    /*************************redis配置*******************************/
 
     /**
      * redis的主机ip
@@ -41,19 +39,132 @@ public class DbCacheSetting {
 
     private Integer redisTimeout = 0;
 
+
+
+    /*************************memcache配置*******************************/
+    /**
+     * memcached
+     */
+    private String memcachedHost = "127.0.0.1";
+
+    /**
+     * 默认缓存10分钟
+     */
+    private Long memcachedExpires = 60 * 10l;
+
+    /**
+     * memcached端口
+     */
+    private int memcachedPort = 11211;
+
+    private boolean memcachedFailover = true;
+
+    private int memcachedInitConn = 10;
+
+    private int memcachedMaxConn = 100;
+
+    private int memcachedMinConn = 20;
+
+    private int memcachedMaintSleep = 50;
+
+    private boolean memcachedNagle = false;
+
+    private int memcachedSockeetTO = 3000;
+
+    private boolean memcachedAliveCheck = true;
+
+    public boolean isMemcachedFailover() {
+        return memcachedFailover;
+    }
+
+    public int getMemcachedMinConn() {
+        return memcachedMinConn;
+    }
+
+    public void setMemcachedMinConn(int memcachedMinConn) {
+        this.memcachedMinConn = memcachedMinConn;
+    }
+
+    public void setMemcachedFailover(boolean memcachedFailover) {
+        this.memcachedFailover = memcachedFailover;
+    }
+
+    public int getMemcachedInitConn() {
+        return memcachedInitConn;
+    }
+
+    public void setMemcachedInitConn(int memcachedInitConn) {
+        this.memcachedInitConn = memcachedInitConn;
+    }
+
+    public int getMemcachedMaxConn() {
+        return memcachedMaxConn;
+    }
+
+    public void setMemcachedMaxConn(int memcachedMaxConn) {
+        this.memcachedMaxConn = memcachedMaxConn;
+    }
+
+    public int getMemcachedMaintSleep() {
+        return memcachedMaintSleep;
+    }
+
+    public void setMemcachedMaintSleep(int memcachedMaintSleep) {
+        this.memcachedMaintSleep = memcachedMaintSleep;
+    }
+
+    public boolean isMemcachedNagle() {
+        return memcachedNagle;
+    }
+
+    public void setMemcachedNagle(boolean memcachedNagle) {
+        this.memcachedNagle = memcachedNagle;
+    }
+
+    public int getMemcachedSockeetTO() {
+        return memcachedSockeetTO;
+    }
+
+    public void setMemcachedSockeetTO(int memcachedSockeetTO) {
+        this.memcachedSockeetTO = memcachedSockeetTO;
+    }
+
+    public boolean isMemcachedAliveCheck() {
+        return memcachedAliveCheck;
+    }
+
+    public void setMemcachedAliveCheck(boolean memcachedAliveCheck) {
+        this.memcachedAliveCheck = memcachedAliveCheck;
+    }
+
+    public String getMemcachedHost() {
+        return memcachedHost;
+    }
+
+    public void setMemcachedHost(String memcachedHost) {
+        this.memcachedHost = memcachedHost;
+    }
+
+    public Long getMemcachedExpires() {
+        return memcachedExpires;
+    }
+
+    public void setMemcachedExpires(Long memcachedExpires) {
+        this.memcachedExpires = memcachedExpires;
+    }
+
+    public int getMemcachedPort() {
+        return memcachedPort;
+    }
+
+    public void setMemcachedPort(int memcachedPort) {
+        this.memcachedPort = memcachedPort;
+    }
+
     /**
      * 缓存类型
      */
     private DbCacheType dbCacheType = DbCacheType.Redis;
-
-
-    public boolean isCacheSwitch() {
-        return cacheSwitch;
-    }
-
-    public void setCacheSwitch(boolean cacheSwitch) {
-        this.cacheSwitch = cacheSwitch;
-    }
 
     public String getRedisHost() {
         return redisHost;

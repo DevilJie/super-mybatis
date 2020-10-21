@@ -21,19 +21,21 @@ import com.cjxch.supermybatis.cache.base.core.SuperMybatisCacheConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
 
 @Configuration
 @AutoConfigureAfter(name="com.cjxch.supermybatis.extend.spring.SuperMybatisSqlSessionFactoryBean")
-@ImportResource({"classpath*:applicationContext-supermybatis-cache.xml"})
+@ImportResource({"classpath*:applicationContext-supermybatis-cache*"})
 public class SuperMybatisCacheAutoConfiguration {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public SuperMybatisCacheAutoConfiguration(SuperMybatisCacheProperties properties) {
+    public SuperMybatisCacheAutoConfiguration(ApplicationContext applicationContext, SuperMybatisCacheProperties properties) {
         if(SuperMybatisCacheConstants.superMybatisCache != null) return;
+        SuperMybatisCacheConstants.applicationContext = applicationContext;
         logger.debug("【Super-Mybatis-Cache】Initializing database cache plug-in...");
         DbCacheType type = properties.getGlobalSetting().getDbCacheSetting().getDbCacheType();
         SuperMybatisCacheConstants.dbCacheSetting = properties.getGlobalSetting().getDbCacheSetting();

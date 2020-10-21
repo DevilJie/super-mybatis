@@ -7,5 +7,5 @@ package com.cjxch.supermybatis.base.enu;
  */
 public enum DbCacheType {
     Redis,
-    Memcache;
+    Memcached;
 }

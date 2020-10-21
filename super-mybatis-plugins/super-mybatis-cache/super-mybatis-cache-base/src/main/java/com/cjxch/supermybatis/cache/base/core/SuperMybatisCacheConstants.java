@@ -1,5 +1,7 @@
 package com.cjxch.supermybatis.cache.base.core;
 
+import org.springframework.context.ApplicationContext;
+
 /**
  * 全局缓存插件常量类
  * @Author: 菜鸡小彩虹
@@ -24,4 +26,6 @@ public class SuperMybatisCacheConstants {
     public static final String HSET_ARGS = "args";
 
     public static final String CONTINUE_FLAG = "continue";
+
+    public static ApplicationContext applicationContext;
 }

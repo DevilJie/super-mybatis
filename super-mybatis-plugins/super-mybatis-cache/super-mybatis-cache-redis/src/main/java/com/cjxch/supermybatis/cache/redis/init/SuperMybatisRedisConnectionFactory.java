@@ -1,5 +1,6 @@
 package com.cjxch.supermybatis.cache.redis.init;
 
+import com.cjxch.supermybatis.cache.base.core.SuperMybatisCacheConstants;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 /**
@@ -10,9 +11,9 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 public class SuperMybatisRedisConnectionFactory extends JedisConnectionFactory {
 
     public SuperMybatisRedisConnectionFactory(){
-        setHostName(SuperMybatisRedisConstants.dbCacheSetting.getRedisHost());
-        setPort(SuperMybatisRedisConstants.dbCacheSetting.getRedisPort());
-        setPassword(SuperMybatisRedisConstants.dbCacheSetting.getRedisPwd());
-        setTimeout(SuperMybatisRedisConstants.dbCacheSetting.getRedisTimeout());
+        setHostName(SuperMybatisCacheConstants.dbCacheSetting.getRedisHost());
+        setPort(SuperMybatisCacheConstants.dbCacheSetting.getRedisPort());
+        setPassword(SuperMybatisCacheConstants.dbCacheSetting.getRedisPwd());
+        setTimeout(SuperMybatisCacheConstants.dbCacheSetting.getRedisTimeout());
     }
 }

@@ -50,7 +50,7 @@ public class BaseAspect {
         CacheSet set = method.getAnnotation(CacheSet.class);
         if(set == null){
             PrintLog.DEBUG(logger, "The current call method is " + method.getName() + " However, no @CacheSet annotation was detected");
-            throw new SuperMybatisException("continue");
+            throw new SuperMybatisException(SuperMybatisCacheConstants.CONTINUE_FLAG);
         }
 
         expires = set.expires();
@@ -70,7 +70,7 @@ public class BaseAspect {
         CacheEvict evict = method.getAnnotation(CacheEvict.class);
         if(evict == null){
             PrintLog.DEBUG(logger, "The current call method is " + method.getName() + " However, no @CacheEvict annotation was detected");
-            throw new SuperMybatisException("continue");
+            throw new SuperMybatisException(SuperMybatisCacheConstants.CONTINUE_FLAG);
         }
 
         PrintLog.DEBUG(logger, "The current call method is " + method.getName() + " @CacheEvict annotations found");

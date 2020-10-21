@@ -6,7 +6,7 @@
     <groupId>com.cjxch</groupId>
     <artifactId>super-mybatis</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <properties>
         <spring.version>5.2.8.RELEASE</spring.version>
