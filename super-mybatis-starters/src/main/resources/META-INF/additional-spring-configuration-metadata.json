@@ -30,10 +30,10 @@
             "type": "com.cjxch.supermybatis.core.setting.SnowflakeSetting"
         },
         {
-            "sourceType": "com.cjxch.supermybatis.core.setting.DbCacheSetting",
+            "sourceType": "com.cjxch.supermybatis.cache.base.core.DbCacheSetting",
             "name": "super-mybatis.global-setting.db-cache-setting",
             "sourceMethod": "getDbCacheSetting()",
-            "type": "com.cjxch.supermybatis.core.setting.DbCacheSetting"
+            "type": "com.cjxch.supermybatis.cache.base.core.DbCacheSetting"
         }
     ],
     "properties": [
@@ -80,7 +80,7 @@
             "description": "控制台是否输出执行的sql语句."
         },
         {
-            "sourceType": "com.cjxch.supermybatis.core.setting.DbCacheSetting",
+            "sourceType": "com.cjxch.supermybatis.cache.base.core.DbCacheSetting",
             "name": "super-mybatis.global-setting.db-cache-setting.cache-switch",
             "type": "java.lang.Boolean",
             "description": "数据库缓存开关."

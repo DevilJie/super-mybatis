@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -78,6 +79,24 @@ public class TableTools {
             case LT:queryStatement.append(String.format(" < #{%s.%s} ", entity.getClass().getSimpleName(), item.getName())); break;
             case GE:queryStatement.append(String.format(" >= #{%s.%s} ", entity.getClass().getSimpleName(), item.getName())); break;
             case LE:queryStatement.append(String.format(" <= #{%s.%s} ", entity.getClass().getSimpleName(), item.getName())); break;
+            case IN:
+                StringBuffer sb = new StringBuffer("");
+                AtomicInteger index = new AtomicInteger(0);
+                ((List)ReflectionUtil.getFieldValue(entity, item.getName())).forEach(obj -> {
+                    sb.append(String.format(",#{%s.%s[%s]}", entity.getClass().getSimpleName(), item.getName(), index.get()));
+                    index.addAndGet(1);
+                });
+                if(sb.toString().length() > 0) queryStatement.append(String.format(" in (%s) ", sb.substring(1)));
+                break;
+            case NOT_IN:
+                sb = new StringBuffer("");
+                index = new AtomicInteger(0);
+                ((List)ReflectionUtil.getFieldValue(entity, item.getName())).forEach(obj -> {
+                    sb.append(String.format(",#{%s.%s[%s]}", entity.getClass().getSimpleName(), item.getName(), index.get()));
+                    index.addAndGet(1);
+                });
+                if(sb.toString().length() > 0) queryStatement.append(String.format(" not in (%s) ", sb.substring(1)));
+                break;
         }
         return queryStatement.toString();
     }

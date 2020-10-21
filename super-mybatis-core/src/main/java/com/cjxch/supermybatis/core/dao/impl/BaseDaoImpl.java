@@ -1,8 +1,5 @@
 package com.cjxch.supermybatis.core.dao.impl;
 
-import com.cjxch.supermybatis.base.annotation.CacheEvict;
-import com.cjxch.supermybatis.base.annotation.CacheSet;
-import com.cjxch.supermybatis.base.bean.BaseAspectConstants;
 import com.cjxch.supermybatis.base.bean.Pager;
 import com.cjxch.supermybatis.core.actuator.SuperMybatisBaseSession;
 import com.cjxch.supermybatis.core.actuator.simple.SuperMybatisSimpleSession;
@@ -45,7 +42,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     private BaseMapper baseMapper;
 
     @Override
-    @CacheSet(key = "{" + BaseAspectConstants.CLASS_NAME + "}-{1}")
     public T get(Serializable id) {
         Map<String, Object> map = new HashMap<>();
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
@@ -79,7 +75,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    @CacheSet(key = "{" + BaseAspectConstants.CLASS_NAME + "}-ALL-LIST", expires = 60 * 10)
     public List<T> allList() {
         Map<String, Object> map = new HashMap<>();
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
@@ -96,7 +91,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    @CacheEvict(key = "{" + BaseAspectConstants.CLASS_NAME + "}*")
     public Long delete(Serializable id) {
         Map<String, Object> map = new HashMap<>();
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
@@ -105,7 +99,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    @CacheEvict(key = "{" + BaseAspectConstants.CLASS_NAME + "}*")
     public Long update(T t) {
         Map<String, Object> map = new HashMap<>();
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);

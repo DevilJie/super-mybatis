@@ -1,7 +1,5 @@
 package com.cjxch.supermybatis.core.setting;
 
-import org.springframework.core.env.Environment;
-
 /**
  * Super-Mybatis 常量类
  * @Author: 菜鸡小彩虹

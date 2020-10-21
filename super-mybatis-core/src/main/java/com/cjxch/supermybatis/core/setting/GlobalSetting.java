@@ -28,15 +28,15 @@ public class GlobalSetting {
      * 数据库配置
      */
     private DatabaseSetting databaseSetting = new DatabaseSetting();
-
-    /**
-     * 数据库缓存
-     */
-    private DbCacheSetting dbCacheSetting;
+//
+//    /**
+//     * 数据库缓存
+//     */
+//    private DbCacheSetting dbCacheSetting;
 
     private String driverClass;
 
-    private Boolean cacheSwitch = false;
+//    private Boolean cacheSwitch = false;
 
     /**
      * 开启debug模式
@@ -116,19 +116,15 @@ public class GlobalSetting {
         this.driverClass = driverClass;
     }
 
-    public boolean isCacheSwitch() {
-        return cacheSwitch;
+    public String getDriverClass() {
+        return driverClass;
     }
 
-    public void setCacheSwitch(boolean cacheSwitch) {
-        this.cacheSwitch = cacheSwitch;
+    public Boolean getDebug() {
+        return debug;
     }
 
-    public DbCacheSetting getDbCacheSetting() {
-        return dbCacheSetting;
-    }
-
-    public void setDbCacheSetting(DbCacheSetting dbCacheSetting) {
-        this.dbCacheSetting = dbCacheSetting;
+    public void setDebug(Boolean debug) {
+        this.debug = debug;
     }
 }

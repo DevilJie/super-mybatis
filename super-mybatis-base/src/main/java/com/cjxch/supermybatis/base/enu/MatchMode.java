@@ -13,4 +13,6 @@ public enum MatchMode {
     LT, //小于
     GE, //大于等于
     LE, //小于等于
+    IN, //在某个集合内
+    NOT_IN, //不在某个集合内
 }

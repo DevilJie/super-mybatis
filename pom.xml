@@ -26,7 +26,7 @@
         <module>super-mybatis-core</module>
         <module>super-mybatis-starters</module>
         <module>super-mybatis-extend</module>
-        <module>super-mybatis-cache</module>
+        <module>super-mybatis-plugins</module>
     </modules>
 
     <build>

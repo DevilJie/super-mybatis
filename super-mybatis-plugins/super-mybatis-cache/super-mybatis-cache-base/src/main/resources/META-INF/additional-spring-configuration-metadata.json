@@ -1,0 +1,18 @@
+{
+    "groups": [
+        {
+            "sourceType": "com.cjxch.supermybatis.cache.base.core.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting",
+            "sourceMethod": "getDbCacheSetting()",
+            "type": "com.cjxch.supermybatis.cache.base.core.DbCacheSetting"
+        }
+    ],
+    "properties": [
+        {
+            "sourceType": "com.cjxch.supermybatis.cache.base.core.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting.db-cache-type",
+            "type": "com.cjxch.supermybatis.base.enu.DbCacheType",
+            "description": "缓存类型."
+        }
+    ]
+}

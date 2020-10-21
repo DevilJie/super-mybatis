@@ -5,6 +5,7 @@ import com.cjxch.supermybatis.demo.entity.User;
 import com.cjxch.supermybatis.demo.service.UserInfoService;
 import com.cjxch.supermybatis.demo.dao.UserInfoDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -66,9 +67,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    @Cacheable("userCache")
     public List<User> getList(User user) {
-        return userInfoDao.getList(user);
-//        return userInfoDao.loadByUser(user);
+//        return userInfoDao.getList(user);
+        return userInfoDao.loadByUser(user);
     }
 
     @Override
