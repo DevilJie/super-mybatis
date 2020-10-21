@@ -1,0 +1,24 @@
+{
+    "groups": [
+        {
+            "sourceType": "com.cjxch.supermybatis.cache.base.core.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting",
+            "sourceMethod": "getDbCacheSetting()",
+            "type": "com.cjxch.supermybatis.cache.base.core.DbCacheSetting"
+        }
+    ],
+    "properties": [
+        {
+            "sourceType": "com.cjxch.supermybatis.cache.base.core.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting.memcached-host",
+            "type": "java.lang.String",
+            "description": "memcached连接主机ip."
+        },
+        {
+            "sourceType": "com.cjxch.supermybatis.cache.base.core.DbCacheSetting",
+            "name": "super-mybatis.global-setting.db-cache-setting.memcached-port",
+            "type": "java.lang.String",
+            "description": "memcached连接端口."
+        }
+    ]
+}

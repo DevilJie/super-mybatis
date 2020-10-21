@@ -1,5 +1,6 @@
 package com.cjxch.supermybatis.cache.redis.init;
 
+import com.cjxch.supermybatis.cache.base.core.SuperMybatisCacheConstants;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
@@ -10,10 +11,10 @@ import redis.clients.jedis.JedisPoolConfig;
 public class SuperMybatisJedisPoolConfig extends JedisPoolConfig {
 
     public SuperMybatisJedisPoolConfig(){
-        setMaxIdle(SuperMybatisRedisConstants.dbCacheSetting.getRedismMxIdle());
-        setMaxTotal(SuperMybatisRedisConstants.dbCacheSetting.getRedisMaxTotal());
-        setMaxWaitMillis(SuperMybatisRedisConstants.dbCacheSetting.getRedisMaxWaitMillis());
+        setMaxIdle(SuperMybatisCacheConstants.dbCacheSetting.getRedismMxIdle());
+        setMaxTotal(SuperMybatisCacheConstants.dbCacheSetting.getRedisMaxTotal());
+        setMaxWaitMillis(SuperMybatisCacheConstants.dbCacheSetting.getRedisMaxWaitMillis());
         setTestOnBorrow(true);
-        setMaxIdle(SuperMybatisRedisConstants.dbCacheSetting.getRedismMxIdle());
+        setMaxIdle(SuperMybatisCacheConstants.dbCacheSetting.getRedismMxIdle());
     }
 }

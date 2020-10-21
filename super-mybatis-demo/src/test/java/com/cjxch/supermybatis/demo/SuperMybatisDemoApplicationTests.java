@@ -26,7 +26,7 @@ class SuperMybatisDemoApplicationTests {
 	}
 	@Test
 	void del(){
-		System.out.println(userInfoService.delete("496974922459910192"));
+		System.out.println(userInfoService.delete("496976191702437956"));
 	}
 
 	@Test

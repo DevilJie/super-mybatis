@@ -20,6 +20,8 @@ public abstract class SuperMybatisCache {
                 Class clazz = null;
                 if (setting.getDbCacheType() == DbCacheType.Redis) {
                     clazz = Class.forName("com.cjxch.supermybatis.cache.redis.core.SuperMybatisRedisCache");
+                }else if(setting.getDbCacheType() == DbCacheType.Memcached){
+                    clazz = Class.forName("com.cjxch.supermybatis.cache.memcached.core.SuperMybatisMemcachedCache");
                 }
 
                 SuperMybatisAssert.check(clazz != null, "Unknown dbCacheType");

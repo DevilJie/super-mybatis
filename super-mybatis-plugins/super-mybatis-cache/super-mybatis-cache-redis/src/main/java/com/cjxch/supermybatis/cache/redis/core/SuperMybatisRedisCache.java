@@ -1,6 +1,7 @@
 package com.cjxch.supermybatis.cache.redis.core;
 
 import com.cjxch.supermybatis.cache.base.core.SuperMybatisCache;
+import com.cjxch.supermybatis.cache.base.core.SuperMybatisCacheConstants;
 import com.cjxch.supermybatis.cache.redis.init.SuperMybatisRedisConstants;
 import com.cjxch.supermybatis.cache.redis.init.SuperMybatisRedisService;
 import com.cjxch.supermybatis.cache.base.core.DbCacheSetting;
@@ -21,7 +22,7 @@ public class SuperMybatisRedisCache extends SuperMybatisCache {
 
     public SuperMybatisRedisCache(DbCacheSetting setting){
         super(setting);
-        logger.debug(String.format("【Super-Mybatis-Cache】Current cache plug-in: redis --> %s:%s", setting.getRedisHost(),setting.getRedisPort()));
+        logger.debug(String.format("【Super-Mybatis-Cache】Current cache plug-in: Redis --> %s:%s", setting.getRedisHost(),setting.getRedisPort()));
     }
 
     @Override
@@ -72,7 +73,7 @@ public class SuperMybatisRedisCache extends SuperMybatisCache {
 
     public SuperMybatisRedisService getRedisService(){
         if(SuperMybatisRedisConstants.superMybatisRedisService == null)
-            SuperMybatisRedisConstants.superMybatisRedisService = SuperMybatisRedisConstants.applicationContext.getBean(SuperMybatisRedisService.class);
+            SuperMybatisRedisConstants.superMybatisRedisService = SuperMybatisCacheConstants.applicationContext.getBean(SuperMybatisRedisService.class);
         return SuperMybatisRedisConstants.superMybatisRedisService;
     }
 
