@@ -44,5 +44,5 @@ super-mybatis:
 
     db-cache-setting:
       cache-switch: true
-      db-cache-type: Memcached
+      db-cache-type: Ehcache
 

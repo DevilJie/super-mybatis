@@ -73,6 +73,48 @@ public class DbCacheSetting {
 
     private boolean memcachedAliveCheck = true;
 
+
+    /****************************ehcache相关配置***************************/
+
+    /**
+     * 缓存所能使用的堆内存的最大字节数的，其单位可以是K、M或G，不区分大小写
+     */
+    private String maxBytesLocalHeap = "500M";
+
+    /**
+     * 用来限制缓存所能使用的非堆内存的最大字节数，其单位也可以是K、M或G.
+     */
+    private String maxBytesLocalOffHeap = "2G";
+
+    /**
+     * 用来限制缓存所能使用的磁盘的最大字节数的，其单位可以是K、M或G。
+     */
+    private String maxBytesLocalDisk = "50G";
+
+    public String getMaxBytesLocalDisk() {
+        return maxBytesLocalDisk;
+    }
+
+    public void setMaxBytesLocalDisk(String maxBytesLocalDisk) {
+        this.maxBytesLocalDisk = maxBytesLocalDisk;
+    }
+
+    public String getMaxBytesLocalHeap() {
+        return maxBytesLocalHeap;
+    }
+
+    public void setMaxBytesLocalHeap(String maxBytesLocalHeap) {
+        this.maxBytesLocalHeap = maxBytesLocalHeap;
+    }
+
+    public String getMaxBytesLocalOffHeap() {
+        return maxBytesLocalOffHeap;
+    }
+
+    public void setMaxBytesLocalOffHeap(String maxBytesLocalOffHeap) {
+        this.maxBytesLocalOffHeap = maxBytesLocalOffHeap;
+    }
+
     public boolean isMemcachedFailover() {
         return memcachedFailover;
     }

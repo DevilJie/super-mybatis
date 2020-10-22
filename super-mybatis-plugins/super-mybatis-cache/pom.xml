@@ -17,5 +17,6 @@
         <module>super-mybatis-cache-redis</module>
         <module>super-mybatis-cache-base</module>
         <module>super-mybatis-cache-memcached</module>
+        <module>super-mybatis-cache-ehcache</module>
     </modules>
 </project>

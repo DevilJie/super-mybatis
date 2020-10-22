@@ -22,11 +22,14 @@ class SuperMybatisDemoApplicationTests {
 
 	@Test
 	void get(){
-		System.out.println(userInfoService.get("496976191702437956"));
+		System.out.println(userInfoService.get("503681798811684901"));
+		System.out.println(userInfoService.get("503681798811684901"));
+		System.out.println(userInfoService.delete("503681798811684901"));
+		System.out.println(userInfoService.get("503681798811684901"));
 	}
 	@Test
 	void del(){
-		System.out.println(userInfoService.delete("496976191702437956"));
+		System.out.println(userInfoService.delete("503681798811684901"));
 	}
 
 	@Test

@@ -50,8 +50,11 @@ public class CacheSetAspect extends BaseAspect {
         hset.put(SuperMybatisCacheConstants.HSET_METHOD, method.getName());
         hset.put(SuperMybatisCacheConstants.HSET_RESULT, result);
 
-        SuperMybatisCacheConstants.superMybatisCache.set(key, hset);
-        if(expires != null && expires > 0l) SuperMybatisCacheConstants.superMybatisCache.expires(key, expires);
+        if(expires != null && expires > 0l) {
+            SuperMybatisCacheConstants.superMybatisCache.set(key, hset, expires);
+        } else {
+            SuperMybatisCacheConstants.superMybatisCache.set(key, hset);
+        }
 
         PrintLog.DEBUG(logger,"Cache successful, Key is " + key + ((expires != null && expires > 0l) ? " expires is " + expires : ""));
     }
