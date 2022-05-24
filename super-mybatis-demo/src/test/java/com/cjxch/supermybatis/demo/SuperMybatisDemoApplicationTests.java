@@ -1,6 +1,6 @@
 package com.cjxch.supermybatis.demo;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.cjxch.supermybatis.base.bean.Pager;
 import com.cjxch.supermybatis.demo.dto.UserJobDto;
 import com.cjxch.supermybatis.demo.entity.User;

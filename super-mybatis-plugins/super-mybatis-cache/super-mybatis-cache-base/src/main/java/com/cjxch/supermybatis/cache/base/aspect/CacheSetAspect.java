@@ -1,6 +1,6 @@
 package com.cjxch.supermybatis.cache.base.aspect;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.cjxch.supermybatis.base.exception.SuperMybatisException;
 import com.cjxch.supermybatis.cache.base.core.SuperMybatisCacheConstants;
 import com.cjxch.supermybatis.cache.base.log.PrintLog;
