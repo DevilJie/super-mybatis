@@ -16,8 +16,10 @@
 package com.cjxch.supermybatis.cache.base.autoconfigure;
 
 import com.cjxch.supermybatis.base.enu.DbCacheType;
+import com.cjxch.supermybatis.cache.base.core.CacheGlobalSetting;
 import com.cjxch.supermybatis.cache.base.core.SuperMybatisCache;
 import com.cjxch.supermybatis.cache.base.core.SuperMybatisCacheConstants;
+import com.cjxch.supermybatis.core.setting.GlobalSetting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -37,13 +39,19 @@ public class SuperMybatisCacheAutoConfiguration {
         if(SuperMybatisCacheConstants.superMybatisCache != null) return;
         SuperMybatisCacheConstants.applicationContext = applicationContext;
         logger.debug("【Super-Mybatis-Cache】Initializing database cache plug-in...");
-        DbCacheType type = properties.getGlobalSetting().getDbCacheSetting().getDbCacheType();
-        SuperMybatisCacheConstants.dbCacheSetting = properties.getGlobalSetting().getDbCacheSetting();
-        if(type == null)
-            logger.debug("【Super-Mybatis-Cache】Database cache plug-in initialization failed: Please check if the 'dbCacheType' is configured");
-        else{
-            SuperMybatisCache.init(properties.getGlobalSetting().getDbCacheSetting());
-            logger.debug("【Super-Mybatis-Cache】Finished initializing database cache plug-in...");
+        SuperMybatisCacheConstants.dbCacheSetting = SuperMybatisCacheConstants.dbCacheSetting == null ?
+                properties.getGlobalSetting().getDbCacheSetting() : SuperMybatisCacheConstants.dbCacheSetting;
+
+        if(SuperMybatisCacheConstants.dbCacheSetting.getCacheSwitch()) {
+            DbCacheType type = SuperMybatisCacheConstants.dbCacheSetting.getDbCacheType();
+            if (type == null)
+                logger.debug("【Super-Mybatis-Cache】Database cache plug-in initialization failed: Please check if the 'dbCacheType' is configured");
+            else {
+                SuperMybatisCache.init(SuperMybatisCacheConstants.dbCacheSetting);
+                logger.debug("【Super-Mybatis-Cache】Finished initializing database cache plug-in...");
+            }
+        }else{
+            logger.debug("【Super-Mybatis-Cache】Cache is closed");
         }
     }
 }

@@ -190,8 +190,13 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
             // Need to mybatis-spring 2.0.2+
             factory.setDefaultScriptingLanguageDriver(defaultLanguageDriver);
         }
-
+        GlobalSetting confGs = GlobalSetting.getGlobalSetting();
         GlobalSetting setting = this.properties.getGlobalSetting();
+        if(confGs != null){
+            /************如果存在confGs 不为空，则直接使用，忽略配置文件读取的配置***************/
+            setting = confGs;
+        }
+
         factory.setGlobalSetting(setting);
 
 

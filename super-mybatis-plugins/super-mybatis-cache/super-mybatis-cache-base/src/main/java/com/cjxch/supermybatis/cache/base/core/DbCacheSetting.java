@@ -9,6 +9,13 @@ import com.cjxch.supermybatis.base.enu.DbCacheType;
  */
 public class DbCacheSetting {
 
+    /*********************全局设置**************************/
+    /**
+     * 缓存开关，默认打开
+     */
+    private Boolean cacheSwitch = true;
+
+
     /*************************redis配置*******************************/
 
     /**
@@ -206,7 +213,7 @@ public class DbCacheSetting {
     /**
      * 缓存类型
      */
-    private DbCacheType dbCacheType = DbCacheType.Redis;
+    private DbCacheType dbCacheType = null;
 
     public String getRedisHost() {
         return redisHost;
@@ -279,4 +286,8 @@ public class DbCacheSetting {
     public void setExpires(Long expires) {
         this.expires = expires;
     }
+
+    public Boolean getCacheSwitch() { return cacheSwitch; }
+
+    public void setCacheSwitch(Boolean cacheSwitch) { this.cacheSwitch = cacheSwitch; }
 }
