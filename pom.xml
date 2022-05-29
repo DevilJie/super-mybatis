@@ -6,7 +6,7 @@
     <groupId>com.cjxch</groupId>
     <artifactId>super-mybatis</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
 
     <properties>
         <spring.version>5.3.3</spring.version>
@@ -41,8 +41,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.9</source>
-                    <target>1.9</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>

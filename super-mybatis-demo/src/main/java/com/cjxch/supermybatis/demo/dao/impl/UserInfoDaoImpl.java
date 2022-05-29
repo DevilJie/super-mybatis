@@ -27,6 +27,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl<User> implements UserInfoDao {
     @Override
     @CacheSet(key="#user.realName", group = "userInfo")
     public List<User> loadByUser(User user) {
+        Mybatis
         StringBuffer sql = new StringBuffer("select * from user_info u where 1=1");
         if(user != null){
             if(!StringUtils.isEmpty(user.getRealName())) sql.append(" and u.real_name = #{ui.realName}");
