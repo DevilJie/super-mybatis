@@ -35,9 +35,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.TypeHandler;
-import org.mybatis.logging.Logger;
-import org.mybatis.logging.LoggerFactory;
 import org.mybatis.spring.transaction.SpringManagedTransactionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationEvent;
@@ -221,9 +221,7 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
             xmlConfigBuilder = new XMLConfigBuilder(this.configLocation.getInputStream(), (String)null, this.configurationProperties);
             targetConfiguration = xmlConfigBuilder.getConfiguration();
         } else {
-            LOGGER.debug(() -> {
-                return "Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration";
-            });
+            LOGGER.debug("Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration");
             targetConfiguration = new Configuration();
             Optional.ofNullable(this.configurationProperties).ifPresent(targetConfiguration::setVariables);
         }
@@ -250,18 +248,14 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
         if (!ObjectUtils.isEmpty(this.typeAliases)) {
             Stream.of(this.typeAliases).forEach((typeAlias) -> {
                 targetConfiguration.getTypeAliasRegistry().registerAlias(typeAlias);
-                LOGGER.debug(() -> {
-                    return "Registered type alias: '" + typeAlias + "'";
-                });
+                LOGGER.debug("Registered type alias: '" + typeAlias + "'");
             });
         }
 
         if (!ObjectUtils.isEmpty(this.plugins)) {
             Stream.of(this.plugins).forEach((plugin) -> {
                 targetConfiguration.addInterceptor(plugin);
-                LOGGER.debug(() -> {
-                    return "Registered plugin: '" + plugin + "'";
-                });
+                LOGGER.debug("Registered plugin: '" + plugin + "'");
             });
         }
 
@@ -275,9 +269,7 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
         if (!ObjectUtils.isEmpty(this.typeHandlers)) {
             Stream.of(this.typeHandlers).forEach((typeHandler) -> {
                 targetConfiguration.getTypeHandlerRegistry().register(typeHandler);
-                LOGGER.debug(() -> {
-                    return "Registered type handler: '" + typeHandler + "'";
-                });
+                LOGGER.debug("Registered type handler: '" + typeHandler + "'");
             });
         }
 
@@ -285,9 +277,7 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
         if (!ObjectUtils.isEmpty(this.scriptingLanguageDrivers)) {
             Stream.of(this.scriptingLanguageDrivers).forEach((languageDriver) -> {
                 targetConfiguration.getLanguageRegistry().register(languageDriver);
-                LOGGER.debug(() -> {
-                    return "Registered scripting language driver: '" + languageDriver + "'";
-                });
+                LOGGER.debug("Registered scripting language driver: '" + languageDriver + "'");
             });
         }
 
@@ -304,9 +294,7 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
         if (xmlConfigBuilder != null) {
             try {
                 xmlConfigBuilder.parse();
-                LOGGER.debug(() -> {
-                    return "Parsed configuration file: '" + this.configLocation + "'";
-                });
+                LOGGER.debug("Parsed configuration file: '" + this.configLocation + "'");
             } catch (Exception var21) {
                 throw new NestedIOException("Failed to parse config resource: " + this.configLocation, var21);
             } finally {
@@ -317,9 +305,7 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
         targetConfiguration.setEnvironment(new Environment(this.environment, (TransactionFactory)(this.transactionFactory == null ? new SpringManagedTransactionFactory() : this.transactionFactory), this.dataSource));
         if (this.mapperLocations != null) {
             if (this.mapperLocations.length == 0) {
-                LOGGER.warn(() -> {
-                    return "Property 'mapperLocations' was specified but matching resources are not found.";
-                });
+                LOGGER.warn("Property 'mapperLocations' was specified but matching resources are not found.");
             } else {
                 Resource[] var3 = this.mapperLocations;
                 int var4 = var3.length;
@@ -336,16 +322,12 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
                             ErrorContext.instance().reset();
                         }
 
-                        LOGGER.debug(() -> {
-                            return "Parsed mapper file: '" + mapperLocation + "'";
-                        });
+                        LOGGER.debug("Parsed mapper file: '" + mapperLocation + "'");
                     }
                 }
             }
         } else {
-            LOGGER.debug(() -> {
-                return "Property 'mapperLocations' was not specified.";
-            });
+            LOGGER.debug("Property 'mapperLocations' was not specified.");
         }
 
 
@@ -398,9 +380,7 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
                         classes.add(clazz);
                     }
                 } catch (Throwable var16) {
-                    LOGGER.warn(() -> {
-                        return "Cannot load the '" + resource + "'. Cause by " + var16.toString();
-                    });
+                    LOGGER.warn("Cannot load the '" + resource + "'. Cause by " + var16.toString());
                 }
             }
         }

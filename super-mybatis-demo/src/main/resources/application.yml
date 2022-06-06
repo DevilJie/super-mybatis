@@ -2,9 +2,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: 111111
+    url: jdbc:mysql://122.51.4.113:3306/demo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: super_mybatis
+    password: 323ba860e23d4982a9a4c978c8752eaa
   # redis相关配置
   redis:
     database: 0
@@ -44,5 +44,7 @@ super-mybatis:
 
     db-cache-setting:
       cache-switch: true
-      db-cache-type: Ehcache
-
+      db-cache-type: Redis
+      redis-host: 122.51.4.113
+      redis-port: 16379
+      redis-pwd: caijie888

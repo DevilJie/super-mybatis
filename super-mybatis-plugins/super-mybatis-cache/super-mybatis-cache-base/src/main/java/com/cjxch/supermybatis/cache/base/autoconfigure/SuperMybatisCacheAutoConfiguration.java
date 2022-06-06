@@ -16,14 +16,14 @@
 package com.cjxch.supermybatis.cache.base.autoconfigure;
 
 import com.cjxch.supermybatis.base.enu.DbCacheType;
-import com.cjxch.supermybatis.cache.base.core.CacheGlobalSetting;
 import com.cjxch.supermybatis.cache.base.core.SuperMybatisCache;
 import com.cjxch.supermybatis.cache.base.core.SuperMybatisCacheConstants;
-import com.cjxch.supermybatis.core.setting.GlobalSetting;
+import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
@@ -31,6 +31,7 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration
 @AutoConfigureAfter(name="com.cjxch.supermybatis.extend.spring.SuperMybatisSqlSessionFactoryBean")
 @ImportResource({"classpath*:applicationContext-supermybatis-cache*"})
+@ComponentScan("com.cjxch.supermybatis.cache")
 public class SuperMybatisCacheAutoConfiguration {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());

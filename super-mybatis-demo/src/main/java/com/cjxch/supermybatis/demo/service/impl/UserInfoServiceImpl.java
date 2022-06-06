@@ -1,6 +1,7 @@
 package com.cjxch.supermybatis.demo.service.impl;
 
 import com.cjxch.supermybatis.base.bean.Pager;
+import com.cjxch.supermybatis.core.tools.query.SmCriteria;
 import com.cjxch.supermybatis.demo.entity.User;
 import com.cjxch.supermybatis.demo.service.UserInfoService;
 import com.cjxch.supermybatis.demo.dao.UserInfoDao;
@@ -101,5 +102,15 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public Long loadListCountByColumn(String column, String val) {
         return userInfoDao.loadListCountByColumn(column, val);
+    }
+
+    @Override
+    public List<User> loadListByIds(Serializable[] ids) {
+        return userInfoDao.loadByIds(ids);
+    }
+
+    @Override
+    public List<User> getList(SmCriteria criteria) {
+        return userInfoDao.getList(criteria);
     }
 }

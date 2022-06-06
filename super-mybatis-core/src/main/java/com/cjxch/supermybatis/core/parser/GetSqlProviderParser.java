@@ -16,7 +16,6 @@ public class GetSqlProviderParser extends BaseSqlProviderParser {
          * 公共初始化
          */
         commonInit(map);
-
         return String.format(BaseSqlTemplate.GET.getSql(), TABLE_NAME, commonPrimaryKey(map), "#{id}");
     }
 }

@@ -1,19 +1,15 @@
 package com.cjxch.supermybatis.core.parser;
 
+import com.cjxch.supermybatis.base.annotation.Column;
 import com.cjxch.supermybatis.base.annotation.PrimaryKey;
 import com.cjxch.supermybatis.base.annotation.Table;
 import com.cjxch.supermybatis.core.setting.GlobalSetting;
-import com.cjxch.supermybatis.core.tools.CamelCaseUtils;
-import com.cjxch.supermybatis.core.tools.TableTools;
-import com.cjxch.supermybatis.core.tools.ReflectionUtil;
-import com.cjxch.supermybatis.core.tools.SuperMybatisAssert;
+import com.cjxch.supermybatis.core.tools.*;
+import com.cjxch.supermybatis.core.tools.query.*;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -50,7 +46,12 @@ public abstract class BaseSqlProviderParser {
      */
     public static Map<String, BaseSqlProviderParser> cachedParser = new HashMap<>();
 
-    public abstract String execute(Map<String, Object> map);
+    /**
+     * 执行方法
+     * @param parameter
+     * @return
+     */
+    public abstract String execute(Map<String, Object> parameter);
 
     public void commonInit(Map<String, Object> map){
 
@@ -102,5 +103,97 @@ public abstract class BaseSqlProviderParser {
         if(primaryKey != null && !"".equals(primaryKey.key())) PRIMARY_KEY = primaryKey.key();
 
         return PRIMARY_KEY;
+    }
+
+    protected String processSearchParam(Map<String, Object> map) {
+        StringBuffer queryStatement = new StringBuffer();
+
+        Object queryEntity = map.get(SqlProviderConstants.ENTITY);
+        SmCriteria smCriteria = (SmCriteria)map.get(SqlProviderConstants.SM_CRITERIA);
+        String queryColumn = String.valueOf(map.get(SqlProviderConstants.QUERY_COLUMN));
+        Object queryVal = String.valueOf(map.get(SqlProviderConstants.QUERY_VAL));
+
+
+        SuperMybatisAssert.check(queryEntity != null || (queryColumn != null && queryVal != null), "You need to pass at least one query parameter");
+
+        if(queryEntity != null) {
+            Arrays.asList(ReflectionUtil.getDeclaredField(queryEntity)).stream().forEach(item -> {
+                Column c = item.getAnnotation(Column.class);
+                if (c != null && c.ignored() && StringUtils.isEmpty(c.matchBase())) {
+                    //TODO 后续其他处理？？？
+                } else {
+                    if (!StringUtils.isEmpty(ReflectionUtil.getFieldValue(queryEntity, item.getName()))) {
+                        queryStatement.append(TableTools.processQueryStatemenet(setting, item, queryEntity));
+                    }
+                }
+            });
+            map.put(queryEntity.getClass().getSimpleName(), queryEntity);
+        }else if(smCriteria != null){
+            List<Object> criterionList = smCriteria.getCriterionList();
+            if(criterionList != null && criterionList.size() > 0){
+                queryStatement.append(" and");
+                criterionList.forEach(item -> {
+                    CriteriaConnector connector;
+                    CriteriaType type;
+                    SmCriterion smc;
+                    SmCriterionArrays sca;
+                    if(item instanceof SmCriterion){
+                        smc = (SmCriterion)item;
+                        connector = smc.getConnector() == null ? CriteriaConnector.AND : smc.getConnector();
+                        type = smc.getType();
+                        String _Key = UUID.randomUUID().toString().replace("-", "");
+                        if(criterionList.indexOf(item) != 0) queryStatement.append(" " + connector.name());
+                        queryStatement.append(String.format(" %s%s#{%s}", TableTools.fieldNameToColumn(setting, smc.getKey()), type.getOperator(), _Key));
+                        map.put(_Key, smc.getValue());
+                    }else if(item instanceof SmCriterionArrays){
+                        sca = (SmCriterionArrays)item;
+                        connector = sca.getConnector() == null ? CriteriaConnector.AND : sca.getConnector();
+                        if(criterionList.indexOf(item) != 0) queryStatement.append(" " + connector.name());
+                        queryStatement.append(" (");
+                        sca.getSmCriterionList().forEach(_item -> {
+                            CriteriaConnector _connector;
+                            CriteriaType _type;
+                            _connector = _item.getConnector() == null ? CriteriaConnector.AND : _item.getConnector();
+                            _type = _item.getType();
+                            String _Key = UUID.randomUUID().toString().replace("-", "");
+                            if(sca.getSmCriterionList().indexOf(_item) != 0) queryStatement.append(" " + _connector.name());
+                            if(_type == CriteriaType.in){
+                                String random = StrUtil.RadomCode(36, "other");
+                                Object[] o;
+                                if (_item.getValue() instanceof List) {
+                                    o = ((List) _item.getValue()).toArray();
+                                } else {
+                                    o = (Object[]) _item.getValue();
+                                }
+                                String sql_ = "(";
+                                String in = "";
+                                int n = 0;
+                                Object v_ = "";
+                                for (Object obj : o) {
+                                    v_ = obj;
+                                    n++;
+                                    in += ",#{" + random + "in_" + n + "}";
+                                    map.put(random + "in_" + n, v_);
+                                }
+                                sql_ += in.substring(1) + ")";
+                                queryStatement.append(String.format(" %s%s%s ", TableTools.fieldNameToColumn(setting, _item.getKey()), _type.getOperator(), sql_));
+                            }else{
+                                queryStatement.append(String.format(" %s%s#{%s}", TableTools.fieldNameToColumn(setting, _item.getKey()), _type.getOperator(), _Key));
+                            }
+                            map.put(_Key, _item.getValue());
+                        });
+                        queryStatement.append(" )");
+                    }
+                });
+            }
+        }else{
+            queryStatement.append(String.format(" and %s = #{%s}", TableTools.fieldNameToColumn(setting, queryColumn), SqlProviderConstants.QUERY_VAL));
+        }
+
+        String queryStatementSql = queryStatement.toString();
+        if(queryStatementSql.length() > 0) {
+            queryStatementSql = " WHERE "+queryStatementSql.substring(4);
+        }
+        return queryStatementSql;
     }
 }

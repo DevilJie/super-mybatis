@@ -7,7 +7,7 @@ package com.cjxch.supermybatis.base.enu;
 public enum BaseSqlTemplate {
 
     GET ("SELECT * FROM %s WHERE %s = %s"), //根据主键获取
-    DELETE ("DELETE fROM %s WHERE %s = %s"), //根据主键删除
+    DELETE ("DELETE FROM %s WHERE %s = %s"), //根据主键删除
     INSERT ("INSERT INTO %s (%s) VALUES (%s)"), //保存
     BATCH_INSERT ("INSERT INTO %s (%s) VALUES \n%s"), //批量保存
     UPDATE ("UPDATE %s %s WHERE %s = %s"), //更新

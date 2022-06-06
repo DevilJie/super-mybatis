@@ -66,6 +66,7 @@ import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.AnnotationMetadata;
@@ -94,6 +95,7 @@ import org.springframework.util.StringUtils;
 @ConditionalOnSingleCandidate(DataSource.class)
 @EnableConfigurationProperties(SuperMybatisProperties.class)
 @AutoConfigureAfter({DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class})
+@ImportResource({"classpath*:applicationContext-hfaster-aop*"})
 public class SuperMybatisAutoConfiguration implements InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(SuperMybatisAutoConfiguration.class);

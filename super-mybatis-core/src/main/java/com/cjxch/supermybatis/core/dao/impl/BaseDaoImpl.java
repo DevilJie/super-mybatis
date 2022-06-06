@@ -8,15 +8,14 @@ import com.cjxch.supermybatis.core.parser.SqlProviderConstants;
 import com.cjxch.supermybatis.core.tools.CoreUtil;
 import com.cjxch.supermybatis.core.dao.BaseDao;
 import com.cjxch.supermybatis.core.tools.SuperMybatisAssert;
+import com.cjxch.supermybatis.core.tools.query.SmCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -96,6 +95,15 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
         map.put("id", id);
         return baseMapper.delete(map);
+    }
+
+    @Override
+    public Long delete(Serializable[] id) {
+        AtomicReference<Long> ret = new AtomicReference<>(0l);
+        Arrays.asList(id).forEach(e -> {
+            ret.updateAndGet(v -> v + delete(e));
+        });
+        return ret.get();
     }
 
     @Override
@@ -295,6 +303,113 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         map.put(SqlProviderConstants.QUERY_COLUMN, column);
         map.put(SqlProviderConstants.QUERY_VAL, val);
         return baseMapper.getListCountByColumn(map);
+    }
+
+    @Override
+    public Pager getPager(Pager pager, SmCriteria smCriteria, Class<T> t) {
+        SuperMybatisAssert.check(smCriteria != null, "Sorry, The Object SmCriteria cannot be empty.");
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.SM_CRITERIA, smCriteria);
+        map.put(SqlProviderConstants.PAGER, pager);
+        map.put(SqlProviderConstants.ORDER, pager.getOrder());
+        map.put(SqlProviderConstants.ORDER_BY, pager.getOrderBy());
+
+        List<T> ret = baseMapper.getPager(map).stream().map(item -> {
+            T entity = null;
+            try {
+                entity = t.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            T tt = (T) CoreUtil.process(entity, item);
+            return tt;
+        }).collect(Collectors.toList());
+
+        Long totalCount = baseMapper.getPagerCount(map);
+
+        pager.setResult(ret);
+        pager.setTotalCount(totalCount==null?0:totalCount.intValue());
+        return pager;
+    }
+
+    @Override
+    public List<T> getList(SmCriteria smCriteria, Class<T> t) {
+        SuperMybatisAssert.check(smCriteria != null, "Sorry, The Object SmCriteria cannot be empty.");
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.SM_CRITERIA, smCriteria);
+        Pager pager = new Pager();
+        map.put(SqlProviderConstants.PAGER, pager);
+        map.put(SqlProviderConstants.ORDER, pager.getOrder());
+        map.put(SqlProviderConstants.ORDER_BY, pager.getOrderBy());
+        List<T> ret = baseMapper.getObjectList(map).stream().map(item -> {
+            T entity = null;
+            try {
+                entity = t.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            T tt = (T) CoreUtil.process(entity, item);
+            return tt;
+        }).collect(Collectors.toList());
+        return ret;
+    }
+
+    @Override
+    public List<T> getList(SmCriteria smCriteria, Class<T> t, Pager.Order order, String orderBy) {
+        SuperMybatisAssert.check(smCriteria != null, "Sorry, The Object SmCriteria cannot be empty.");
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.ENTITY, t);
+        Pager pager = new Pager();
+        map.put(SqlProviderConstants.PAGER, pager);
+        map.put(SqlProviderConstants.ORDER, order);
+        map.put(SqlProviderConstants.ORDER_BY, orderBy);
+        List<T> ret = baseMapper.getObjectList(map).stream().map(item -> {
+            T entity = null;
+            try {
+                entity = t.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            T tt = (T) CoreUtil.process(entity, item);
+            return tt;
+        }).collect(Collectors.toList());
+        return ret;
+    }
+
+    @Override
+    public Long getListCount(SmCriteria smCriteria, Class<T> t) {
+        SuperMybatisAssert.check(smCriteria != null, "Sorry, The Object SmCriteria cannot be empty.");
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.SM_CRITERIA, smCriteria);
+        Pager pager = new Pager();
+        map.put(SqlProviderConstants.PAGER, pager);
+        map.put(SqlProviderConstants.ORDER, pager.getOrder());
+        map.put(SqlProviderConstants.ORDER_BY, pager.getOrderBy());
+        return baseMapper.getObjectListCount(map);
+    }
+
+    @Override
+    public Pager getPager(Pager pager, SmCriteria smCriteria) {
+        return getPager(pager, smCriteria, getEntityClass());
+    }
+
+    @Override
+    public List<T> getList(SmCriteria smCriteria) {
+        return getList(smCriteria, getEntityClass());
+    }
+
+    @Override
+    public List<T> getList(SmCriteria smCriteria, Pager.Order order, String orderBy) {
+        return getList(smCriteria, getEntityClass(), order, orderBy);
+    }
+
+    @Override
+    public Long getListCount(SmCriteria smCriteria) {
+        return getListCount(smCriteria, getEntityClass());
     }
 
 

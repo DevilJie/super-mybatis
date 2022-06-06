@@ -12,11 +12,11 @@ import java.lang.annotation.Documented;
  */
 public abstract class BaseEntity implements Serializable {
 
-    public static final String ON_SAVE_METHOD_NAME   = "onSave";            // "保存"方法名称
-
-    public static final String ON_UPDATE_METHOD_NAME = "onUpdate";          // "更新"方法名称
-
-    public static final String ON_DELETE_METHOD_NAME = "onDelete";          // "删除"方法名称
+//    public static final String ON_SAVE_METHOD_NAME   = "onSave";            // "保存"方法名称
+//
+//    public static final String ON_UPDATE_METHOD_NAME = "onUpdate";          // "更新"方法名称
+//
+//    public static final String ON_DELETE_METHOD_NAME = "onDelete";          // "删除"方法名称
 
     /**
      * 当执行save方法之前，会调用此方法

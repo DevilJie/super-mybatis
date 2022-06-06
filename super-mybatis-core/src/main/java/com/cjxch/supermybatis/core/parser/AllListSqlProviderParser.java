@@ -17,7 +17,8 @@ public class AllListSqlProviderParser extends BaseSqlProviderParser {
          */
         commonInit(map);
 
-        return String.format(BaseSqlTemplate.ALL_LIST.getSql(), TABLE_NAME);
+        String sql = String.format(BaseSqlTemplate.ALL_LIST.getSql(), TABLE_NAME);
+        return sql;
 
     }
 }

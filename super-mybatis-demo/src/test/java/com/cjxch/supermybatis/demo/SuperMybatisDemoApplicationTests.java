@@ -2,38 +2,41 @@ package com.cjxch.supermybatis.demo;
 
 import com.alibaba.fastjson2.JSON;
 import com.cjxch.supermybatis.base.bean.Pager;
+import com.cjxch.supermybatis.core.tools.query.CriteriaConnector;
+import com.cjxch.supermybatis.core.tools.query.SmCriteria;
+import com.cjxch.supermybatis.core.tools.query.SmCriterion;
+import com.cjxch.supermybatis.core.tools.query.SmCriterionArrays;
 import com.cjxch.supermybatis.demo.dto.UserJobDto;
 import com.cjxch.supermybatis.demo.entity.User;
 import com.cjxch.supermybatis.demo.service.UserInfoService;
 import com.cjxch.supermybatis.demo.dto.UserDto;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.io.Serializable;
 import java.util.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class SuperMybatisDemoApplicationTests {
+public class SuperMybatisDemoApplicationTests {
 
 	@Autowired
 	UserInfoService userInfoService;
 
 	@Test
-	void get(){
-		System.out.println(userInfoService.get("503681798811684901"));
-		System.out.println(userInfoService.get("503681798811684901"));
-		System.out.println(userInfoService.delete("503681798811684901"));
-		System.out.println(userInfoService.get("503681798811684901"));
+	public void get(){
+		System.out.println(userInfoService.loadByColumn("id", "713868623503953997"));
 	}
 	@Test
-	void del(){
+	public void del(){
 		System.out.println(userInfoService.delete("503681798811684901"));
 	}
 
 	@Test
-	void testInsert(){
+	public void testInsert(){
 		UserDto user = new UserDto();
 		user.setAgeStart(18);
 		user.setAge(19);
@@ -44,7 +47,7 @@ class SuperMybatisDemoApplicationTests {
 	}
 
 	@Test
-	void testBatchInsert(){
+	public void testBatchInsert(){
 		List<User> list = new ArrayList(){
 			{
 				add(new User("菜菜2", 30, "314170122@qq.com"));
@@ -56,17 +59,17 @@ class SuperMybatisDemoApplicationTests {
 	}
 
 	@Test
-	void testAllList(){
+	public void testAllList(){
 		System.out.println(JSON.toJSONString(userInfoService.allList()));
 	}
 
 	@Test
-	void testDelete(){
+	public void testDelete(){
 		System.out.println(userInfoService.delete("493137875643142166"));
 	}
 
 	@Test
-	void testUpdate(){
+	public void testUpdate(){
 		User user = new User();
 		user.setId("496976191702437956");
 		user.setRealName("小屁孩");
@@ -76,7 +79,7 @@ class SuperMybatisDemoApplicationTests {
 	}
 
 	@Test
-	void testPager(){
+	public void testPager(){
 		Pager pager = new Pager();
 		pager.setPageSize(10);
 		pager.setOrderBy("age");
@@ -90,7 +93,7 @@ class SuperMybatisDemoApplicationTests {
 	}
 
 	@Test
-	void testGetList(){
+	public void testGetList(){
 		UserDto u = new UserDto();
 		u.setAgeStart(19);
 		u.setAgeEnd(19);
@@ -103,7 +106,7 @@ class SuperMybatisDemoApplicationTests {
 	}
 
 	@Test
-	void testUserJob(){
+	public void testUserJob(){
 		Pager pager = new Pager();
 		pager.setPageSize(10);
 		pager.setOrderBy("age");
@@ -112,5 +115,26 @@ class SuperMybatisDemoApplicationTests {
 		u.setRealName("妹");
 		pager = userInfoService.getPager(pager, u);
 		System.out.println(JSON.toJSONString(pager));
+	}
+
+	@Test
+	public void testLoadByIds(){
+		List<User> userList = userInfoService.loadListByIds(new Serializable[]{"711542893247991812", "712431236315877442"});
+		System.out.println(JSON.toJSONString(userList));
+	}
+
+	@Test
+	public void testSmCriteria(){
+
+		SmCriterionArrays arr = new SmCriterionArrays.SmCriterionArraysBuild()
+				.in("id", new String[]{"712433319333072950", "712433533724921876"})
+				.like("real_name", "%11", CriteriaConnector.AND).build(CriteriaConnector.AND);
+
+		SmCriteria smc = new SmCriteria.SmCriteriaBuild()
+				.add(arr)
+				.add(SmCriterion.eq("id", "712436551878971436", CriteriaConnector.OR))
+				.build();
+		System.out.println(smc);
+		System.out.println(JSON.toJSONString(userInfoService.getList(smc)));
 	}
 }

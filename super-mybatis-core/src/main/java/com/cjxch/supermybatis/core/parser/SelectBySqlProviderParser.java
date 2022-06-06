@@ -12,7 +12,9 @@ public class SelectBySqlProviderParser extends SelectObjectSqlProviderParser {
     public String execute(Map<String, Object> map) {
 
         String sql = (String)map.get(SqlProviderConstants.SQL);
+        if(map.get(SqlProviderConstants.HFASTER_FLAG) != null){
 
+        }
         return sql;
     }
 }

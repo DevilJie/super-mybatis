@@ -27,10 +27,9 @@ public class UserInfoDaoImpl extends BaseDaoImpl<User> implements UserInfoDao {
     @Override
     @CacheSet(key="#user.realName", group = "userInfo")
     public List<User> loadByUser(User user) {
-        Mybatis
         StringBuffer sql = new StringBuffer("select * from user_info u where 1=1");
         if(user != null){
-            if(!StringUtils.isEmpty(user.getRealName())) sql.append(" and u.real_name = #{ui.realName}");
+            if(!StringUtils.isEmpty(user.getRealName())) sql.append(" and u.real_name = :ui.realName");
         }
         return getBatisSession().createQuery(sql.toString()).setParameter("ui", user).list(User.class);
     }
@@ -42,8 +41,13 @@ public class UserInfoDaoImpl extends BaseDaoImpl<User> implements UserInfoDao {
     }
 
     @Override
-    @CacheEvict(key="'user-info:' + #id")
     public Long delete(Serializable id) {
         return super.delete(id);
+    }
+
+    @Override
+    public List<User> loadByIds(Serializable[] ids) {
+        String sql = "select * from user_info u where u.id in :ids";
+        return getBatisSession().createQuery(sql).setParameter("ids", ids).list(User.class);
     }
 }

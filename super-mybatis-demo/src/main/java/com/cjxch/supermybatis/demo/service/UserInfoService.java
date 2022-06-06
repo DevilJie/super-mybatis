@@ -1,6 +1,7 @@
 package com.cjxch.supermybatis.demo.service;
 
 import com.cjxch.supermybatis.base.bean.Pager;
+import com.cjxch.supermybatis.core.tools.query.SmCriteria;
 import com.cjxch.supermybatis.demo.entity.User;
 
 import java.io.Serializable;
@@ -46,4 +47,9 @@ public interface UserInfoService {
     List<User> loadListByColumn(String column, String val, Pager.Order order, String orderBy);
 
     Long loadListCountByColumn(String column, String val);
+
+    List<User> loadListByIds(Serializable[] ids);
+
+
+    List<User> getList(SmCriteria criteria);
 }

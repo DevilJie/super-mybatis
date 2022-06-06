@@ -3,6 +3,7 @@ package com.cjxch.supermybatis.core.actuator;
 import com.cjxch.supermybatis.base.bean.Pager;
 import com.cjxch.supermybatis.core.mapper.BaseMapper;
 import com.cjxch.supermybatis.core.parser.SqlProviderConstants;
+import com.cjxch.supermybatis.core.tools.StrUtil;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public abstract class SuperMybatisBaseQuery {
 
     /**
      * 返回一个单元的数据
-     * 
+     *
      * @return
      */
     public abstract Serializable uniqueResult();
@@ -58,14 +59,14 @@ public abstract class SuperMybatisBaseQuery {
 
     /**
      * 执行更新sql
-     * 
+     *
      * @return
      */
     public abstract Long executeUpdate();
 
     /**
      * 执行sql
-     * 
+     *
      * @return
      */
     public abstract Serializable execute();
@@ -95,7 +96,44 @@ public abstract class SuperMybatisBaseQuery {
 
     public SuperMybatisBaseQuery setParameter(String key, Object value) {
         this.parameter.put(key, value);
+
+        if (value instanceof Object[] || value instanceof List) {
+            String random = StrUtil.RadomCode(36, "other");
+            Object[] o;
+            if (value instanceof List) {
+                o = ((List) value).toArray();
+            } else {
+                o = (Object[]) value;
+            }
+            String sql_ = "(";
+            String in = "";
+            int n = 0;
+            Object v_ = "";
+            for (Object obj : o) {
+                v_ = obj;
+                if (obj.getClass().isEnum()) {
+                    v_ = processEnum(obj.toString(), obj.getClass());
+                }
+                n++;
+                in += ",#{" + random + "in_" + n + "}";
+                parameter.put(random + "in_" + n, v_);
+            }
+            sql_ += in.substring(1) + ")";
+            sql = sql.replace("#{"+key+"}", sql_);
+            this.parameter.put(SqlProviderConstants.SQL, sql);
+        }
         return this;
+    }
+
+    private String processEnum(String v, Class c) {
+        String returnStr = "";
+        for (int i = 0; i < c.getEnumConstants().length; i++) {
+            if (v.equals(c.getEnumConstants()[i].toString())) {
+                returnStr = i + "";
+                break;
+            }
+        }
+        return returnStr;
     }
 
 

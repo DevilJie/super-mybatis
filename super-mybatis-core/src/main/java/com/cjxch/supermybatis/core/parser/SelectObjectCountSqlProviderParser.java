@@ -32,36 +32,8 @@ public class SelectObjectCountSqlProviderParser extends BaseSqlProviderParser {
 //            orderBy = " order by " + orderBy + " " + order.name();
 //        }
 
-        StringBuffer queryStatement = new StringBuffer();
 
-        Object queryEntity = map.get(SqlProviderConstants.ENTITY);
-        String queryColumn = String.valueOf(map.get(SqlProviderConstants.QUERY_COLUMN));
-        Object queryVal = String.valueOf(map.get(SqlProviderConstants.QUERY_VAL));
-
-
-        SuperMybatisAssert.check(queryEntity != null || (queryColumn != null && queryVal != null), "You need to pass at least one query parameter");
-
-
-        if(queryEntity != null) {
-            Arrays.asList(ReflectionUtil.getDeclaredField(queryEntity)).stream().forEach(item -> {
-                Column c = item.getAnnotation(Column.class);
-                if (c != null && c.ignored() && StringUtils.isEmpty(c.matchBase())) {
-                    //TODO 后续其他处理？？？
-                } else {
-                    if (!StringUtils.isEmpty(ReflectionUtil.getFieldValue(queryEntity, item.getName()))) {
-                        queryStatement.append(TableTools.processQueryStatemenet(setting, item, queryEntity));
-                    }
-                }
-            });
-            map.put(queryEntity.getClass().getSimpleName(), queryEntity);
-        }else{
-            queryStatement.append(String.format(" and %s = #{%s}", TableTools.fieldNameToColumn(setting, queryColumn), SqlProviderConstants.QUERY_VAL));
-        }
-
-        String queryStatementSql = queryStatement.toString();
-        if(queryStatementSql.length() > 0) {
-            queryStatementSql = " WHERE "+queryStatementSql.substring(4);
-        }
+        String queryStatementSql = processSearchParam(map);
 
 
         return String.format(BaseSqlTemplate.SELECT_COUNT.getSql(), TABLE_NAME, queryStatementSql);
