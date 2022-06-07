@@ -28,6 +28,7 @@ import org.apache.ibatis.session.ExecutorType;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -42,6 +43,7 @@ import org.springframework.stereotype.Component;
  * @author Kazuki Shimizu
  */
 @Component
+@Primary
 @ConfigurationProperties(prefix = GlobalConstants.SUPER_MYBATIS)
 public class SuperMybatisProperties {
 
