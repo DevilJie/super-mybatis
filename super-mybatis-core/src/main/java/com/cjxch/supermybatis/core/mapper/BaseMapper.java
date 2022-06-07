@@ -120,8 +120,6 @@ public interface BaseMapper {
     @SelectProvider(type= SelectObjectCountSqlProviderParser.class,method="execute")
     Long getListCountByColumn(Map<String, Object> paramMap);
 
-
-
     /**
      * 自定义查询条件获取对象列表集合大小
      *

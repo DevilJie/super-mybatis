@@ -155,6 +155,21 @@ public interface BaseDao<T> {
      */
     public List<T> getList(SmCriteria smCriteria);
 
+
+    /**
+     * 根据查询条件构造器查询
+     * @param smCriteria 查询条件构造器
+     * @return
+     */
+    public T getObject(SmCriteria smCriteria);
+
+    /**
+     * 根据查询条件构造器查询
+     * @param smCriteria 查询条件构造器
+     * @return
+     */
+    public T getObject(SmCriteria smCriteria, Class<T> t);
+
     /**
      * 根据查询条件构造器查询
      * @param order 排序类型

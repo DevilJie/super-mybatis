@@ -5,7 +5,7 @@
     <parent>
         <artifactId>super-mybatis-cache</artifactId>
         <groupId>com.cjxch.supermybatis</groupId>
-        <version>1.1.9</version>
+        <version>1.2.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -13,14 +13,14 @@
 
     <properties>
         <spring.redis.version>2.7.0</spring.redis.version>
-        <jedis.version>4.2.3</jedis.version>
+        <jedis.version>3.8.0</jedis.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.cjxch.supermybatis</groupId>
             <artifactId>super-mybatis-cache-base</artifactId>
-            <version>1.1.9</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>

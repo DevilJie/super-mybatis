@@ -4,7 +4,7 @@ import com.cjxch.supermybatis.extend.spring.anno.SuperMapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.cjxch.supermybatis.demo.*")
+@SpringBootApplication
 @SuperMapperScan
 public class SuperMybatisDemoApplication {
 

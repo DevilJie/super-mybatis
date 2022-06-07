@@ -421,4 +421,18 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     public Class<T> getEntityClass() {
         return entityClass;
     }
+
+    @Override
+    public T getObject(SmCriteria smCriteria) {
+        List<T> l = getList(smCriteria);
+        if(l != null && l.size() > 0) return l.get(0);
+        return null;
+    }
+
+    @Override
+    public T getObject(SmCriteria smCriteria, Class<T> t) {
+        List<T> l = getList(smCriteria, t);
+        if(l != null && l.size() > 0) return l.get(0);
+        return null;
+    }
 }

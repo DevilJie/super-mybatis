@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.cjxch</groupId>
         <artifactId>super-mybatis</artifactId>
-        <version>1.1.9</version>
+        <version>1.2.0</version>
     </parent>
 
     <groupId>com.cjxch.supermybatis</groupId>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>com.cjxch.supermybatis</groupId>
             <artifactId>super-mybatis-base</artifactId>
-            <version>1.1.9</version>
+            <version>1.2.0</version>
         </dependency>
     </dependencies>
 </project>
