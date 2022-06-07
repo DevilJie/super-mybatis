@@ -122,6 +122,8 @@ public class CoreUtil {
                             v = Float.parseFloat(en.getValue().toString());
                         } else if (clazz.equals(Integer.class) || clazz.equals(int.class)) {
                             v = Integer.parseInt(en.getValue().toString());
+                        } else if (clazz.equals(Long.class) || clazz.equals(long.class)) {
+                            v = Long.parseLong(en.getValue().toString());
                         } else if (clazz.equals(Boolean.class) || clazz.equals(boolean.class)) {
                             Boolean l = null;
                             if (en.getValue() != null) {

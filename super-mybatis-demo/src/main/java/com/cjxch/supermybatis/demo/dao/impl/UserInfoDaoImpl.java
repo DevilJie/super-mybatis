@@ -1,6 +1,5 @@
 package com.cjxch.supermybatis.demo.dao.impl;
 
-import com.cjxch.supermybatis.cache.base.annotation.CacheEvict;
 import com.cjxch.supermybatis.cache.base.annotation.CacheSet;
 import com.cjxch.supermybatis.core.dao.impl.BaseDaoImpl;
 import com.cjxch.supermybatis.demo.dao.UserInfoDao;

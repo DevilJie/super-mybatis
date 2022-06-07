@@ -16,7 +16,7 @@ public class DatabaseSetting {
     /**
      * 默认主键生成策略
      */
-    private PrimaryKeyType primaryKeyType = PrimaryKeyType.SNOWFLAKE;
+    private PrimaryKeyType primaryKeyType = PrimaryKeyType.AUTO;
 
     /**
      * 表名是否开启驼峰和下划线分割互转

@@ -38,6 +38,7 @@ super-mybatis:
       upper-case-mode: true
       table-perfix: test_
       show-sql: true
+      primary-key-type: auto
     snowflake-setting:
       datacenter-id: 1
       worker-id: 1

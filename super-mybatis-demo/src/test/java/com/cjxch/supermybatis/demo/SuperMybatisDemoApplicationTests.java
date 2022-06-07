@@ -10,20 +10,22 @@ import com.cjxch.supermybatis.demo.dto.UserJobDto;
 import com.cjxch.supermybatis.demo.entity.User;
 import com.cjxch.supermybatis.demo.service.UserInfoService;
 import com.cjxch.supermybatis.demo.dto.UserDto;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.Serializable;
 import java.util.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class SuperMybatisDemoApplicationTests {
 
-	@Autowired
+	@Before
+	public void befor(){
+		ConfigurableApplicationContext context = SpringApplication.run(SuperMybatisDemoApplication.class, new String[]{});
+		userInfoService = context.getBean(UserInfoService.class);
+	}
+
 	UserInfoService userInfoService;
 
 	@Test

@@ -15,6 +15,7 @@ public class User implements Serializable {
     @Column(matchMode = MatchMode.CENTER_MATCH)
     private String realName;
     private Integer age;
+    @Column(ignored = true)
     private String email;
 
     public User(){}
