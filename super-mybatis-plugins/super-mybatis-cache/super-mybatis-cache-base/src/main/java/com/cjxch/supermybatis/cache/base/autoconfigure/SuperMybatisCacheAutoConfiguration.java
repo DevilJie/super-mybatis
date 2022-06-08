@@ -28,7 +28,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
 
-@Configuration
 @AutoConfigureAfter(name="com.cjxch.supermybatis.extend.spring.SuperMybatisSqlSessionFactoryBean")
 @ImportResource({"classpath*:applicationContext-supermybatis-cache*"})
 @ComponentScan("com.cjxch.supermybatis.cache")
@@ -40,10 +39,14 @@ public class SuperMybatisCacheAutoConfiguration {
         if(SuperMybatisCacheConstants.superMybatisCache != null) return;
         SuperMybatisCacheConstants.applicationContext = applicationContext;
         logger.debug("【Super-Mybatis-Cache】Initializing database cache plug-in...");
-        SuperMybatisCacheConstants.dbCacheSetting = SuperMybatisCacheConstants.dbCacheSetting == null ?
-                properties.getGlobalSetting().getDbCacheSetting() : SuperMybatisCacheConstants.dbCacheSetting;
 
-        if(SuperMybatisCacheConstants.dbCacheSetting.getCacheSwitch()) {
+        if(SuperMybatisCacheConstants.dbCacheSetting == null){
+            if(properties.getGlobalSetting() != null && properties.getGlobalSetting().getDbCacheSetting() != null)
+                SuperMybatisCacheConstants.dbCacheSetting = properties.getGlobalSetting().getDbCacheSetting();
+        }
+
+
+        if(SuperMybatisCacheConstants.dbCacheSetting != null && SuperMybatisCacheConstants.dbCacheSetting.getCacheSwitch()) {
             DbCacheType type = SuperMybatisCacheConstants.dbCacheSetting.getDbCacheType();
             if (type == null)
                 logger.debug("【Super-Mybatis-Cache】Database cache plug-in initialization failed: Please check if the 'dbCacheType' is configured");

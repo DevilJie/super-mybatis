@@ -30,7 +30,8 @@ public class UserTests {
 
 	@Test
 	public void get(){
-		System.out.println(userInfoService.loadByColumn("id", "713868623503953997"));
+		System.out.println(userInfoService.get("713868623503953997"));
+		System.out.println(userInfoService.get("713868623503953997"));
 	}
 	@Test
 	public void del(){

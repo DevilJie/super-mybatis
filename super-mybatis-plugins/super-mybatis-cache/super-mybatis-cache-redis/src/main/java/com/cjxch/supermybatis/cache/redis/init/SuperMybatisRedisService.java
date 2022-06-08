@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 public class SuperMybatisRedisService {
