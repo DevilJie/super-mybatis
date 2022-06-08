@@ -4,13 +4,14 @@ import com.cjxch.supermybatis.base.annotation.Column;
 import com.cjxch.supermybatis.base.annotation.PrimaryKey;
 import com.cjxch.supermybatis.base.annotation.Table;
 import com.cjxch.supermybatis.base.enu.MatchMode;
+import com.cjxch.supermybatis.base.enu.PrimaryKeyType;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Table(value="user_info")
 public class User implements Serializable {
-    @PrimaryKey
+    @PrimaryKey(keyType = PrimaryKeyType.SNOWFLAKE)
     private String id;
     @Column(matchMode = MatchMode.CENTER_MATCH)
     private String realName;

@@ -7,6 +7,7 @@ import com.cjxch.supermybatis.core.mapper.BaseMapper;
 import com.cjxch.supermybatis.core.parser.SqlProviderConstants;
 import com.cjxch.supermybatis.core.tools.CoreUtil;
 import com.cjxch.supermybatis.core.dao.BaseDao;
+import com.cjxch.supermybatis.core.tools.ReflectionUtil;
 import com.cjxch.supermybatis.core.tools.SuperMybatisAssert;
 import com.cjxch.supermybatis.core.tools.query.SmCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
         map.put(SqlProviderConstants.ENTITY, t);
         baseMapper.insert(map);
-        return (Serializable) map.get(SqlProviderConstants.PRIMARY_KEY_VALUE);
+        Serializable id = (Serializable) map.get(SqlProviderConstants.PRIMARY_KEY_VALUE);
+        ReflectionUtil.invokeSetterMethod(t, map.get(SqlProviderConstants.PRIMARY_KEY).toString(), id.toString());
+        return id;
     }
 
     @Override

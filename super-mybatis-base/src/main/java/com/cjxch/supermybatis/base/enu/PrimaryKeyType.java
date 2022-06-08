@@ -7,6 +7,11 @@ package com.cjxch.supermybatis.base.enu;
 public enum PrimaryKeyType {
 
     /**
+     * 未指定
+     */
+    NONE(0),
+
+    /**
      * ID自增长
      * 字段类型：int
      */

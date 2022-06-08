@@ -4,12 +4,15 @@ import com.cjxch.supermybatis.base.annotation.Column;
 import com.cjxch.supermybatis.base.annotation.PrimaryKey;
 import com.cjxch.supermybatis.base.enu.BaseSqlTemplate;
 import com.cjxch.supermybatis.base.enu.PrimaryKeyType;
+import com.cjxch.supermybatis.core.generator.IdentifierGenerator;
+import com.cjxch.supermybatis.core.setting.DatabaseSetting;
 import com.cjxch.supermybatis.core.setting.GlobalConstants;
 import com.cjxch.supermybatis.core.tools.ReflectionUtil;
 import com.cjxch.supermybatis.core.tools.SuperMybatisAssert;
 import com.cjxch.supermybatis.core.tools.TableTools;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -33,29 +36,21 @@ public class InsertSqlProviderParser extends BaseSqlProviderParser {
 
         Arrays.asList(ReflectionUtil.getDeclaredField(insertEntity)).stream().
                 filter(item -> item.getAnnotation(PrimaryKey.class) != null).forEach(item -> {
-            if((item.getAnnotation(PrimaryKey.class)).keyType() != PrimaryKeyType.AUTO){
+
+            PrimaryKeyType keyType = (item.getAnnotation(PrimaryKey.class)).keyType();
+
+            if(keyType == PrimaryKeyType.NONE){
+                keyType = setting.getDatabaseSetting().getPrimaryKeyType();
+            }
+
+            if(keyType != PrimaryKeyType.AUTO){
                 columnBuffer.append(String.format(",`%s`", TableTools.fieldToColumn(setting, item)));
                 valuesBuffer.append(String.format(",#{%s.%s}", insertEntity.getClass().getSimpleName(), item.getName()));
 
-                Serializable id = null;
-
-                PrimaryKeyType keyType = (item.getAnnotation(PrimaryKey.class)).keyType();
-
-                if(keyType == null){
-                    keyType = setting.getDatabaseSetting().getPrimaryKeyType();
-                }
-
-                if(keyType == PrimaryKeyType.UUID){
-                    id = setting.getIdentifierGenerator(GlobalConstants.UUID_GENERATOR_KEY).nextId(insertEntity);
-                }else if(keyType == PrimaryKeyType.SNOWFLAKE){
-                    id = setting.getIdentifierGenerator(GlobalConstants.SNOWFLAKE_GENERATOR_KEY).nextId(insertEntity);
-                }else{
-                    SuperMybatisAssert.check(ReflectionUtil.invokeGetterMethod(insertEntity, item.getName()) !=  null, "The primary key has no assignment");
-                    id = (Serializable)ReflectionUtil.invokeGetterMethod(insertEntity, item.getName());
-                }
-                ReflectionUtil.invokeSetterMethod(insertEntity, item.getName(), id);
+                Serializable id = processPrimaryKey(insertEntity, item, keyType, setting.getIdentifierGenerator(GlobalConstants.UUID_GENERATOR_KEY), setting.getIdentifierGenerator(GlobalConstants.SNOWFLAKE_GENERATOR_KEY));
                 map.put(SqlProviderConstants.PRIMARY_KEY_VALUE, id);
             }
+            map.put(SqlProviderConstants.PRIMARY_KEY, item.getName());
         });
 
 
@@ -71,5 +66,20 @@ public class InsertSqlProviderParser extends BaseSqlProviderParser {
         map.put(insertEntity.getClass().getSimpleName(), insertEntity);
 
         return String.format(BaseSqlTemplate.INSERT.getSql(), TABLE_NAME, columnBuffer.substring(1), valuesBuffer.substring(1));
+    }
+
+    static Serializable processPrimaryKey(Object insertEntity, Field item, PrimaryKeyType keyType, IdentifierGenerator uuididentifierGenerator, IdentifierGenerator snowidentifierGenerator) {
+        Serializable id = null;
+
+        if(keyType == PrimaryKeyType.UUID){
+            id = uuididentifierGenerator.nextId(insertEntity);
+        }else if(keyType == PrimaryKeyType.SNOWFLAKE){
+            id = snowidentifierGenerator.nextId(insertEntity);
+        }else{
+            SuperMybatisAssert.check(ReflectionUtil.invokeGetterMethod(insertEntity, item.getName()) !=  null, "The primary key has no assignment");
+            id = (Serializable)ReflectionUtil.invokeGetterMethod(insertEntity, item.getName());
+        }
+        ReflectionUtil.invokeSetterMethod(insertEntity, item.getName(), id);
+        return id;
     }
 }

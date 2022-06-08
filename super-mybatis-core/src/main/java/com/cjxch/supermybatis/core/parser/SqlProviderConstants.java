@@ -28,6 +28,8 @@ public class SqlProviderConstants {
 
     public static final String PRIMARY_KEY_VALUE = "_SUPER_MYBATIS_PRIMARY_KEY_VALUE";
 
+    public static final String PRIMARY_KEY = "_SUPER_MYBATIS_PRIMARY_KEY";
+
     public static final String QUERY_COLUMN = "_SUPER_MYBATIS_QUERY_COLUMN";
 
     public static final String QUERY_VAL = "_SUPER_MYBATIS_QUERY_VAL";

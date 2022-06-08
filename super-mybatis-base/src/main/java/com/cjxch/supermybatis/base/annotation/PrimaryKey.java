@@ -27,5 +27,5 @@ public @interface PrimaryKey {
 	 * 默认雪花算法
 	 * @return
 	 */
-	PrimaryKeyType keyType() default PrimaryKeyType.SNOWFLAKE;
+	PrimaryKeyType keyType() default PrimaryKeyType.NONE;
 }

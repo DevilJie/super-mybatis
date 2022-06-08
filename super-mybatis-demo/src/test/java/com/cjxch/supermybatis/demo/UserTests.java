@@ -18,7 +18,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import java.io.Serializable;
 import java.util.*;
 
-public class SuperMybatisDemoApplicationTests {
+public class UserTests {
 
 	@Before
 	public void befor(){
@@ -45,7 +45,7 @@ public class SuperMybatisDemoApplicationTests {
 		user.setEmail("cjxch@cjxch.com");
 		user.setRealName("红妹妹");
 		String s = (String) userInfoService.insert(user);
-		System.out.println(s);
+		System.out.println(s + "对象：" + user.toString());
 	}
 
 	@Test
