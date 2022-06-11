@@ -9,6 +9,7 @@ import com.cjxch.supermybatis.core.tools.TableTools;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -27,24 +28,26 @@ public class UpdateSqlProviderParser extends BaseSqlProviderParser {
          */
         commonInit(map);
 
-        Object insertEntity = map.get(SqlProviderConstants.ENTITY);
+        Object updateEntity = map.get(SqlProviderConstants.ENTITY);
         String primaryKey = commonPrimaryKey(map);
-        Serializable primaryKeyVal = (Serializable)ReflectionUtil.invokeGetterMethod(insertEntity, primaryKeyField.getName());
+        Serializable primaryKeyVal = (Serializable)ReflectionUtil.invokeGetterMethod(updateEntity, primaryKeyField.getName());
         SuperMybatisAssert.check(!StringUtils.isEmpty(primaryKeyVal), "Primary key value cannot be empty");
 
         StringBuffer setVal = new StringBuffer();
 
         AtomicBoolean updateAnyway = new AtomicBoolean(false);
-        Arrays.asList(ReflectionUtil.getDeclaredField(insertEntity)).stream().
-                filter(item -> item.getAnnotation(PrimaryKey.class) == null).forEach(item -> {
+        Arrays.asList(ReflectionUtil.getDeclaredField(updateEntity)).stream().
+                filter(item -> item.getAnnotation(PrimaryKey.class) == null
+                        && !Modifier.isFinal(item.getModifiers())
+                        && !Modifier.isStatic(item.getModifiers())).forEach(item -> {
             if(item.getAnnotation(Column.class) != null) updateAnyway.set(item.getAnnotation(Column.class).updateAnyway());
             else updateAnyway.set(setting.getDatabaseSetting().getUpdateAnyway());
-            Object val = ReflectionUtil.invokeGetterMethod(insertEntity, item.getName());
+            Object val = ReflectionUtil.invokeGetterMethod(updateEntity, item.getName());
             if(updateAnyway.get() || (val != null && !StringUtils.isEmpty(String.valueOf(val))))
-                setVal.append(String.format(",%s = #{%s.%s}", TableTools.fieldToColumn(setting, item), insertEntity.getClass().getSimpleName(), item.getName()));
+                setVal.append(String.format(",%s = #{%s.%s}", TableTools.fieldToColumn(setting, item), updateEntity.getClass().getSimpleName(), item.getName()));
         });
 
-        map.put(insertEntity.getClass().getSimpleName(), insertEntity);
+        map.put(updateEntity.getClass().getSimpleName(), updateEntity);
 
         SuperMybatisAssert.check(setVal.length() > 0, "Update property cannot be empty");
 

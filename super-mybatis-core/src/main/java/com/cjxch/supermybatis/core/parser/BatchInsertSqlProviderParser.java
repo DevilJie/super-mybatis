@@ -10,6 +10,7 @@ import com.cjxch.supermybatis.core.tools.SuperMybatisAssert;
 import com.cjxch.supermybatis.core.tools.TableTools;
 
 import java.io.Serializable;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,7 +58,9 @@ public class BatchInsertSqlProviderParser extends BaseSqlProviderParser {
 
 
             Arrays.asList(ReflectionUtil.getDeclaredField(insertEntity)).stream().
-                    filter(item -> item.getAnnotation(PrimaryKey.class) == null).forEach(item -> {
+                    filter(item -> item.getAnnotation(PrimaryKey.class) == null
+                            && !Modifier.isFinal(item.getModifiers())
+                            && !Modifier.isStatic(item.getModifiers())).forEach(item -> {
                 Column c = item.getAnnotation(Column.class);
                 if(c == null || !c.ignored()) {
                     if (index.get() == 0)

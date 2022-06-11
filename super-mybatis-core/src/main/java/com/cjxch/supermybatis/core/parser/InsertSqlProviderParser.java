@@ -13,6 +13,7 @@ import com.cjxch.supermybatis.core.tools.TableTools;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -55,7 +56,9 @@ public class InsertSqlProviderParser extends BaseSqlProviderParser {
 
 
         Arrays.asList(ReflectionUtil.getDeclaredField(insertEntity)).stream().
-                filter(item -> item.getAnnotation(PrimaryKey.class) == null).forEach(item -> {
+                filter(item -> item.getAnnotation(PrimaryKey.class) == null
+                        && !Modifier.isFinal(item.getModifiers())
+                        && !Modifier.isStatic(item.getModifiers())).forEach(item -> {
             Column c = item.getAnnotation(Column.class);
             if(c == null || !c.ignored()) {
                 columnBuffer.append(String.format(",`%s`", TableTools.fieldToColumn(setting, item)));
