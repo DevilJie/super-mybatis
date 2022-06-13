@@ -27,6 +27,12 @@ public interface UserInfoService {
      */
     Long delete(String id);
 
+    /**
+     * 删除
+     * @return
+     */
+    Long delete(SmCriteria criteria);
+
     Long update(User user);
 
     Pager getPager(Pager pager, User user);

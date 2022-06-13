@@ -34,8 +34,22 @@ public class SelectObjectSqlProviderParser extends BaseSqlProviderParser {
         }
 
 
+        SmCriteria smCriteria = (SmCriteria)map.get(SqlProviderConstants.SM_CRITERIA);
         String queryStatementSql = processSearchParam(map);
 
-        return String.format(BaseSqlTemplate.SELECT.getSql(), TABLE_NAME, queryStatementSql, orderBy);
+        String[] customerRetColumn = (smCriteria == null || StringUtils.isEmpty(smCriteria.getCustomerRetColumn()))
+                ? null : smCriteria.getCustomerRetColumn();
+
+        StringBuffer retColumn = new StringBuffer("");
+        if(customerRetColumn != null && customerRetColumn.length > 0){
+            Arrays.asList(customerRetColumn).forEach(str -> {
+                retColumn.append(",");
+                retColumn.append(TableTools.fieldNameToColumn(setting, str));
+            });
+        }else{
+            retColumn.append(",*");
+        }
+
+        return String.format(BaseSqlTemplate.SELECT.getSql(), retColumn.toString().substring(1), TABLE_NAME, queryStatementSql, orderBy);
     }
 }

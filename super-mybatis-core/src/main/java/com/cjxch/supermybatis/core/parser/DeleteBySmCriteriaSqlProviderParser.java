@@ -8,7 +8,7 @@ import java.util.Map;
  * @Author: 菜鸡小彩虹
  * @Date: 2020/09/22/15:46
  */
-public class DeleteSqlProviderParser extends BaseSqlProviderParser {
+public class DeleteBySmCriteriaSqlProviderParser extends BaseSqlProviderParser {
 
     @Override
     public String execute(Map<String, Object> map) {
@@ -17,6 +17,6 @@ public class DeleteSqlProviderParser extends BaseSqlProviderParser {
          */
        commonInit(map);
 
-       return String.format(BaseSqlTemplate.DELETE.getSql(), TABLE_NAME, commonPrimaryKey(map), "#{id}");
+       return String.format(BaseSqlTemplate.DELETE_BY_CRITERIA.getSql(), TABLE_NAME, processSearchParam(map));
     }
 }

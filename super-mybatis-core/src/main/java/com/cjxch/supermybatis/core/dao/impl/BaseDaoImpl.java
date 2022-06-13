@@ -94,6 +94,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 
     @Override
     public Long delete(Serializable id) {
+        if(id == null || id.toString().length() == 0) return 0l;
         Map<String, Object> map = new HashMap<>();
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
         map.put("id", id);
@@ -102,8 +103,14 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 
     @Override
     public Long delete(Serializable[] id) {
+        return delete(Arrays.asList(id));
+    }
+
+    @Override
+    public Long delete(List<Serializable> id) {
+        if(id == null || id.size() == 0) return 0l;
         AtomicReference<Long> ret = new AtomicReference<>(0l);
-        Arrays.asList(id).forEach(e -> {
+        id.forEach(e -> {
             ret.updateAndGet(v -> v + delete(e));
         });
         return ret.get();
@@ -437,5 +444,15 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         List<T> l = getList(smCriteria, t);
         if(l != null && l.size() > 0) return l.get(0);
         return null;
+    }
+
+
+
+    @Override
+    public Long delete(SmCriteria smCriteria){
+        Map<String, Object> map = new HashMap<>();
+        map.put(SqlProviderConstants.CLASS_NAME, entityClass);
+        map.put(SqlProviderConstants.SM_CRITERIA, smCriteria);
+        return baseMapper.deleteBySmCriteria(map);
     }
 }

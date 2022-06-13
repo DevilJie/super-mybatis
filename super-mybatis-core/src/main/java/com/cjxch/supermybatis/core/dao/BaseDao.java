@@ -50,6 +50,12 @@ public interface BaseDao<T> {
     public Long delete(Serializable[] id);
 
     /**
+     * 根据主键ID删除
+     * @param id
+     */
+    public Long delete(List<Serializable> id);
+
+    /**
      * 更新数据
      * @param t
      */
@@ -184,6 +190,13 @@ public interface BaseDao<T> {
      * @return
      */
     public Long getListCount(SmCriteria smCriteria);
+
+
+    /**
+     * 根据主键ID删除
+     * @param smCriteria 查询条件构造器
+     */
+    public Long delete(SmCriteria smCriteria);
 
 
     /****************************条件查询构造器相关方法 end*********************************/

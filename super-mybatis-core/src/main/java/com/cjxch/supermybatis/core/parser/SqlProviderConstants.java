@@ -38,4 +38,6 @@ public class SqlProviderConstants {
 
     public static final String SM_CRITERIA = "_SUPER_MYBATIS_SM_CRITERIA";
 
+    public static final String CUSTOMER_RETURN_COLUMN = "_SUPER_CUSTOMER_RETURN_COLUMN";
+
 }

@@ -131,13 +131,16 @@ public class UserTests {
 
 		SmCriterionArrays arr = new SmCriterionArrays.SmCriterionArraysBuild()
 				.in("id", new String[]{"712433319333072950", "712433533724921876"})
-				.like("real_name", "%11", CriteriaConnector.AND).build(CriteriaConnector.AND);
+				.like("realName", "%11", CriteriaConnector.AND).build(CriteriaConnector.AND);
 
 		SmCriteria smc = new SmCriteria.SmCriteriaBuild()
 				.add(arr)
 				.add(SmCriterion.eq("id", "712436551878971436", CriteriaConnector.OR))
+				.customerRetColumn(new String[]{"id", "realName"})
 				.build();
 		System.out.println(smc);
+		System.out.println(JSON.toJSONString(userInfoService.getList(smc)));
+		System.out.println(userInfoService.delete(smc));
 		System.out.println(JSON.toJSONString(userInfoService.getList(smc)));
 	}
 }

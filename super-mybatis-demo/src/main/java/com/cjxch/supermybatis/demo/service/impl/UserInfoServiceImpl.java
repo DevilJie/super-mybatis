@@ -52,6 +52,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    public Long delete(SmCriteria criteria) {
+        return userInfoDao.delete(criteria);
+    }
+
+    @Override
     public Long update(User user) {
         return userInfoDao.update(user);
     }

@@ -152,4 +152,11 @@ public interface BaseMapper {
      */
     @UpdateProvider(type= UpdateBySqlProviderParser.class,method="execute")
     Long updateBySql(Map<String, Object> paramMap);
+
+
+    /**
+     * 个性化sql执行，更新语句
+     */
+    @UpdateProvider(type= DeleteBySmCriteriaSqlProviderParser.class,method="execute")
+    Long deleteBySmCriteria(Map<String, Object> paramMap);
 }

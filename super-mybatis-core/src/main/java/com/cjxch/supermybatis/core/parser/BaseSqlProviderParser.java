@@ -143,7 +143,7 @@ public abstract class BaseSqlProviderParser {
                         type = smc.getType();
                         String _Key = UUID.randomUUID().toString().replace("-", "");
                         if(criterionList.indexOf(item) != 0) queryStatement.append(" " + connector.name());
-                        queryStatement.append(String.format(" %s%s#{%s}", TableTools.fieldNameToColumn(setting, smc.getKey()), type.getOperator(), _Key));
+                        prepareQueryStatement(map, queryStatement, smc, type, _Key);
                         map.put(_Key, smc.getValue());
                     }else if(item instanceof SmCriterionArrays){
                         sca = (SmCriterionArrays)item;
@@ -157,29 +157,7 @@ public abstract class BaseSqlProviderParser {
                             _type = _item.getType();
                             String _Key = UUID.randomUUID().toString().replace("-", "");
                             if(sca.getSmCriterionList().indexOf(_item) != 0) queryStatement.append(" " + _connector.name());
-                            if(_type == CriteriaType.in){
-                                String random = StrUtil.RadomCode(36, "other");
-                                Object[] o;
-                                if (_item.getValue() instanceof List) {
-                                    o = ((List) _item.getValue()).toArray();
-                                } else {
-                                    o = (Object[]) _item.getValue();
-                                }
-                                String sql_ = "(";
-                                String in = "";
-                                int n = 0;
-                                Object v_ = "";
-                                for (Object obj : o) {
-                                    v_ = obj;
-                                    n++;
-                                    in += ",#{" + random + "in_" + n + "}";
-                                    map.put(random + "in_" + n, v_);
-                                }
-                                sql_ += in.substring(1) + ")";
-                                queryStatement.append(String.format(" %s%s%s ", TableTools.fieldNameToColumn(setting, _item.getKey()), _type.getOperator(), sql_));
-                            }else{
-                                queryStatement.append(String.format(" %s%s#{%s}", TableTools.fieldNameToColumn(setting, _item.getKey()), _type.getOperator(), _Key));
-                            }
+                            prepareQueryStatement(map, queryStatement, _item, _type, _Key);
                             map.put(_Key, _item.getValue());
                         });
                         queryStatement.append(" )");
@@ -195,5 +173,31 @@ public abstract class BaseSqlProviderParser {
             queryStatementSql = " WHERE "+queryStatementSql.substring(4);
         }
         return queryStatementSql;
+    }
+
+    private void prepareQueryStatement(Map<String, Object> map, StringBuffer queryStatement, SmCriterion _item, CriteriaType _type, String _Key) {
+        if(_type == CriteriaType.in){
+            String random = StrUtil.RadomCode(36, "other");
+            Object[] o;
+            if (_item.getValue() instanceof List) {
+                o = ((List) _item.getValue()).toArray();
+            } else {
+                o = (Object[]) _item.getValue();
+            }
+            String sql_ = "(";
+            String in = "";
+            int n = 0;
+            Object v_ = "";
+            for (Object obj : o) {
+                v_ = obj;
+                n++;
+                in += ",#{" + random + "in_" + n + "}";
+                map.put(random + "in_" + n, v_);
+            }
+            sql_ += in.substring(1) + ")";
+            queryStatement.append(String.format(" %s%s%s ", TableTools.fieldNameToColumn(setting, _item.getKey()), _type.getOperator(), sql_));
+        }else{
+            queryStatement.append(String.format(" %s%s#{%s}", TableTools.fieldNameToColumn(setting, _item.getKey()), _type.getOperator(), _Key));
+        }
     }
 }
