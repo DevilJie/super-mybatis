@@ -38,13 +38,20 @@ public class DbCacheSetting {
      */
     private String redisPwd;
 
-    private Integer redismMxIdle = 5;
+    //最大空闲线程
+    private Integer redisMaxIdle = 10;
 
+    //最小空闲线程
+    private Integer redisMinIdle = 5;
+
+    //最大线程数
     private Integer redisMaxTotal = 10;
 
-    private Integer redisMaxWaitMillis = 2000;
+    //当池内没有可用的连接时，最大等待时间（单位 秒）
+    private Long redisMaxWaitMillis = 10000l;
 
-    private Integer redisTimeout = 0;
+    //链接的Redis数据库
+    private Integer redisDatabase = 0;
 
 
 
@@ -247,12 +254,20 @@ public class DbCacheSetting {
         this.dbCacheType = dbCacheType;
     }
 
-    public Integer getRedismMxIdle() {
-        return redismMxIdle;
+    public Integer getRedisMaxIdle() {
+        return redisMaxIdle;
     }
 
-    public void setRedismMxIdle(Integer redismMxIdle) {
-        this.redismMxIdle = redismMxIdle;
+    public void setRedisMaxIdle(Integer redisMaxIdle) {
+        this.redisMaxIdle = redisMaxIdle;
+    }
+
+    public Integer getRedisMinIdle() {
+        return redisMinIdle;
+    }
+
+    public void setRedisMinIdle(Integer redisMinIdle) {
+        this.redisMinIdle = redisMinIdle;
     }
 
     public Integer getRedisMaxTotal() {
@@ -263,20 +278,12 @@ public class DbCacheSetting {
         this.redisMaxTotal = redisMaxTotal;
     }
 
-    public Integer getRedisMaxWaitMillis() {
+    public Long getRedisMaxWaitMillis() {
         return redisMaxWaitMillis;
     }
 
-    public void setRedisMaxWaitMillis(Integer redisMaxWaitMillis) {
+    public void setRedisMaxWaitMillis(Long redisMaxWaitMillis) {
         this.redisMaxWaitMillis = redisMaxWaitMillis;
-    }
-
-    public Integer getRedisTimeout() {
-        return redisTimeout;
-    }
-
-    public void setRedisTimeout(Integer redisTimeout) {
-        this.redisTimeout = redisTimeout;
     }
 
     public Long getExpires() {
@@ -290,4 +297,12 @@ public class DbCacheSetting {
     public Boolean getCacheSwitch() { return cacheSwitch; }
 
     public void setCacheSwitch(Boolean cacheSwitch) { this.cacheSwitch = cacheSwitch; }
+
+    public Integer getRedisDatabase() {
+        return redisDatabase;
+    }
+
+    public void setRedisDatabase(Integer redisDatabase) {
+        this.redisDatabase = redisDatabase;
+    }
 }

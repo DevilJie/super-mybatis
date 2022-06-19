@@ -30,8 +30,10 @@ public class UserTests {
 
 	@Test
 	public void get(){
-		System.out.println(userInfoService.get("713868623503953997"));
-		System.out.println(userInfoService.get("713868623503953997"));
+		User user = userInfoService.get("713868623503953997");
+		System.out.println(user);
+		user = userInfoService.get("713868623503953997");
+		System.out.println(user);
 	}
 	@Test
 	public void del(){

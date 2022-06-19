@@ -17,18 +17,8 @@ public abstract class SuperMybatisCache {
     public static void init(DbCacheSetting setting) throws SuperMybatisException {
         if(SuperMybatisCacheConstants.superMybatisCache == null) {
             try {
-                Class clazz = null;
-                if (setting.getDbCacheType() == DbCacheType.Redis) {
-                    clazz = Class.forName("com.cjxch.supermybatis.cache.redis.core.SuperMybatisRedisCache");
-                }else if(setting.getDbCacheType() == DbCacheType.Memcached){
-                    clazz = Class.forName("com.cjxch.supermybatis.cache.memcached.core.SuperMybatisMemcachedCache");
-                }else if(setting.getDbCacheType() == DbCacheType.Ehcache){
-                    clazz = Class.forName("com.cjxch.supermybatis.cache.ehcache.core.SuperMybatisEhcacheCache");
-                }
-
-                SuperMybatisAssert.check(clazz != null, "Unknown dbCacheType");
-
-                Constructor cons = clazz.getConstructor(DbCacheSetting.class);
+                SuperMybatisAssert.check(setting.getDbCacheType() != null, "Unknown dbCacheType");
+                Constructor cons = Class.forName(setting.getDbCacheType().getClassPath()).getConstructor(DbCacheSetting.class);
                 SuperMybatisCacheConstants.superMybatisCache = (SuperMybatisCache) cons.newInstance(setting);
             }catch(Exception e){
                 throw new SuperMybatisException(e);

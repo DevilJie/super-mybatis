@@ -6,7 +6,21 @@ package com.cjxch.supermybatis.base.enu;
  * @Date: 2020/10/01/8:24
  */
 public enum DbCacheType {
-    Redis,
-    Memcached,
-    Ehcache;
+    Redis("com.cjxch.supermybatis.cache.redis.core.SuperMybatisRedisCache"),
+    Memcached("com.cjxch.supermybatis.cache.memcached.core.SuperMybatisMemcachedCache"),
+    Ehcache("com.cjxch.supermybatis.cache.ehcache.core.SuperMybatisEhcacheCache");
+
+    private String classPath;
+
+    DbCacheType(String classPath){
+        this.classPath = classPath;
+    }
+
+    public String getClassPath() {
+        return classPath;
+    }
+
+    public void setClassPath(String classPath) {
+        this.classPath = classPath;
+    }
 }
