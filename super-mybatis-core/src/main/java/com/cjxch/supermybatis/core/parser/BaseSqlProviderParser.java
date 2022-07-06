@@ -196,6 +196,10 @@ public abstract class BaseSqlProviderParser {
             }
             sql_ += in.substring(1) + ")";
             queryStatement.append(String.format(" %s%s%s ", TableTools.fieldNameToColumn(setting, _item.getKey()), _type.getOperator(), sql_));
+        }else if(_type == CriteriaType.isNull){
+            queryStatement.append(String.format(" %s is null", _item.getKey()));
+        }else if(_type == CriteriaType.isNotNull){
+            queryStatement.append(String.format(" %s is not null", _item.getKey()));
         }else{
             queryStatement.append(String.format(" %s%s#{%s}", TableTools.fieldNameToColumn(setting, _item.getKey()), _type.getOperator(), _Key));
         }

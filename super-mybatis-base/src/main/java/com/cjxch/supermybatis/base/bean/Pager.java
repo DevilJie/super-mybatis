@@ -9,7 +9,7 @@ import java.util.List;
  * @Author: 菜鸡小彩虹
  * @Date: 2020/09/19/17:28
  */
-public class Pager implements Serializable {
+public class Pager<T> implements Serializable {
 
     private static final long   serialVersionUID = -2707171505887622174L;
 
@@ -105,8 +105,8 @@ public class Pager implements Serializable {
         this.totalCount = totalCount;
     }
 
-    public List<?> getResult() {
-        return result;
+    public List<T> getResult() {
+        return (List<T>)result;
     }
 
     public void setResult(List<?> result) {
