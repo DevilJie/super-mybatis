@@ -51,6 +51,6 @@ public class UpdateSqlProviderParser extends BaseSqlProviderParser {
 
         SuperMybatisAssert.check(setVal.length() > 0, "Update property cannot be empty");
 
-        return String.format(BaseSqlTemplate.UPDATE.getSql(), TABLE_NAME, "SET "+setVal.substring(1), primaryKey, primaryKeyVal);
+        return commonTenantProcess(map, String.format(BaseSqlTemplate.UPDATE.getSql(), TABLE_NAME, "SET "+setVal.substring(1), primaryKey, primaryKeyVal));
     }
 }

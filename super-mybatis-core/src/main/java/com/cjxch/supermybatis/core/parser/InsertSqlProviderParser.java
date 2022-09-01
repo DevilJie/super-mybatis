@@ -7,9 +7,11 @@ import com.cjxch.supermybatis.base.enu.PrimaryKeyType;
 import com.cjxch.supermybatis.core.generator.IdentifierGenerator;
 import com.cjxch.supermybatis.core.setting.DatabaseSetting;
 import com.cjxch.supermybatis.core.setting.GlobalConstants;
+import com.cjxch.supermybatis.core.setting.GlobalSetting;
 import com.cjxch.supermybatis.core.tools.ReflectionUtil;
 import com.cjxch.supermybatis.core.tools.SuperMybatisAssert;
 import com.cjxch.supermybatis.core.tools.TableTools;
+import com.cjxch.supermybatis.tenant.SuperMybatisTenant;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -65,6 +67,15 @@ public class InsertSqlProviderParser extends BaseSqlProviderParser {
                 valuesBuffer.append(String.format(",#{%s.%s}", insertEntity.getClass().getSimpleName(), item.getName()));
             }
         });
+
+        if(GlobalSetting.getGlobalSetting().getDatabaseSetting().getTenant() && SuperMybatisTenant.currentTenant() != null){
+            String column = SuperMybatisTenant.currentTenant().tenantColumn();
+            String value = SuperMybatisTenant.currentTenant().tenantValue();
+            String val = System.currentTimeMillis()+column;
+            columnBuffer.append(String.format(",`%s`", column));
+            valuesBuffer.append(String.format(",#{%s}", val));
+            map.put(val, value);
+        }
 
         map.put(insertEntity.getClass().getSimpleName(), insertEntity);
 

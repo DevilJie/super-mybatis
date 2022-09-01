@@ -47,7 +47,6 @@ public enum DbType {
             return false;
         }).forEach(i -> {
             sqlRet.set(getPagerSql(sql, i, pager));
-            return;
         });
 
         return sqlRet.get();

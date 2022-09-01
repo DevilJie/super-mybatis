@@ -1,6 +1,8 @@
 package com.cjxch.supermybatis.core.parser;
 
 import com.cjxch.supermybatis.base.enu.BaseSqlTemplate;
+import com.cjxch.supermybatis.core.setting.GlobalSetting;
+import com.cjxch.supermybatis.tenant.SuperMybatisTenant;
 
 import java.util.Map;
 
@@ -16,6 +18,8 @@ public class GetSqlProviderParser extends BaseSqlProviderParser {
          * 公共初始化
          */
         commonInit(map);
-        return String.format(BaseSqlTemplate.GET.getSql(), TABLE_NAME, commonPrimaryKey(map), "#{id}");
+        String sql = String.format(BaseSqlTemplate.GET.getSql(), TABLE_NAME, commonPrimaryKey(map), "#{id}");
+
+        return commonTenantProcess(map, sql);
     }
 }

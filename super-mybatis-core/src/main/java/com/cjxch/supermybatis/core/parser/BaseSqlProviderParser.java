@@ -6,6 +6,7 @@ import com.cjxch.supermybatis.base.annotation.Table;
 import com.cjxch.supermybatis.core.setting.GlobalSetting;
 import com.cjxch.supermybatis.core.tools.*;
 import com.cjxch.supermybatis.core.tools.query.*;
+import com.cjxch.supermybatis.tenant.SuperMybatisTenant;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
@@ -171,6 +172,21 @@ public abstract class BaseSqlProviderParser {
         String queryStatementSql = queryStatement.toString();
         if(queryStatementSql.length() > 0) {
             queryStatementSql = " WHERE "+queryStatementSql.substring(4);
+            if(GlobalSetting.getGlobalSetting().getDatabaseSetting().getTenant() && SuperMybatisTenant.currentTenant() != null){
+                String column = SuperMybatisTenant.currentTenant().tenantColumn();
+                String value = SuperMybatisTenant.currentTenant().tenantValue();
+                String val = System.currentTimeMillis()+column;
+                queryStatementSql += String.format(" and %s=#{%s}", column, val);
+                map.put(val,value);
+            }
+        }else{
+            if(GlobalSetting.getGlobalSetting().getDatabaseSetting().getTenant() && SuperMybatisTenant.currentTenant() != null){
+                String column = SuperMybatisTenant.currentTenant().tenantColumn();
+                String value = SuperMybatisTenant.currentTenant().tenantValue();
+                String val = System.currentTimeMillis()+column;
+                queryStatementSql += String.format(" WHERE %s=#{%s}", column, val);
+                map.put(val,value);
+            }
         }
         return queryStatementSql;
     }
@@ -203,5 +219,21 @@ public abstract class BaseSqlProviderParser {
         }else{
             queryStatement.append(String.format(" %s%s#{%s}", TableTools.fieldNameToColumn(setting, _item.getKey()), _type.getOperator(), _Key));
         }
+    }
+
+
+
+    static String commonTenantProcess(Map<String, Object> map, String sql) {
+        if(GlobalSetting.getGlobalSetting().getDatabaseSetting().getTenant() && SuperMybatisTenant.currentTenant() != null){
+            String column = SuperMybatisTenant.currentTenant().tenantColumn();
+            String value = SuperMybatisTenant.currentTenant().tenantValue();
+            String val = System.currentTimeMillis()+column;
+            if(sql.toLowerCase().indexOf("where") != -1)
+                sql += String.format(" and %s=#{%s}", column, val);
+            else
+                sql += String.format(" where %s=#{%s}", column, val);
+            map.put(val,value);
+        }
+        return sql;
     }
 }

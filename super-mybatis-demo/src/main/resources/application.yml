@@ -2,9 +2,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://122.51.4.113:3306/demo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-    username: super_mybatis
-    password: 323ba860e23d4982a9a4c978c8752eaa
+    url: jdbc:mysql://rm-bp1u9vqxg28tqx9ftgo.mysql.rds.aliyuncs.com/super-mybatis?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+    username: dev
+    password: dev@1234
   # redis相关配置
   redis:
     database: 0
@@ -39,6 +39,7 @@ super-mybatis:
       table-perfix: test_
       show-sql: true
       primary-key-type: auto
+      tenant: true
     snowflake-setting:
       datacenter-id: 1
       worker-id: 1

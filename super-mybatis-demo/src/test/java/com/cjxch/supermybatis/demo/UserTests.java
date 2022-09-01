@@ -10,11 +10,14 @@ import com.cjxch.supermybatis.demo.dto.UserJobDto;
 import com.cjxch.supermybatis.demo.entity.User;
 import com.cjxch.supermybatis.demo.service.UserInfoService;
 import com.cjxch.supermybatis.demo.dto.UserDto;
+import com.cjxch.supermybatis.tenant.SuperMybatisTenant;
+import com.cjxch.supermybatis.tenant.SuperMybatisTenantInfo;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -41,50 +44,62 @@ public class UserTests {
 	}
 
 	@Test
-	public void testInsert(){
-		UserDto user = new UserDto();
-		user.setAgeStart(18);
-		user.setAge(19);
-		user.setEmail("cjxch@cjxch.com");
-		user.setRealName("红妹妹");
-		String s = (String) userInfoService.insert(user);
-		System.out.println(s + "对象：" + user.toString());
+	public void testInsert() throws IOException {
+		try(SuperMybatisTenant tenant = SuperMybatisTenant.openTenant("org_id", "5")) {
+			System.out.println(Thread.currentThread().getName());
+			UserDto user = new UserDto();
+			user.setAgeStart(18);
+			user.setAge(19);
+			user.setEmail("cjxch@cjxch.com");
+			user.setRealName("红妹妹");
+			String s = (String) userInfoService.insert(user);
+			System.out.println(s + "对象：" + user.toString());
+		}
 	}
 
 	@Test
 	public void testBatchInsert(){
-		List<User> list = new ArrayList(){
-			{
-				add(new User("菜菜2", 30, "314170122@qq.com"));
-				add(new User("菜菜2", 30, "314170122@qq.com"));
-			}
-		};
+		try(SuperMybatisTenant tenant = SuperMybatisTenant.openTenant("org_id", "4")) {
+			List<User> list = new ArrayList() {
+				{
+					add(new User("菜菜2", 30, "314170122@qq.com"));
+					add(new User("菜菜2", 30, "314170122@qq.com"));
+				}
+			};
 
-		System.out.println(JSON.toJSONString(userInfoService.batchInsert(list)));
+			System.out.println(JSON.toJSONString(userInfoService.batchInsert(list)));
+		}
 	}
 
 	@Test
 	public void testAllList(){
-		System.out.println(JSON.toJSONString(userInfoService.allList()));
+		try(SuperMybatisTenant tenant = SuperMybatisTenant.openTenant("org_id", "5")) {
+			System.out.println(JSON.toJSONString(userInfoService.allList()));
+		}
 	}
 
 	@Test
 	public void testDelete(){
-		System.out.println(userInfoService.delete("493137875643142166"));
+		try(SuperMybatisTenant tenant = SuperMybatisTenant.openTenant("org_id", "4")) {
+			System.out.println(userInfoService.delete("750106411618275355"));
+		}
 	}
 
 	@Test
 	public void testUpdate(){
-		User user = new User();
-		user.setId("496976191702437956");
-		user.setRealName("小屁孩");
-		user.setAge(29);
-		user.setEmail("cjxch@cjxch.com");
-		System.out.println(userInfoService.update(user));
+		try(SuperMybatisTenant tenant = SuperMybatisTenant.openTenant("org_id", "4")) {
+			User user = new User();
+			user.setId("750106411635052592");
+			user.setRealName("小屁孩");
+			user.setAge(29);
+			user.setEmail("cjxch@cjxch.com");
+			System.out.println(userInfoService.update(user));
+		}
 	}
 
 	@Test
 	public void testPager(){
+		SuperMybatisTenant tenant = SuperMybatisTenant.openTenant("org_id", "4");
 		Pager pager = new Pager();
 		pager.setPageSize(10);
 		pager.setOrderBy("age");
@@ -95,6 +110,20 @@ public class UserTests {
 		u.getAges().add(22);
 		pager = userInfoService.getPager(pager, u);
 		System.out.println(JSON.toJSONString(pager));
+		tenant.close();
+
+		tenant = SuperMybatisTenant.openTenant("org_id", "5");
+		pager = new Pager();
+		pager.setPageSize(10);
+		pager.setOrderBy("age");
+		pager.setOrder(Pager.Order.asc);
+		u = new UserDto();
+		u.setAges(new ArrayList());
+		u.getAges().add(19);
+		u.getAges().add(22);
+		pager = userInfoService.getPager(pager, u);
+		System.out.println(JSON.toJSONString(pager));
+		tenant.close();
 	}
 
 	@Test

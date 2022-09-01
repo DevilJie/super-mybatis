@@ -15,6 +15,7 @@ public class SelectBySqlProviderParser extends SelectObjectSqlProviderParser {
         if(map.get(SqlProviderConstants.HFASTER_FLAG) != null){
 
         }
-        return sql;
+
+        return commonTenantProcess(map, sql);
     }
 }

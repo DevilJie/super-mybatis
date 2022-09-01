@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>super-mybatis-cache</module>
+        <module>super-mybatis-tenant</module>
     </modules>
     <groupId>com.cjxch.supermybatis</groupId>
 

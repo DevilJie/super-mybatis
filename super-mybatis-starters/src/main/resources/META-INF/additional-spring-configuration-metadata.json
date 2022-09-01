@@ -84,6 +84,12 @@
             "name": "super-mybatis.global-setting.db-cache-setting.cache-switch",
             "type": "java.lang.Boolean",
             "description": "数据库缓存开关."
+        },
+        {
+            "sourceType": "com.cjxch.supermybatis.core.setting.DatabaseSetting",
+            "name": "super-mybatis.global-setting.database-setting.tenant",
+            "type": "java.lang.Boolean",
+            "description": "是否开启多租户的支持."
         }
     ]
 }

@@ -49,6 +49,19 @@ public class DatabaseSetting {
      */
     public Boolean showSql = false;
 
+    /**
+     * 是否支持多租户模式
+     */
+    public Boolean tenant = false;
+
+    public Boolean getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Boolean tenant) {
+        this.tenant = tenant;
+    }
+
     public Boolean getShowSql() {
         return showSql;
     }

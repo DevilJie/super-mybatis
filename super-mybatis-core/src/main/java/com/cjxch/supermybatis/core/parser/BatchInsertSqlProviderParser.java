@@ -5,9 +5,11 @@ import com.cjxch.supermybatis.base.annotation.PrimaryKey;
 import com.cjxch.supermybatis.base.enu.BaseSqlTemplate;
 import com.cjxch.supermybatis.base.enu.PrimaryKeyType;
 import com.cjxch.supermybatis.core.setting.GlobalConstants;
+import com.cjxch.supermybatis.core.setting.GlobalSetting;
 import com.cjxch.supermybatis.core.tools.ReflectionUtil;
 import com.cjxch.supermybatis.core.tools.SuperMybatisAssert;
 import com.cjxch.supermybatis.core.tools.TableTools;
+import com.cjxch.supermybatis.tenant.SuperMybatisTenant;
 
 import java.io.Serializable;
 import java.lang.reflect.Modifier;
@@ -69,7 +71,21 @@ public class BatchInsertSqlProviderParser extends BaseSqlProviderParser {
                 }
             });
 
-            valuesBufferTotal.append(",("+valuesBuffer.substring(1)+")\n");
+
+
+            if(GlobalSetting.getGlobalSetting().getDatabaseSetting().getTenant() && SuperMybatisTenant.currentTenant() != null){
+                String column = SuperMybatisTenant.currentTenant().tenantColumn();
+                String value = SuperMybatisTenant.currentTenant().tenantValue();
+                String val = System.currentTimeMillis()+column;
+                if(index.get() == 0){
+                    columnBuffer.append(String.format(",`%s`", column));
+                }
+                valuesBuffer.append(String.format(",#{%s}", val));
+                valuesBufferTotal.append(",("+valuesBuffer.substring(1)+")\n");
+                map.put(val, value);
+            }else{
+                valuesBufferTotal.append(",("+valuesBuffer.substring(1)+")\n");
+            }
 
             index.addAndGet(1);
         });

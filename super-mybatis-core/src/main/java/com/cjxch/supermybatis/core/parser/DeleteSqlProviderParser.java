@@ -1,6 +1,8 @@
 package com.cjxch.supermybatis.core.parser;
 
 import com.cjxch.supermybatis.base.enu.BaseSqlTemplate;
+import com.cjxch.supermybatis.core.setting.GlobalSetting;
+import com.cjxch.supermybatis.tenant.SuperMybatisTenant;
 
 import java.util.Map;
 
@@ -15,8 +17,10 @@ public class DeleteSqlProviderParser extends BaseSqlProviderParser {
         /**
          * 公共初始化
          */
-       commonInit(map);
+        commonInit(map);
 
-       return String.format(BaseSqlTemplate.DELETE.getSql(), TABLE_NAME, commonPrimaryKey(map), "#{id}");
+        String sql = String.format(BaseSqlTemplate.DELETE.getSql(), TABLE_NAME, commonPrimaryKey(map), "#{id}");
+
+        return commonTenantProcess(map, sql);
     }
 }

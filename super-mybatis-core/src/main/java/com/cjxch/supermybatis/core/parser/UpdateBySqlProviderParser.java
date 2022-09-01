@@ -10,9 +10,6 @@ public class UpdateBySqlProviderParser extends BaseSqlProviderParser {
 
     @Override
     public String execute(Map<String, Object> map) {
-
-        String sql = (String)map.get(SqlProviderConstants.SQL);
-
-        return sql;
+        return commonTenantProcess(map, (String)map.get(SqlProviderConstants.SQL));
     }
 }

@@ -14,7 +14,6 @@ public class SelectPagerCountBySqlProviderParser extends SelectBySqlProviderPars
         String sql = (String)map.get(SqlProviderConstants.SQL);
 
         sql = "SELECT COUNT(*) " + sql.substring(sql.toLowerCase().indexOf("from"));
-
-        return sql;
+        return commonTenantProcess(map, sql);
     }
 }
