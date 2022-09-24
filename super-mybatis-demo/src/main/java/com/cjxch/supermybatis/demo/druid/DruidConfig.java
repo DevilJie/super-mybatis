@@ -23,14 +23,6 @@ import java.util.Map;
 @Configuration
 public class DruidConfig {
 
-    @Autowired
-    private DataSource dataSource;
-
-    public DataSource druid() {
-        return dataSource;
-    }
-
-
     /**
      * 内置 Servlet 容器时没有web.xml文件，所以使用 Spring Boot 的注册 Servlet 方式
      */
@@ -60,6 +52,7 @@ public class DruidConfig {
 
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new WebStatFilter());
+
         bean.setInitParameters(initParams);
         bean.setUrlPatterns(Arrays.asList("/*"));
 

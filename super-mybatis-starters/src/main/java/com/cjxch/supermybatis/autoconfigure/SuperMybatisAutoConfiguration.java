@@ -89,10 +89,7 @@ import org.springframework.util.StringUtils;
  * @author Eduardo Macarrón
  */
 @org.springframework.context.annotation.Configuration
-@ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class})
-@ConditionalOnSingleCandidate(DataSource.class)
 @EnableConfigurationProperties(SuperMybatisProperties.class)
-@AutoConfigureAfter({DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class})
 @ImportResource({"classpath*:applicationContext-supermybatis-ds*"})
 @Primary
 public class SuperMybatisAutoConfiguration implements InitializingBean {
@@ -153,7 +150,7 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
 
         GlobalSetting confGs = GlobalSetting.getGlobalSetting();
         GlobalSetting setting = this.properties.getGlobalSetting();
-        setting.setDataSource((SuperMybatisRouteDatasources)supermybatisDataSource);
+        setting.setDataSource((SuperMybatisRouteDatasources) supermybatisDataSource);
         if(confGs != null){
             /************如果存在confGs 不为空，则直接使用，忽略配置文件读取的配置***************/
             setting = confGs;

@@ -1,9 +1,12 @@
 package com.cjxch.supermybatis.core.datasource;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.cjxch.supermybatis.base.bean.DataSourcesSetting;
+import com.cjxch.supermybatis.core.datasource.druid.DruidProperties;
 import com.cjxch.supermybatis.core.setting.GlobalConstants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +24,8 @@ class DataSourceConfig {
 
     private Map<String, Object> datasource;
 
+    @Autowired
+    private DruidProperties druidProperties;
     @Bean(name="supermybatisDataSource")
     public DataSource supermybatisDataSource(){
         SuperMybatisRouteDatasources ds = new SuperMybatisRouteDatasources();
@@ -33,28 +38,17 @@ class DataSourceConfig {
 
     private Map<Object, Object> processDatasources(){
         Map<Object, Object> ret = new LinkedHashMap<>();
-        final Class<?>[] type = {null};
         if(datasource != null && datasource.size() > 0){
             datasource.forEach((k,v) -> {
-                if(k.equals("pool")){
-                    JSONObject map = JSON.parseObject(JSON.toJSONString(v));
-                    try {
-                        type[0] = Class.forName(map.getString("type"));
-                        Object obj = Class.forName(map.getString("type")).newInstance();
-                        Refl
-                    } catch (ClassNotFoundException e) {
-                    } catch (InstantiationException e) {
-                    } catch (IllegalAccessException e) {
-                    }
-                }else{
+                if(!k.equals("pool")){
+                    DruidDataSource ds = new DruidDataSource();
                     DataSourcesSetting vv = JSONObject.parseObject(JSON.toJSONString(v), DataSourcesSetting.class);
-                    DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-                    dataSourceBuilder.driverClassName(vv.getDriverClassName());
-                    dataSourceBuilder.password(vv.getPassword());
-                    dataSourceBuilder.username(vv.getUserName());
-                    dataSourceBuilder.url(vv.getUrl());
-                    if(type[0] != null) dataSourceBuilder.type(type[0]);
-                    ret.put(k,dataSourceBuilder.build());
+                    ds.setDriverClassName(vv.getDriverClassName());
+                    ds.setUsername(vv.getUsername());
+                    ds.setPassword(vv.getPassword());
+                    ds.setUrl(vv.getUrl());
+                    druidProperties.dataSource(ds);
+                    ret.put(k, ds);
                 }
             });
         }

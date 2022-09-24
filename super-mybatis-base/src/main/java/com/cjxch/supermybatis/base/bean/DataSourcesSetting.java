@@ -4,7 +4,7 @@ public class DataSourcesSetting {
     private String type;
     private String driverClassName;
     private String url;
-    private String userName;
+    private String username;
     private String password;
     private Boolean encrypt;
 
@@ -32,12 +32,12 @@ public class DataSourcesSetting {
         this.url = url;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -62,7 +62,7 @@ public class DataSourcesSetting {
                 "type='" + type + '\'' +
                 ", driverClassName='" + driverClassName + '\'' +
                 ", url='" + url + '\'' +
-                ", userName='" + userName + '\'' +
+                ", userName='" + username + '\'' +
                 ", password='*********" + '\'' +
                 ", encrypt=" + encrypt +
                 '}';
