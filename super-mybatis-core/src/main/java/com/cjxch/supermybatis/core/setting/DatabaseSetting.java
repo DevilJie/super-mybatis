@@ -13,6 +13,7 @@ public class DatabaseSetting {
      */
     private String tablePerfix = "";
 
+
     /**
      * 默认主键生成策略
      */

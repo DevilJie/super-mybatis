@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SuperMybatisTenant implements AutoCloseable {
 
-    public static Map<Long, SuperMybatisTenantInfo> tenantInfos = new ConcurrentHashMap<>();
+    private static ThreadLocal<SuperMybatisTenantInfo> tenantInfos = new ThreadLocal<SuperMybatisTenantInfo>();
 
     public static SuperMybatisTenant openTenant(String tenantColumn, String tenantValue){
         SuperMybatisTenantInfo info = new SuperMybatisTenantInfo() {
@@ -24,24 +24,16 @@ public class SuperMybatisTenant implements AutoCloseable {
                 return tenantValue;
             }
         };
-        tenantInfos.put(Thread.currentThread().getId(), info);
-        return new SuperMybatisTenant(Thread.currentThread().getId());
+        tenantInfos.set(info);
+        return new SuperMybatisTenant();
     }
 
     public static SuperMybatisTenantInfo currentTenant(){
-        return tenantInfos.get(Thread.currentThread().getId());
-    }
-
-    private long id;
-
-    private SuperMybatisTenantInfo tenantInfo;
-
-    private SuperMybatisTenant(long id){
-        this.id = id;
+        return tenantInfos.get();
     }
 
     @Override
     public void close() {
-        tenantInfos.remove(id);
+        tenantInfos.remove();
     }
 }

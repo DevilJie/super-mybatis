@@ -65,6 +65,11 @@ public class BatchInsertSqlProviderParser extends BaseSqlProviderParser {
                             && !Modifier.isStatic(item.getModifiers())).forEach(item -> {
                 Column c = item.getAnnotation(Column.class);
                 if(c == null || !c.ignored()) {
+
+                    if(GlobalSetting.getGlobalSetting().getDatabaseSetting().getTenant() && SuperMybatisTenant.currentTenant() != null){
+                        if(TableTools.fieldToColumn(setting, item).equals(SuperMybatisTenant.currentTenant().tenantColumn())) return;
+                    }
+                    
                     if (index.get() == 0)
                         columnBuffer.append(String.format(",`%s`", TableTools.fieldToColumn(setting, item)));
                     valuesBuffer.append(String.format(",#{%s[%s].%s}", SqlProviderConstants.ENTITY_LIST, index.get(), item.getName()));

@@ -17,16 +17,23 @@ import org.junit.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class UserTests {
+
+
+
+	private DataSource dataSource;
 
 	@Before
 	public void befor(){
 		ConfigurableApplicationContext context = SpringApplication.run(SuperMybatisDemoApplication.class, new String[]{});
 		userInfoService = context.getBean(UserInfoService.class);
+		dataSource = (DataSource)context.getBean("supermybatisDataSource");
 	}
 
 	UserInfoService userInfoService;
@@ -54,6 +61,7 @@ public class UserTests {
 			user.setRealName("红妹妹");
 			String s = (String) userInfoService.insert(user);
 			System.out.println(s + "对象：" + user.toString());
+			System.out.println(dataSource);
 		}
 	}
 
@@ -72,9 +80,12 @@ public class UserTests {
 	}
 
 	@Test
-	public void testAllList(){
+	public void testAllList() throws InterruptedException {
 		try(SuperMybatisTenant tenant = SuperMybatisTenant.openTenant("org_id", "5")) {
+			TimeUnit.SECONDS.sleep(1);
 			System.out.println(JSON.toJSONString(userInfoService.allList()));
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
 		}
 	}
 

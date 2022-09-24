@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 import javax.sql.DataSource;
 
 import com.cjxch.supermybatis.base.bean.CommonCons;
+import com.cjxch.supermybatis.core.datasource.SuperMybatisRouteDatasources;
 import com.cjxch.supermybatis.core.setting.GlobalSetting;
 import com.cjxch.supermybatis.extend.spring.SuperMybatisSqlSessionFactoryBean;
 import org.apache.ibatis.annotations.Mapper;
@@ -92,6 +93,7 @@ import org.springframework.util.StringUtils;
 @ConditionalOnSingleCandidate(DataSource.class)
 @EnableConfigurationProperties(SuperMybatisProperties.class)
 @AutoConfigureAfter({DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class})
+@ImportResource({"classpath*:applicationContext-supermybatis-ds*"})
 @Primary
 public class SuperMybatisAutoConfiguration implements InitializingBean {
 
@@ -113,6 +115,9 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
 
     @Autowired
     private LoggingSystem loggingSystem;
+
+    @Autowired
+    private DataSource supermybatisDataSource;
 
     public SuperMybatisAutoConfiguration(SuperMybatisProperties properties, ObjectProvider<Interceptor[]> interceptorsProvider,
                                          ObjectProvider<TypeHandler[]> typeHandlersProvider, ObjectProvider<LanguageDriver[]> languageDriversProvider,
@@ -142,62 +147,17 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
 
     @Bean
     @ConditionalOnMissingBean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-        SuperMybatisSqlSessionFactoryBean factory = new SuperMybatisSqlSessionFactoryBean();
-        factory.setDataSource(dataSource);
-        factory.setVfs(SpringBootVFS.class);
-        if (StringUtils.hasText(this.properties.getConfigLocation())) {
-            factory.setConfigLocation(this.resourceLoader.getResource(this.properties.getConfigLocation()));
-        }
-        applyConfiguration(factory);
-        if (this.properties.getConfigurationProperties() != null) {
-            factory.setConfigurationProperties(this.properties.getConfigurationProperties());
-        }
-        if (!ObjectUtils.isEmpty(this.interceptors)) {
-            factory.setPlugins(this.interceptors);
-        }
-        if (this.databaseIdProvider != null) {
-            factory.setDatabaseIdProvider(this.databaseIdProvider);
-        }
-        if (StringUtils.hasLength(this.properties.getTypeAliasesPackage())) {
-            factory.setTypeAliasesPackage(this.properties.getTypeAliasesPackage());
-        }
-        if (this.properties.getTypeAliasesSuperType() != null) {
-            factory.setTypeAliasesSuperType(this.properties.getTypeAliasesSuperType());
-        }
-        if (StringUtils.hasLength(this.properties.getTypeHandlersPackage())) {
-            factory.setTypeHandlersPackage(this.properties.getTypeHandlersPackage());
-        }
-        if (!ObjectUtils.isEmpty(this.typeHandlers)) {
-            factory.setTypeHandlers(this.typeHandlers);
-        }
-        if (!ObjectUtils.isEmpty(this.properties.resolveMapperLocations())) {
-            factory.setMapperLocations(this.properties.resolveMapperLocations());
-        }
-        Set<String> factoryPropertyNames = Stream
-                .of(new BeanWrapperImpl(SqlSessionFactoryBean.class).getPropertyDescriptors()).map(PropertyDescriptor::getName)
-                .collect(Collectors.toSet());
-        Class<? extends LanguageDriver> defaultLanguageDriver = this.properties.getDefaultScriptingLanguageDriver();
-        if (factoryPropertyNames.contains("scriptingLanguageDrivers") && !ObjectUtils.isEmpty(this.languageDrivers)) {
-            // Need to mybatis-spring 2.0.2+
-            factory.setScriptingLanguageDrivers(this.languageDrivers);
-            if (defaultLanguageDriver == null && this.languageDrivers.length == 1) {
-                defaultLanguageDriver = this.languageDrivers[0].getClass();
-            }
-        }
-        if (factoryPropertyNames.contains("defaultScriptingLanguageDriver")) {
-            // Need to mybatis-spring 2.0.2+
-            factory.setDefaultScriptingLanguageDriver(defaultLanguageDriver);
-        }
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
+        factory.setDataSource(supermybatisDataSource);
+
         GlobalSetting confGs = GlobalSetting.getGlobalSetting();
         GlobalSetting setting = this.properties.getGlobalSetting();
+        setting.setDataSource((SuperMybatisRouteDatasources)supermybatisDataSource);
         if(confGs != null){
             /************如果存在confGs 不为空，则直接使用，忽略配置文件读取的配置***************/
             setting = confGs;
         }
-
-        factory.setGlobalSetting(setting);
-
 
         if (setting.getDebug()) {
             loggingSystem.setLogLevel("com.cjxch", LogLevel.DEBUG);
@@ -206,6 +166,8 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
 
         if (setting.getDatabaseSetting().getShowSql())
             loggingSystem.setLogLevel(CommonCons.BASE_MAPPER, LogLevel.DEBUG);
+
+        GlobalSetting.setGlobalSetting(setting);
 
         return factory.getObject();
     }

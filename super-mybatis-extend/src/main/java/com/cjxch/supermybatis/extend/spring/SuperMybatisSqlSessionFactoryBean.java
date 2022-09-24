@@ -8,10 +8,7 @@ package com.cjxch.supermybatis.extend.spring;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 import javax.sql.DataSource;
 
@@ -51,6 +48,7 @@ import org.springframework.core.type.ClassMetadata;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ObjectUtils;
@@ -228,10 +226,14 @@ public class SuperMybatisSqlSessionFactoryBean implements FactoryBean<SqlSession
 
         this.globalSetting = Optional.ofNullable(this.globalSetting).orElseGet(GlobalSetting::create);
         this.globalSetting.setDatabaseSetting(Optional.ofNullable(this.globalSetting.getDatabaseSetting()).orElseGet(DatabaseSetting::new));
-        try {
-            globalSetting.setDriverClass((String) ReflectionUtil.getFieldValue(dataSource, "driverClassName"));
-        }catch(Exception e){
-            globalSetting.setDriverClass((String) ReflectionUtil.getFieldValue(dataSource, "driverClass"));
+        if(dataSource instanceof AbstractRoutingDataSource){
+            this.globalSetting.setDataSource((AbstractRoutingDataSource)dataSource);
+        }else{
+            try {
+                globalSetting.setDriverClass((String) ReflectionUtil.getFieldValue(dataSource, "driverClassName"));
+            }catch(Exception e){
+                globalSetting.setDriverClass((String) ReflectionUtil.getFieldValue(dataSource, "driverClass"));
+            }
         }
         GlobalSetting.setGlobalSetting(this.globalSetting);
 

@@ -1,6 +1,7 @@
 package com.cjxch.supermybatis.demo.service.impl;
 
 import com.cjxch.supermybatis.base.bean.Pager;
+import com.cjxch.supermybatis.core.datasource.ChooseDataSource;
 import com.cjxch.supermybatis.core.tools.query.SmCriteria;
 import com.cjxch.supermybatis.demo.entity.User;
 import com.cjxch.supermybatis.demo.service.UserInfoService;
@@ -17,6 +18,7 @@ import java.util.List;
  * @Date: 2020/09/21/20:37
  */
 @Service
+@ChooseDataSource("master")
 public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
@@ -37,6 +39,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoDao.batchInsert(user);
     }
 
+    @ChooseDataSource("slave1")
     @Override
     public List<User> allList() {
         return userInfoDao.allList();

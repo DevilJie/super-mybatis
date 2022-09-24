@@ -4,7 +4,9 @@ import com.cjxch.supermybatis.base.exception.SuperMybatisException;
 import com.cjxch.supermybatis.core.generator.IdentifierGenerator;
 import com.cjxch.supermybatis.core.generator.SnowflakeIdentifierGenerator;
 import com.cjxch.supermybatis.core.generator.UuidIdentifierGenerator;
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
+import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +45,16 @@ public class GlobalSetting {
      * 输出Super-Mybatis debug日志
      */
     private Boolean debug = false;
+
+    private AbstractRoutingDataSource dataSource;
+
+    public AbstractRoutingDataSource getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(AbstractRoutingDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     /**
      * 获取主键生成器
@@ -117,7 +129,12 @@ public class GlobalSetting {
     }
 
     public String getDriverClass() {
-        return driverClass;
+        if(dataSource != null){
+            Map<Object, DataSource> res = dataSource.getResolvedDataSources();
+            return res.get("driverClassName").toString();
+        }else{
+            return driverClass;
+        }
     }
 
     public Boolean getDebug() {

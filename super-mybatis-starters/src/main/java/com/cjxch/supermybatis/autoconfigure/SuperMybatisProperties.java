@@ -16,10 +16,12 @@
 package com.cjxch.supermybatis.autoconfigure;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Stream;
 
+import com.cjxch.supermybatis.base.bean.DataSourcesSetting;
 import com.cjxch.supermybatis.core.setting.GlobalConstants;
 import com.cjxch.supermybatis.core.setting.GlobalSetting;
 import org.apache.ibatis.scripting.LanguageDriver;
@@ -102,9 +104,19 @@ public class SuperMybatisProperties {
   @NestedConfigurationProperty
   private Configuration configuration;
 
-
   @NestedConfigurationProperty
   private GlobalSetting globalSetting = GlobalSetting.create();
+
+  @NestedConfigurationProperty
+  private Map<String, DataSourcesSetting> datasource;
+
+  public Map<String, DataSourcesSetting> getDatasource() {
+    return datasource;
+  }
+
+  public void setDatasource(Map<String, DataSourcesSetting> datasource) {
+    this.datasource = datasource;
+  }
 
   /**
    * @since 1.1.0
