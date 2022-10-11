@@ -5,6 +5,7 @@ import com.cjxch.supermybatis.base.annotation.PrimaryKey;
 import com.cjxch.supermybatis.base.annotation.Table;
 import com.cjxch.supermybatis.base.enu.MatchMode;
 import com.cjxch.supermybatis.base.enu.PrimaryKeyType;
+import com.cjxch.supermybatis.demo.enu.Gender;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,6 +21,16 @@ public class User implements Serializable {
     private String email;
 
     private String orgId;
+
+    private Gender gender;
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 
     public String getOrgId() {
         return orgId;
@@ -92,6 +103,7 @@ public class User implements Serializable {
                 ", nickName='" + realName + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
                 '}';
     }
 }

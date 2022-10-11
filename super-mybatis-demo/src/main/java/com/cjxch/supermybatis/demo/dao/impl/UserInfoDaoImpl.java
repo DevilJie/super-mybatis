@@ -34,7 +34,6 @@ public class UserInfoDaoImpl extends BaseDaoImpl<User> implements UserInfoDao {
     }
 
     @Override
-    @CacheSet(key="'user-info:' + #id")
     public User get(Serializable id) {
         return super.get(id);
     }

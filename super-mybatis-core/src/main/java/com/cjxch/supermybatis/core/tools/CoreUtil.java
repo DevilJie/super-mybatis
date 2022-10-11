@@ -113,7 +113,12 @@ public class CoreUtil {
                         if (clazz.equals(BigDecimal.class)) {
                             v = new BigDecimal(en.getValue().toString());
                         } else if (clazz.isEnum()) {
-                            v = clazz.getEnumConstants()[Integer.parseInt(v.toString())];
+                            for(Object obj : clazz.getEnumConstants()){
+                                if(obj.toString().equals(v.toString())) {
+                                    v = obj;
+                                    break;
+                                }
+                            }
                         } else if (clazz.equals(String.class)) {
                             v = en.getValue().toString();
                         } else if (clazz.equals(Double.class) || clazz.equals(double.class)) {
@@ -142,6 +147,7 @@ public class CoreUtil {
                     ReflectionUtil.invokeSetterMethod(e, key, v);
 
                 } catch (Exception ee) {
+                    ee.printStackTrace();
                 }
             }
         }

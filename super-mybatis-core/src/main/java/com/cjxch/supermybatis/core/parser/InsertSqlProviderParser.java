@@ -1,5 +1,7 @@
 package com.cjxch.supermybatis.core.parser;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.cjxch.supermybatis.base.annotation.Column;
 import com.cjxch.supermybatis.base.annotation.PrimaryKey;
 import com.cjxch.supermybatis.base.enu.BaseSqlTemplate;

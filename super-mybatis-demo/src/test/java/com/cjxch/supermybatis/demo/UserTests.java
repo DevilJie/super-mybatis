@@ -8,6 +8,7 @@ import com.cjxch.supermybatis.core.tools.query.SmCriterion;
 import com.cjxch.supermybatis.core.tools.query.SmCriterionArrays;
 import com.cjxch.supermybatis.demo.dto.UserJobDto;
 import com.cjxch.supermybatis.demo.entity.User;
+import com.cjxch.supermybatis.demo.enu.Gender;
 import com.cjxch.supermybatis.demo.service.UserInfoService;
 import com.cjxch.supermybatis.demo.dto.UserDto;
 import com.cjxch.supermybatis.tenant.SuperMybatisTenant;
@@ -40,9 +41,7 @@ public class UserTests {
 
 	@Test
 	public void get(){
-		User user = userInfoService.get("713868623503953997");
-		System.out.println(user);
-		user = userInfoService.get("713868623503953997");
+		User user = userInfoService.get("764603998102622264");
 		System.out.println(user);
 	}
 	@Test
@@ -57,6 +56,7 @@ public class UserTests {
 			UserDto user = new UserDto();
 			user.setAgeStart(18);
 			user.setAge(19);
+			user.setGender(Gender.FEMALE);
 			user.setEmail("cjxch@cjxch.com");
 			user.setRealName("红妹妹");
 			String s = (String) userInfoService.insert(user);
