@@ -163,12 +163,6 @@ public class UserTests {
 	}
 
 	@Test
-	public void testLoadByIds(){
-		List<User> userList = userInfoService.loadListByIds(new Serializable[]{"711542893247991812", "712431236315877442"});
-		System.out.println(JSON.toJSONString(userList));
-	}
-
-	@Test
 	public void testSmCriteria(){
 
 		SmCriterionArrays arr = new SmCriterionArrays.SmCriterionArraysBuild()
