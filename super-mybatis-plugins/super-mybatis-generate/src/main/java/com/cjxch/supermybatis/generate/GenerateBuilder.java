@@ -271,7 +271,7 @@ public class GenerateBuilder {
                     System.out.println(">>>>>>>>>>>>>>>["+i.getSimpleName()+"]建表语句创建成功：");
                     System.out.println(sb);
                 }else{
-                    tableSql.append("#"+i.getSimpleName()+"");
+                    tableSql.append("#"+i.getSimpleName()+"\r\n");
                     tableSql.append(sb+"\r\n");
                 }
             }catch(Exception e){
