@@ -267,7 +267,7 @@ public class GenerateBuilder {
                 sb.append(");" + "\r\n");
 
                 if(StringUtils.isEmpty(sqlPath)){
-                    System.out.println(">>>>>>>>>>>>>>>["+i.getSimpleName()+"]建表语句创建成功：");
+                    System.out.println("#>>>>>>>>>>>>>>>["+i.getSimpleName()+"]建表语句创建成功：");
                     System.out.println(sb);
                 }else{
                     tableSql.append("#"+i.getSimpleName()+"\r\n");
