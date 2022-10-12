@@ -256,7 +256,6 @@ public class GenerateBuilder {
                 int ii = 0;
                 for(Field f : declaredField){
                     String typeName = f.getType().getSimpleName();
-                    if(f.isEnumConstant()) typeName = "Enum";
                     sb.append("    " + CamelCaseUtils.processNameWithUnderLine(f.getName()) + "    " + DBUtil.propertiesToDb(typeName));
                     PrimaryKey primaryKey = f.getAnnotation(PrimaryKey.class);
                     if(primaryKey != null) sb.append("    not null    primary key");

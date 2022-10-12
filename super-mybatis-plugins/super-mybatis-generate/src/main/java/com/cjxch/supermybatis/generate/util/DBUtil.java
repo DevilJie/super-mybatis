@@ -1,5 +1,7 @@
 package com.cjxch.supermybatis.generate.util;
 
+import com.alibaba.druid.util.StringUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,10 +32,11 @@ public class DBUtil {
         propertiesToDbMap.put("Timestamp", "datetime");
         propertiesToDbMap.put("Date", "datetime");
         propertiesToDbMap.put("String", "VARCHAR(255)");
-        propertiesToDbMap.put("Enum", "VARCHAR(20)");
     }
 
     public static String propertiesToDb(String properties){
-        return propertiesToDbMap.get(properties);
+        String ret = propertiesToDbMap.get(properties);
+        if(StringUtils.isEmpty(ret)) ret = "VARCHAR(20)";
+        return ret;
     }
 }
