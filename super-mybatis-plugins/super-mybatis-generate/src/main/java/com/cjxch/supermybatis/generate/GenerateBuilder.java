@@ -264,7 +264,7 @@ public class GenerateBuilder {
                     if(ii < declaredField.length) sb.append(",\r\n");
                     else sb.append("\r\n");
                 }
-                sb.append(")" + "\r\n");
+                sb.append(");" + "\r\n");
 
                 if(StringUtils.isEmpty(sqlPath)){
                     System.out.println(">>>>>>>>>>>>>>>["+i.getSimpleName()+"]建表语句创建成功：");
