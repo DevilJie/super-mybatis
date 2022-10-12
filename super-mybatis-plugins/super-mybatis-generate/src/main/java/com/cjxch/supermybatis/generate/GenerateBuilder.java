@@ -250,13 +250,13 @@ public class GenerateBuilder {
                 }
                 String tableName = CamelCaseUtils.processNameWithUnderLine(i.getSimpleName());
                 if (!StringUtils.isEmpty(a.value())) tableName = a.value();
-                sb.append("create table " + tableName + "\r\n");
+                sb.append("create table `" + tableName + "`\r\n");
                 sb.append("(" + "\r\n");
                 Field[] declaredField = ReflectionUtil.getDeclaredField(i.newInstance());
                 int ii = 0;
                 for(Field f : declaredField){
                     String typeName = f.getType().getSimpleName();
-                    sb.append("    " + CamelCaseUtils.processNameWithUnderLine(f.getName()) + "    " + DBUtil.propertiesToDb(typeName));
+                    sb.append("    `" + CamelCaseUtils.processNameWithUnderLine(f.getName()) + "`    " + DBUtil.propertiesToDb(typeName));
                     PrimaryKey primaryKey = f.getAnnotation(PrimaryKey.class);
                     if(primaryKey != null) sb.append("    not null    primary key");
                     else  sb.append("    null");
