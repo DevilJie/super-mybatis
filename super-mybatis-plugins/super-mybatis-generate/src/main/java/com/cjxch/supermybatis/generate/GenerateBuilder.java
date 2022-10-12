@@ -1,12 +1,19 @@
 package com.cjxch.supermybatis.generate;
 
 import com.alibaba.druid.util.StringUtils;
+import com.cjxch.supermybatis.base.annotation.PrimaryKey;
+import com.cjxch.supermybatis.base.annotation.Table;
+import com.cjxch.supermybatis.core.tools.CamelCaseUtils;
+import com.cjxch.supermybatis.core.tools.ReflectionUtil;
 import com.cjxch.supermybatis.generate.util.ClassUtil;
+import com.cjxch.supermybatis.generate.util.DBUtil;
 import com.cjxch.supermybatis.generate.util.FileUtil;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,6 +31,8 @@ public class GenerateBuilder {
     private boolean generateSql = true;
     private boolean interfaceFlag = true;
 
+    private String sqlPath;
+
     private String[] ignore = new String[]{};
     private DbType dbType;
 
@@ -33,6 +42,10 @@ public class GenerateBuilder {
 
     public GenerateBuilder generateDao(boolean generateDao){
         this.generateDao = generateDao;
+        return this;
+    }
+    public GenerateBuilder sqlPath(String sqlPath){
+        this.sqlPath = sqlPath;
         return this;
     }
 
@@ -223,5 +236,57 @@ public class GenerateBuilder {
             }
         }
     }
-    private void doGenerateSql(){}
+
+    private void doGenerateSql()  {
+        System.out.println("开始生成建表SQL文件");
+        StringBuilder tableSql = new StringBuilder();
+        for(Class i : ClassUtil.getClassSet(entityPath)) {
+            try {
+                StringBuilder sb = new StringBuilder();
+                Table a = i.newInstance().getClass().getAnnotation(Table.class);
+                if (a == null){
+                    System.out.println("实体类["+i.getSimpleName()+"]没有添加@Table注解，直接跳过");
+                    continue;
+                }
+                String tableName = CamelCaseUtils.processNameWithUnderLine(i.getSimpleName());
+                if (!StringUtils.isEmpty(a.value())) tableName = a.value();
+                sb.append("create table " + tableName + "\r\n");
+                sb.append("(" + "\r\n");
+                Field[] declaredField = ReflectionUtil.getDeclaredField(i.newInstance());
+                int ii = 0;
+                for(Field f : declaredField){
+                    String typeName = f.getType().getSimpleName();
+                    if(f.isEnumConstant()) typeName = "Enum";
+                    sb.append("    " + CamelCaseUtils.processNameWithUnderLine(f.getName()) + "    " + DBUtil.propertiesToDb(typeName));
+                    PrimaryKey primaryKey = f.getAnnotation(PrimaryKey.class);
+                    if(primaryKey != null) sb.append("    not null    primary key");
+                    else  sb.append("    null");
+                    ii++;
+                    if(ii < declaredField.length) sb.append(",\r\n");
+                    else sb.append("\r\n");
+                }
+                sb.append(")" + "\r\n");
+
+                if(StringUtils.isEmpty(sqlPath)){
+                    System.out.println(">>>>>>>>>>>>>>>["+i.getSimpleName()+"]建表语句创建成功：");
+                    System.out.println(sb);
+                }else{
+                    tableSql.append("#"+i.getSimpleName()+"");
+                    tableSql.append(sb+"\r\n");
+                }
+            }catch(Exception e){
+                System.out.println("实体类["+i.getSimpleName()+"]建表语句生成失败：" + e.getMessage());
+            }
+        }
+
+        if(!StringUtils.isEmpty(sqlPath)){
+            try(FileWriter writer = new FileWriter(sqlPath + File.separator + "db.sql")) {
+                writer.write(tableSql.toString());
+                System.out.println("\t建表语句生成成功，路径：" + sqlPath + File.separator + "db.sql");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
 }

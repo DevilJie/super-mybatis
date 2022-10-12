@@ -16,7 +16,7 @@ public class User implements Serializable {
     private String id;
     @Column(matchMode = MatchMode.CENTER_MATCH)
     private String realName;
-    private Integer age;
+    private int age;
     @Column(ignored = true)
     private String email;
 
@@ -42,7 +42,7 @@ public class User implements Serializable {
 
     public User(){}
 
-    public User(String realName, Integer age, String email) {
+    public User(String realName, int age, String email) {
         this.realName = realName;
         this.age = age;
         this.email = email;
@@ -64,11 +64,11 @@ public class User implements Serializable {
         this.realName = realName;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
