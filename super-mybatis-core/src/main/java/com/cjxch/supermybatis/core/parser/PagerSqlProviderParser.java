@@ -2,6 +2,7 @@ package com.cjxch.supermybatis.core.parser;
 
 import com.cjxch.supermybatis.base.bean.Pager;
 import com.cjxch.supermybatis.base.enu.DbType;
+import com.cjxch.supermybatis.core.datasource.SuperMybatisDatasourceHandler;
 
 import java.util.Map;
 
@@ -20,6 +21,6 @@ public class PagerSqlProviderParser extends SelectObjectSqlProviderParser {
 
         Pager pager = (Pager) map.get(SqlProviderConstants.PAGER);
 
-        return DbType.getPagerSql(super.execute(map), setting.getDbDriverClass(), pager);
+        return DbType.getPagerSql(super.execute(map), setting.getDriverClass(), pager);
     }
 }

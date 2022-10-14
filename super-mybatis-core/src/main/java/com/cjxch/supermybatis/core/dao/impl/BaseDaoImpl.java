@@ -158,7 +158,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         map.put(SqlProviderConstants.CLASS_NAME, entityClass);
         map.put(SqlProviderConstants.ENTITY, t);
         Pager pager = new Pager();
-        pager.setPageSize(2);
+        pager.setPageSize(1);
         map.put(SqlProviderConstants.PAGER, pager);
         map.put(SqlProviderConstants.ORDER, pager.getOrder());
         map.put(SqlProviderConstants.ORDER_BY, pager.getOrderBy());

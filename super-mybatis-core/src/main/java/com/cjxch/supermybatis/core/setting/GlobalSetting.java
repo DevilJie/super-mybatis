@@ -1,6 +1,13 @@
 package com.cjxch.supermybatis.core.setting;
 
+import com.alibaba.druid.util.StringUtils;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.cjxch.supermybatis.base.bean.DataSourcesSetting;
 import com.cjxch.supermybatis.base.exception.SuperMybatisException;
+import com.cjxch.supermybatis.core.datasource.DataSourceConfig;
+import com.cjxch.supermybatis.core.datasource.SuperMybatisDatasourceHandler;
+import com.cjxch.supermybatis.core.datasource.SuperMybatisRouteDatasources;
 import com.cjxch.supermybatis.core.generator.IdentifierGenerator;
 import com.cjxch.supermybatis.core.generator.SnowflakeIdentifierGenerator;
 import com.cjxch.supermybatis.core.generator.UuidIdentifierGenerator;
@@ -40,6 +47,9 @@ public class GlobalSetting {
 
 //    private Boolean cacheSwitch = false;
 
+    private String currentDataBase;
+
+    private String defaultDataBase;
     /**
      * 开启debug模式
      * 输出Super-Mybatis debug日志
@@ -120,21 +130,40 @@ public class GlobalSetting {
         return GLOBAL_SETTING;
     }
 
-    public String getDbDriverClass(){
-        return this.driverClass;
-    }
-
     public void setDriverClass(String driverClass) {
         this.driverClass = driverClass;
     }
 
     public String getDriverClass() {
         if(dataSource != null){
-            Map<Object, DataSource> res = dataSource.getResolvedDataSources();
-            return res.get("driverClassName").toString();
+            Map<String, Object> res = ((SuperMybatisRouteDatasources)dataSource).getDatasource();
+            String currentDataSource = SuperMybatisDatasourceHandler.getCurrentDataSource();
+            if(StringUtils.isEmpty(currentDataSource)){
+                for(Map.Entry<String, Object> entry : res.entrySet()){
+                    if(entry.getKey().equals("pool")) continue;
+                    DataSourcesSetting vv = JSONObject.parseObject(JSON.toJSONString(entry.getValue()), DataSourcesSetting.class);
+                    return vv.getDriverClassName();
+                }
+            }else {
+                for (Map.Entry<String, Object> entry : res.entrySet()) {
+                    if(currentDataSource.equals(entry.getKey())){
+                        DataSourcesSetting vv = JSONObject.parseObject(JSON.toJSONString(entry.getValue()), DataSourcesSetting.class);
+                        return vv.getDriverClassName();
+                    }
+                }
+            }
+            throw new SuperMybatisException("Unknown Driver class");
         }else{
             return driverClass;
         }
+    }
+
+    public String getCurrentDataBase() {
+        return currentDataBase;
+    }
+
+    public void setCurrentDataBase(String currentDataBase) {
+        this.currentDataBase = currentDataBase;
     }
 
     public Boolean getDebug() {
@@ -143,5 +172,13 @@ public class GlobalSetting {
 
     public void setDebug(Boolean debug) {
         this.debug = debug;
+    }
+
+    public String getDefaultDataBase() {
+        return defaultDataBase;
+    }
+
+    public void setDefaultDataBase(String defaultDataBase) {
+        this.defaultDataBase = defaultDataBase;
     }
 }

@@ -6,6 +6,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.cjxch.supermybatis.base.bean.DataSourcesSetting;
 import com.cjxch.supermybatis.core.datasource.druid.DruidProperties;
 import com.cjxch.supermybatis.core.setting.GlobalConstants;
+import com.cjxch.supermybatis.core.setting.GlobalSetting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -20,7 +21,7 @@ import java.util.Map;
 
 @Component
 @ConfigurationProperties(prefix = GlobalConstants.SUPER_MYBATIS)
-class DataSourceConfig {
+public class DataSourceConfig {
 
     private Map<String, Object> datasource;
 
@@ -33,6 +34,7 @@ class DataSourceConfig {
         ds.setTargetDataSources(dsMap);
         ds.setDefaultTargetDataSource(dsMap.values().toArray()[0]);
         ds.afterPropertiesSet();
+        ds.setDatasource(datasource);
         return ds;
     }
 

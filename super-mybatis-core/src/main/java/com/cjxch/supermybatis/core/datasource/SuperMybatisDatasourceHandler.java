@@ -1,5 +1,6 @@
 package com.cjxch.supermybatis.core.datasource;
 
+import com.cjxch.supermybatis.core.setting.GlobalSetting;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import javax.sql.DataSource;
@@ -11,7 +12,7 @@ import javax.sql.DataSource;
  **/
 public class SuperMybatisDatasourceHandler {
 
-    private static ThreadLocal<String> handlerThredLocal = new ThreadLocal<String>();
+    public static ThreadLocal<String> handlerThredLocal = new ThreadLocal<String>();
 
     /**
      * Use aop dynamic setting datasouce

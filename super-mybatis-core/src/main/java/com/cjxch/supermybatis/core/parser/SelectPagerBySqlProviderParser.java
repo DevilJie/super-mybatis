@@ -13,9 +13,8 @@ public class SelectPagerBySqlProviderParser extends SelectBySqlProviderParser {
 
     @Override
     public String execute(Map<String, Object> map) {
-
         String sql = (String)map.get(SqlProviderConstants.SQL);
         Pager pager = (Pager) map.get(SqlProviderConstants.PAGER);
-        return DbType.getPagerSql(commonTenantProcess(map, sql), setting.getDbDriverClass(), pager);
+        return DbType.getPagerSql(commonTenantProcess(map, sql), setting.getDriverClass(), pager);
     }
 }

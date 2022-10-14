@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class SuperMybatisRouteDatasources extends AbstractRoutingDataSource {
 
+    private Map<String, Object> datasource;
     @Override
     protected Object determineCurrentLookupKey() {
         return SuperMybatisDatasourceHandler.getCurrentDataSource();
@@ -21,5 +22,13 @@ public class SuperMybatisRouteDatasources extends AbstractRoutingDataSource {
     @Override
     protected DataSource determineTargetDataSource() {
         return super.determineTargetDataSource();
+    }
+
+    public Map<String, Object> getDatasource() {
+        return datasource;
+    }
+
+    public void setDatasource(Map<String, Object> datasource) {
+        this.datasource = datasource;
     }
 }
