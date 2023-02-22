@@ -115,6 +115,8 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
 
     @Autowired
     private DataSource supermybatisDataSource;
+    @Autowired
+    private DataSource dataSource;
 
     public SuperMybatisAutoConfiguration(SuperMybatisProperties properties, ObjectProvider<Interceptor[]> interceptorsProvider,
                                          ObjectProvider<TypeHandler[]> typeHandlersProvider, ObjectProvider<LanguageDriver[]> languageDriversProvider,
@@ -146,11 +148,14 @@ public class SuperMybatisAutoConfiguration implements InitializingBean {
     @ConditionalOnMissingBean
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
-        factory.setDataSource(supermybatisDataSource);
-
         GlobalSetting confGs = GlobalSetting.getGlobalSetting();
         GlobalSetting setting = this.properties.getGlobalSetting();
-        setting.setDataSource((SuperMybatisRouteDatasources) supermybatisDataSource);
+        if(supermybatisDataSource != null && ((SuperMybatisRouteDatasources)supermybatisDataSource).isActive()) {
+            factory.setDataSource(supermybatisDataSource);
+            setting.setDataSource((SuperMybatisRouteDatasources) supermybatisDataSource);
+        }else{
+            factory.setDataSource(dataSource);
+        }
         if(confGs != null){
             /************如果存在confGs 不为空，则直接使用，忽略配置文件读取的配置***************/
             setting = confGs;
