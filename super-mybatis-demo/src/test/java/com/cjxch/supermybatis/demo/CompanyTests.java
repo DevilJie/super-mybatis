@@ -29,6 +29,7 @@ public class CompanyTests {
 
 	ICompanyDao companyDao;
 
+
 	@Before
 	public void befor(){
 		ConfigurableApplicationContext context = SpringApplication.run(SuperMybatisDemoApplication.class, new String[]{});
