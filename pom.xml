@@ -12,8 +12,10 @@
         <spring.version>5.3.3</spring.version>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.mybatis.spring.boot.version>2.2.2</org.mybatis.spring.boot.version>
+        <org.mybatis.spring.boot.version>2.3.0</org.mybatis.spring.boot.version>
         <spring.boot.autoconfigure>2.4.2</spring.boot.autoconfigure>
+        <spring.boot.version>2.7.9</spring.boot.version>
+        <snakeyaml.version>1.33</snakeyaml.version>
         <fastjson2>2.0.4</fastjson2>
         <slf4j.version>1.7.30</slf4j.version>
         <spring.boot>2.7.0</spring.boot>
@@ -70,10 +72,13 @@
     </scm>
     <profiles>
         <profile>
-            <id>release</id>
+            <id>mvn</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <gpg.executable>D:\GnuPG\bin\gpg.exe</gpg.executable>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
